@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tony's Sky View</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Pretendard -->
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+  <!-- Preload banner images (사용자가 images 안에 3장 넣는 전제) -->
+  <link rel="preload" as="image" href="./images/baksu.png">
+  <link rel="preload" as="image" href="./images/sup.png">
+  <link rel="preload" as="image" href="./images/tiger.png">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#16A34A",   // Primary Green
+            ink: "#1F2933",       // Ink Black
+            warm: "#FFFBEA",      // Warm Background
+            info: "#2563EB",      // Learning Blue
+            success: "#22C55E"    // Success Green
+          },
+          borderRadius: { card: "16px" },
+          boxShadow: { soft: "0 10px 30px rgba(31,41,51,.12)" }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body{
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      line-height: 1.6;
+      background: #FFFBEA;
+      word-break: keep-all;
+    }
+    .text-shadow{ text-shadow: 2px 2px 4px rgba(0,0,0,.55); }
+    .slider-transition{ transition: transform 1s ease-in-out; }
+  </style>
+</head>
+
+<body class="bg-warm text-ink">
+
+  <!-- HERO / Banner slider -->
+  <header class="relative w-full h-[320px] md:h-[420px] overflow-hidden">
+    <div id="slider-track"
+         class="absolute inset-y-0 left-0 flex w-[400%] h-full slider-transition">
+      <img src="./images/baksu.png" class="w-1/4 h-full object-cover" alt="Banner baksu"
+           onerror="this.src='./images/baksu.png'">
+      <img src="./images/sup.png" class="w-1/4 h-full object-cover" alt="Banner sup"
+           onerror="this.src='./images/baksu.png'">
+      <img src="./images/tiger.png" class="w-1/4 h-full object-cover" alt="Banner tiger"
+           onerror="this.src='./images/baksu.png'">
+      <img src="./images/baksu.png" class="w-1/4 h-full object-cover" alt="Banner clone">
+    </div>
+
+    <div class="absolute inset-0 bg-black/45"></div>
+
+    <div class="relative z-10 h-full flex flex-col items-center justify-center px-4">
+      <h1 class="text-4xl md:text-6xl font-extrabold text-white text-shadow tracking-tight">
+        Tony's Sky View
+      </h1>
+
+      <!-- 대표 장소 5개 (버튼) -->
+      <nav class="mt-10 flex flex-wrap justify-center gap-3">
+        <a href="./places/beomseom.html"
+           class="min-h-[44px] px-5 py-2 rounded-xl bg-primary text-white font-bold shadow hover:opacity-95 transition">
+          범섬
+        </a>
+        <a href="./places/seopseom.html"
+           class="min-h-[44px] px-5 py-2 rounded-xl bg-primary text-white font-bold shadow hover:opacity-95 transition">
+          섶섬
+        </a>
+        <a href="./places/sanbangsan.html"
+           class="min-h-[44px] px-5 py-2 rounded-xl bg-primary text-white font-bold shadow hover:opacity-95 transition">
+          산방산
+        </a>
+        <a href="./places/songaksan.html"
+           class="min-h-[44px] px-5 py-2 rounded-xl bg-primary text-white font-bold shadow hover:opacity-95 transition">
+          송악산
+        </a>
+        <a href="./places/index.html"
+           class="min-h-[44px] px-5 py-2 rounded-xl bg-white/90 text-ink font-bold shadow hover:bg-white transition">
+          기타
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Portfolio block (메인에서 바로 보이게) -->
+  <main class="max-w-6xl mx-auto px-4 py-10 md:py-14">
+    <section class="bg-white rounded-card shadow-soft border border-black/5 p-6 md:p-8">
+      <div class="flex items-center justify-between gap-4 flex-wrap">
+        <h2 class="text-2xl md:text-3xl font-extrabold">Portfolio</h2>
+        <a href="./places/index.html" class="text-info font-semibold hover:underline">
+          전체 장소 보기 →
+        </a>
+      </div>
+
+      <p class="mt-2 text-ink/75">
+        대표 장소 4곳은 상단 버튼에서 바로 이동할 수 있고, 기타에서 전체 장소를 탐색할 수 있습니다.
+      </p>
+
+      <!-- 영상 카드(샘플/자리표시자) : 주인님이 원하시는 순서로 교체 -->
+      <div class="mt-8 grid gap-5 md:grid-cols-2">
+        <article class="rounded-card border border-black/5 overflow-hidden bg-warm">
+          <div class="aspect-video bg-black/10 flex items-center justify-center text-ink/60">
+            (영상 썸네일/임베드 자리) 16:9
+          </div>
+          <div class="p-4">
+            <div class="text-sm text-ink/60">대표</div>
+            <h3 class="text-lg font-bold mt-1">범섬 — 샘플 영상 타이틀</h3>
+            <p class="text-sm text-ink/75 mt-1">
+              여기에 짧은 설명(1~2줄)만. 자세한 설명은 장소 페이지에서.
+            </p>
+          </div>
+        </article>
+
+        <article class="rounded-card border border-black/5 overflow-hidden bg-warm">
+          <div class="aspect-video bg-black/10 flex items-center justify-center text-ink/60">
+            (영상 썸네일/임베드 자리) 16:9
+          </div>
+          <div class="p-4">
+            <div class="text-sm text-ink/60">대표</div>
+            <h3 class="text-lg font-bold mt-1">산방산 — 샘플 영상 타이틀</h3>
+            <p class="text-sm text-ink/75 mt-1">
+              메인에는 “대표 몇 개”만 두고, 나머지는 전체 장소에서 펼칩니다.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-10 text-center text-sm text-ink/60">
+    © 2026 Tony's SkyView. All Rights Reserved.
+  </footer>
+
+  <!-- Slider script (3장 + clone) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const track = document.getElementById('slider-track');
+      if (!track) return;
+
+      const totalSlides = 3;
+      const slidesWithClone = 4;
+      const step = 100 / slidesWithClone;
+      const durationMs = 1000;
+      const intervalMs = 10000;
+
+      let index = 0;
+      let timer = null;
+
+      function goTo(i, withTransition = true) {
+        track.style.transition = withTransition ? `transform ${durationMs}ms ease-in-out` : 'none';
+        track.style.transform = `translateX(-${i * step}%)`;
+      }
+
+      function scheduleNext() {
+        clearTimeout(timer);
+        timer = setTimeout(nextSlide, intervalMs);
+      }
+
+      function nextSlide() {
+        index += 1;
+        goTo(index, true);
+
+        if (index === totalSlides) {
+          const onEnd = (e) => {
+            if (e.propertyName !== 'transform') return;
+            track.removeEventListener('transitionend', onEnd);
+
+            index = 0;
+            goTo(index, false);
+
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                track.style.transition = `transform ${durationMs}ms ease-in-out`;
+              });
+            });
+
+            scheduleNext();
+          };
+          track.addEventListener('transitionend', onEnd);
+        } else {
+          scheduleNext();
+        }
+      }
+
+      goTo(0, false);
+      scheduleNext();
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) clearTimeout(timer);
+        else scheduleNext();
+      });
+    });
+  </script>
+</body>
+</html>
