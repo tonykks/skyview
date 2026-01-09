@@ -5,8 +5,47 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tony's SkyView Portfolio</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- [중요] Tailwind CSS 최신 버전 (슬라이더 호환용) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Google Fonts (Inter & Pretendard) -->
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+<!-- Preload banner images (Performance Optimization) -->
+<link rel="preload" as="image" href="./images/songak.png">
+<link rel="preload" as="image" href="./images/sanbang.png">
+<link rel="preload" as="image" href="./images/sanbangsan.jpg">
+<link rel="preload" as="image" href="./images/baksu.png">
+<link rel="preload" as="image" href="./images/tiger.png">
+<link rel="preload" as="image" href="./images/sup.png">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            dark: '#1f3556',
+            DEFAULT: '#2b5aa6',
+            hover: '#234b8b',
+          },
+          accent: '#7b1fa2',
+          page: '#f2f2f2',
+          card: '#ffffff',
+          primary: "#16A34A",
+          ink: "#1F2933",
+          warm: "#FFFBEA",
+        },
+        fontFamily: {
+          sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+
 <style>
   :root{
     --brand-dark:#1f3556; --brand:#2b5aa6; --brand-hover:#234b8b; --accent:#7b1fa2;
@@ -17,17 +56,15 @@
       --card-bg:#111827; --page-bg:#0b1220; --text:#e5e7eb; --muted:#9ca3af;
       --brand-dark:#162640; --brand:#2b5aa6; --brand-hover:#234b8b; --accent:#8b5cf6;
     }
+    body { background-color: #0b1220; color: #e5e7eb; }
   }
-  body{font-family:'Inter',sans-serif; background:var(--page-bg); color:var(--text);}
+  body{font-family:'Pretendard', sans-serif; background:var(--page-bg); color:var(--text); line-height: 1.6; word-break: keep-all;}
 
-  .header{
-    background-image:url('https://yt3.googleusercontent.com/JHTHRsm3_keOY7f6dLzgDkG7e_olnUvd9Nd0hNfcCbGDScdnOyKDFmuaARWFX05zWaPjwjsAJw=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj');
-    background-size:cover; background-position:center; height:250px; color:#fff;
-    display:flex; align-items:center; justify-content:center;
-    font-size:48px; font-weight:900; text-align:center;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-  }
+  /* [Slider Styles] 배너 슬라이드 전용 */
+  .slider-transition { transition: transform 1s ease-in-out; }
+  .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,.55); }
 
+  /* [Navigation] 스타일 */
   .navbar{ background:var(--brand-dark); }
   .nav-btn{
     background:var(--brand); color:#fff; border:none; padding:10px 20px; margin:0 5px; border-radius:8px;
@@ -36,7 +73,7 @@
   }
   .nav-btn:hover{ background:var(--brand-hover); }
 
-  /* 인트로: 가독성 강화(색·크기·줄간격) */
+  /* 인트로: 가독성 강화 */
   .intro{
     background: linear-gradient(90deg, var(--brand), var(--accent));
     color:#fff; font-size:1.25rem; font-weight:700; line-height:1.8;
@@ -67,6 +104,8 @@
     box-shadow:0 6px 18px rgba(0,0,0,.08); transition:transform .25s ease, box-shadow .25s ease;
   }
   .video-card:hover{ transform:translateY(-6px); box-shadow:0 10px 24px rgba(0,0,0,.15); }
+  @media (prefers-color-scheme: dark) { .video-card { background-color: #111827; } }
+
   .thumb{ position:relative; aspect-ratio:16/9; background:#000; display:block; }
   .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
   .play-badge{
@@ -75,11 +114,13 @@
   }
   .yt-link{ text-align:center; padding:8px 12px 14px; }
   .yt-link a{ color:var(--accent); text-decoration:none; font-size:14px; }
+  @media (prefers-color-scheme: dark) { .yt-link a { color: #8b5cf6; } }
   .yt-link a:hover{ text-decoration:underline; }
 
   /* 연락 모달 */
   .modal{ position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; z-index:1000; }
   .modal-content{ background:var(--card-bg); color:var(--text); padding:2rem; border-radius:.75rem; width:min(92vw,420px); text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.35);}
+  @media (prefers-color-scheme: dark) { .modal-content { background-color: #111827; } }
   .btn{ background:var(--brand); color:#fff; padding:.6rem 1rem; border-radius:.6rem; }
   .btn:hover{ background:var(--brand-hover); }
 
@@ -97,18 +138,35 @@
   #back-to-top:hover{ background:var(--brand-hover); }
 
   @media (max-width:768px){
-    .header{ font-size:28px; height:200px;}
     .intro{ width:90%; padding:16px;}
     .navbar{ flex-wrap:wrap; padding:10px;}
     .nav-btn{ margin:5px; padding:8px 12px;}
     .video-container{ gap:16px; }
+    .header-title { font-size: 2.5rem !important; }
   }
 </style>
 </head>
 <body class="bg-gray-100">
 
-  <!-- Header -->
-  <div class="header">Tony's SkyView Portfolio</div>
+  <!-- 
+    [HERO / Banner Slider] 
+    index.html에도 동일하게 적용된 롤링 배너
+  -->
+  <header class="relative w-full h-[320px] md:h-[480px] overflow-hidden bg-gray-900">
+    <div id="slider-track"
+         class="absolute inset-y-0 left-0 flex h-full slider-transition">
+      <!-- Images injected via JS below -->
+    </div>
+
+    <!-- overlay -->
+    <div class="absolute inset-0 bg-black/45"></div>
+
+    <!-- Title -->
+    <h1 class="header-title absolute left-1/2 -translate-x-1/2 top-[50%] -translate-y-[50%]
+               text-5xl md:text-7xl font-extrabold text-white text-shadow tracking-tight z-20 w-full text-center px-4">
+      Tony's Sky View
+    </h1>
+  </header>
 
   <!-- Nav -->
   <div class="navbar flex justify-center py-2 shadow-md">
@@ -197,6 +255,90 @@
   <button id="back-to-top" aria-label="맨 위로">▲</button>
 
 <script>
+  /**
+   * [Config] Banner Images
+   */
+  const BANNER_IMAGES = [
+    "./images/songak.png",
+    "./images/sanbang.png",
+    "./images/sanbangsan.jpg",
+    "./images/baksu.png",
+    "./images/tiger.png",
+    "./images/sup.png"
+  ];
+  
+  /**
+   * Banner Slider Logic
+   */
+  document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('slider-track');
+    if (!track) return;
+
+    const imagesToUse = (BANNER_IMAGES && BANNER_IMAGES.length > 0) ? BANNER_IMAGES : [];
+    if (imagesToUse.length === 0) return;
+
+    const imagesToRender = [...imagesToUse, imagesToUse[0]];
+    const totalSlides = imagesToUse.length;
+    const slidesWithClone = imagesToRender.length;
+    const slideWidthPercent = 100 / slidesWithClone;
+
+    track.innerHTML = imagesToRender.map((src, i) => `
+      <img src="${src}" 
+           class="h-full object-cover flex-shrink-0" 
+           alt="Banner ${i}" 
+           style="width: ${slideWidthPercent}%;"
+           onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/CCCCCC/666666?text=Image+Loading...';"> 
+    `).join('');
+
+    track.style.width = `${slidesWithClone * 100}%`;
+    
+    const durationMs = 1000; 
+    const intervalMs = 10000; // 10 seconds
+    let index = 0;
+    let timer = null;
+
+    function goTo(i, withTransition = true) {
+      track.style.transition = withTransition ? `transform ${durationMs}ms ease-in-out` : 'none';
+      track.style.transform = `translateX(-${i * slideWidthPercent}%)`;
+    }
+
+    function scheduleNext() {
+      clearTimeout(timer);
+      timer = setTimeout(nextSlide, intervalMs);
+    }
+
+    function nextSlide() {
+      index += 1;
+      goTo(index, true);
+
+      if (index === totalSlides) {
+        const onEnd = (e) => {
+          if (e.propertyName !== 'transform') return;
+          track.removeEventListener('transitionend', onEnd);
+          index = 0;
+          goTo(index, false);
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              track.style.transition = `transform ${durationMs}ms ease-in-out`;
+            });
+          });
+          scheduleNext();
+        };
+        track.addEventListener('transitionend', onEnd);
+      } else {
+        scheduleNext();
+      }
+    }
+
+    goTo(0, false);
+    scheduleNext();
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clearTimeout(timer);
+      else scheduleNext();
+    });
+  });
+
   // 연락 모달
   const contactBtn=document.getElementById('contact-btn');
   const contactModal=document.getElementById('contact-modal');
@@ -252,6 +394,3 @@
 </script>
 </body>
 </html>
-
-
-
