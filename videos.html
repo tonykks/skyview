@@ -265,34 +265,38 @@
   }
 
   /**
-   * Fetch Data from Google Spreadsheet (Modified for Robust Error Handling)
-   * 변경점: JSON 파싱 실패 시 서버가 보낸 원본 텍스트(HTML 에러 등)를 보여줌
+   * Fetch Data from Google Spreadsheet (Diagnostic Mode)
+   * 에러 발생 시 서버가 보낸 원본 텍스트를 화면에 표시하여 원인 파악
    */
   async function loadVideos() {
     const loadingEl = document.getElementById('loading');
     try {
-      const response = await fetch(SCRIPT_URL);
+      // 1. Fetch with explicit redirect handling
+      const response = await fetch(SCRIPT_URL, {
+        method: 'GET',
+        redirect: 'follow'
+      });
       
-      // 1. HTTP 상태 코드 확인
       if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status}`);
+        throw new Error(`HTTP Error Status: ${response.status}`);
       }
 
-      // 2. 텍스트로 먼저 받기 (JSON 파싱 에러를 잡기 위해)
+      // 2. Get Raw Text first to inspect
       const text = await response.text();
       let data;
       
+      // 3. Attempt JSON Parsing
       try {
         data = JSON.parse(text);
       } catch (e) {
-        // 3. JSON 파싱 실패 시 = 서버 스크립트 에러 (HTML 리턴됨)
-        // 에러 내용의 앞부분만 잘라서 보여줌
-        const errorSnippet = text.length > 200 ? text.substring(0, 200) + "..." : text;
-        throw new Error(`서버 응답이 JSON이 아닙니다 (스크립트 에러 가능성): ${errorSnippet.replace(/</g, '&lt;')}`);
+        // JSON 파싱 실패는 서버가 HTML(에러페이지/로그인페이지)을 보냈다는 뜻
+        // 화면에 에러 내용을 출력하기 위해 예외 발생
+        const previewText = text.length > 400 ? text.substring(0, 400) + "..." : text;
+        throw new Error(`서버가 JSON 데이터 대신 다른 메시지를 보냈습니다.\n\n[서버 응답 내용]:\n${previewText.replace(/</g, '&lt;')}`);
       }
       
-      if(!data || data.length === 0) {
-        if(loadingEl) loadingEl.textContent = '데이터가 비어있습니다. 스프레드시트의 "landscape" 시트에 데이터가 있는지 확인해주세요.';
+      if(!data || !Array.isArray(data) || data.length === 0) {
+        if(loadingEl) loadingEl.textContent = '데이터가 비어있습니다. (Empty Array Returned)';
         return;
       }
 
@@ -301,17 +305,15 @@
     } catch (error) {
       console.error('Fetch error:', error);
       if(loadingEl) {
-        // 4. 사용자에게 구체적인 진단 가이드 표시
         loadingEl.innerHTML = `
-          <div style="color:#b91c1c; background:#fef2f2; padding:16px; border-radius:8px; text-align:left; font-size:14px; border:1px solid #fecaca;">
-            <strong style="font-size:16px;">⚠️ 데이터 로드 실패</strong><br/><br/>
-            <strong>오류 내용:</strong> <span style="font-family:monospace; background:#fff; padding:2px 4px; border-radius:4px;">${error.message}</span><br/><br/>
-            <strong>[해결 체크리스트]</strong>
-            <ul style="list-style-type:disc; margin-left:20px; margin-top:8px; line-height:1.6;">
-              <li><strong>1순위:</strong> 스프레드시트 하단의 시트(탭) 이름이 정확히 <code style="background:#e5e7eb; padding:2px 4px; border-radius:4px;">landscape</code> (모두 소문자)인지 확인하세요. (예: "Landscape", "Sheet1" 불가)</li>
-              <li><strong>2순위:</strong> 데이터가 A2행부터 시작하는지 확인하세요. (1행은 제목)</li>
-              <li><strong>3순위:</strong> Apps Script에서 수정 후 <strong>[배포] > [새 버전]</strong>으로 다시 배포했는지 확인하세요.</li>
-            </ul>
+          <div style="color:#991b1b; background:#fee2e2; padding:20px; border-radius:12px; text-align:left; border:2px solid #f87171; font-family: monospace; white-space: pre-wrap; overflow-x: auto;">
+            <h3 style="font-weight:bold; font-size:1.2rem; margin-bottom:10px;">⚠️ 진단 결과 (Diagnostic Result)</h3>
+            <p style="margin-bottom:10px;"><strong>오류 메시지:</strong> ${error.message}</p>
+            <hr style="border-color:#fca5a5; margin:10px 0;">
+            <p><strong>[해결 가이드]</strong></p>
+            1. 만약 <strong>"Sign in"</strong>이나 <strong>"Google Accounts"</strong>가 보이면: 배포 설정에서 <strong>'모든 사용자(Anyone)'</strong>가 아닙니다.<br>
+            2. 만약 <strong>"Sheet not found"</strong>가 보이면: 시트 이름 <strong>"landscape"</strong> 오타입니다.<br>
+            3. 만약 <strong>"ScriptError"</strong>가 보이면: <strong>[배포 관리] -> [수정] -> [새 버전]</strong> 선택 후 배포를 안 한 것입니다.
           </div>
         `;
       }
