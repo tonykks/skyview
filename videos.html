@@ -148,8 +148,8 @@
   <!-- Main Video Grid -->
   <div id="videos" class="text-center py-6">
     <h2 class="video-section-title">16:9 Videos</h2>
-    <!-- Loading State -->
-    <div id="loading" class="text-gray-500 mb-4 font-bold">Loading videos...</div>
+    <!-- Loading State with more space for debug info -->
+    <div id="loading" class="text-gray-500 mb-4 font-bold max-w-2xl mx-auto px-4">Loading videos...</div>
     <div id="videos-container" class="grid"></div>
   </div>
 
@@ -173,7 +173,7 @@
 <script>
   /**
    * [설정] Google Apps Script 배포 URL
-   * 주인님께서 제공하신 URL입니다.
+   * 주인님께서 제공하신 URL을 사용합니다.
    */
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec"; 
 
@@ -265,34 +265,53 @@
   }
 
   /**
-   * Fetch Data from Google Spreadsheet
+   * Fetch Data from Google Spreadsheet (Modified for Robust Error Handling)
+   * 변경점: JSON 파싱 실패 시 서버가 보낸 원본 텍스트(HTML 에러 등)를 보여줌
    */
   async function loadVideos() {
     const loadingEl = document.getElementById('loading');
     try {
       const response = await fetch(SCRIPT_URL);
       
+      // 1. HTTP 상태 코드 확인
       if (!response.ok) {
-        throw new Error(`Server returned ${response.status}`);
+        throw new Error(`HTTP Error: ${response.status}`);
+      }
+
+      // 2. 텍스트로 먼저 받기 (JSON 파싱 에러를 잡기 위해)
+      const text = await response.text();
+      let data;
+      
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        // 3. JSON 파싱 실패 시 = 서버 스크립트 에러 (HTML 리턴됨)
+        // 에러 내용의 앞부분만 잘라서 보여줌
+        const errorSnippet = text.length > 200 ? text.substring(0, 200) + "..." : text;
+        throw new Error(`서버 응답이 JSON이 아닙니다 (스크립트 에러 가능성): ${errorSnippet.replace(/</g, '&lt;')}`);
       }
       
-      const data = await response.json();
-      
       if(!data || data.length === 0) {
-        if(loadingEl) loadingEl.textContent = '데이터가 없습니다. 스프레드시트를 확인해주세요.';
+        if(loadingEl) loadingEl.textContent = '데이터가 비어있습니다. 스프레드시트의 "landscape" 시트에 데이터가 있는지 확인해주세요.';
         return;
       }
 
       render(data, 'videos-container');
       
     } catch (error) {
-      console.error('Failed to fetch videos:', error);
+      console.error('Fetch error:', error);
       if(loadingEl) {
+        // 4. 사용자에게 구체적인 진단 가이드 표시
         loadingEl.innerHTML = `
-          <div style="color:red; background:#fee; padding:10px; border-radius:8px;">
-            ⚠️ <strong>데이터 로드 실패</strong><br/>
-            Google Apps Script 배포 설정에서 <strong>'모든 사용자(Anyone)'</strong> 접근 권한이 설정되었는지 확인해주세요.<br/>
-            설정이 올바르다면 GitHub Pages에 업로드 시 정상 작동합니다.
+          <div style="color:#b91c1c; background:#fef2f2; padding:16px; border-radius:8px; text-align:left; font-size:14px; border:1px solid #fecaca;">
+            <strong style="font-size:16px;">⚠️ 데이터 로드 실패</strong><br/><br/>
+            <strong>오류 내용:</strong> <span style="font-family:monospace; background:#fff; padding:2px 4px; border-radius:4px;">${error.message}</span><br/><br/>
+            <strong>[해결 체크리스트]</strong>
+            <ul style="list-style-type:disc; margin-left:20px; margin-top:8px; line-height:1.6;">
+              <li><strong>1순위:</strong> 스프레드시트 하단의 시트(탭) 이름이 정확히 <code style="background:#e5e7eb; padding:2px 4px; border-radius:4px;">landscape</code> (모두 소문자)인지 확인하세요. (예: "Landscape", "Sheet1" 불가)</li>
+              <li><strong>2순위:</strong> 데이터가 A2행부터 시작하는지 확인하세요. (1행은 제목)</li>
+              <li><strong>3순위:</strong> Apps Script에서 수정 후 <strong>[배포] > [새 버전]</strong>으로 다시 배포했는지 확인하세요.</li>
+            </ul>
           </div>
         `;
       }
