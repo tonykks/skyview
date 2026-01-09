@@ -4,76 +4,81 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tony's SkyView Portfolio - 9:16 Shorts</title>
-<!-- Tailwind CSS -->
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<!-- Google Fonts (Inter) -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  /* * Design System Variables */
-  :root{ 
-    --brand-dark:#1f3556; 
-    --brand:#2b5aa6; 
-    --brand-hover:#234b8b; 
-    --accent:#7b1fa2;
-    --card-bg:#ffffff; 
-    --page-bg:#f2f2f2; 
-    --text:#111827; 
-    --muted:#6b7280; 
-  }
-  
-  /* Dark Mode Support */
-  @media (prefers-color-scheme: dark){
-    :root{ 
-      --card-bg:#111827; 
-      --page-bg:#0b1220; 
-      --text:#e5e7eb; 
-      --muted:#9ca3af;
-      --brand-dark:#162640; 
-      --brand:#2b5aa6; 
-      --brand-hover:#234b8b; 
-      --accent:#8b5cf6; 
+
+<!-- Tailwind CSS (CDN - Latest) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Pretendard & Inter Fonts -->
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+<!-- Preload banner images (Performance Optimization) -->
+<link rel="preload" as="image" href="./images/songak.png">
+<link rel="preload" as="image" href="./images/sanbang.png">
+<link rel="preload" as="image" href="./images/sanbangsan.jpg">
+<link rel="preload" as="image" href="./images/baksu.png">
+<link rel="preload" as="image" href="./images/tiger.png">
+<link rel="preload" as="image" href="./images/sup.png">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            dark: '#1f3556',
+            DEFAULT: '#2b5aa6',
+            hover: '#234b8b',
+          },
+          accent: '#7b1fa2',
+          page: '#f2f2f2',
+          card: '#ffffff',
+          primary: "#16A34A",
+          ink: "#1F2933",
+          warm: "#FFFBEA",
+        },
+        fontFamily: {
+          sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        }
+      }
     }
   }
+</script>
 
-  body{ font-family:'Inter',sans-serif; background:var(--page-bg); color:var(--text); }
-  
-  /* Header Section */
-  .header{
-    background-image:url('https://yt3.googleusercontent.com/JHTHRsm3_keOY7f6dLzgDkG7e_olnUvd9Nd0hNfcCbGDScdnOyKDFmuaARWFX05zWaPjwjsAJw=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj');
-    background-size:cover;
-    background-position:center;
-    height:250px;
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:48px;
-    font-weight:900;
-    text-align:center;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+<style>
+  :root{ --text:#111827; --muted:#6b7280; }
+  @media (prefers-color-scheme: dark){
+    :root{ --text:#e5e7eb; --muted:#9ca3af; }
+    body { background-color: #0b1220; color: #e5e7eb; }
   }
+
+  body{ font-family:'Pretendard', sans-serif; background-color: #f2f2f2; color: var(--text); line-height: 1.6; word-break: keep-all; }
   
-  /* Navigation */
-  .navbar{ background:var(--brand-dark); }
-  .nav-btn{
-    background:var(--brand); 
-    color:#fff; 
-    border:none; 
-    padding:10px 20px; 
-    margin:0 5px; 
-    border-radius:8px;
-    text-decoration:none; 
-    font-size:14px; 
-    transition:background .25s ease;
-    min-width:110px;
-    text-align:center;
-    display:inline-block;
+  /* [Slider Styles] */
+  .slider-transition { transition: transform 1s ease-in-out; }
+  .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,.55); }
+  
+  /* [Navigation] */
+  .navbar { background-color: #1f3556; }
+  .nav-btn {
+    background-color: #2b5aa6;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color .25s ease;
+    min-width: 110px;
+    text-align: center;
+    display: inline-block;
   }
-  .nav-btn:hover{ background:var(--brand-hover); }
+  .nav-btn:hover { background-color: #234b8b; }
   
   /* Intro Banner */
   .intro{
-    background: linear-gradient(90deg, var(--brand), var(--accent));
+    background: linear-gradient(90deg, #2b5aa6, #7b1fa2);
     color: #ffffff;
     font-size: 1.25rem;
     font-weight: 700;
@@ -87,50 +92,67 @@
     border: 0;
   }
   
-  .video-section-title{ color:var(--brand-dark); font-size:2rem; font-weight:800; margin-bottom:1rem; }
+  .video-section-title{ color: #1f3556; font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
   @media (prefers-color-scheme:dark){ .video-section-title{ color:#cbd5e1; } }
   
-  /* Grid Layout for Shorts (Vertical Cards) */
-  .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:18px; padding:16px; justify-items:center; }
+  /* Grid Layout */
+  .grid-layout{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:18px; padding:16px; justify-items:center; }
   
   /* Card Component */
-  .card{ width:100%; max-width:180px; background:var(--card-bg); border-radius:14px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.08); transition:transform .25s ease, box-shadow .25s ease; }
-  .card:hover{ transform:translateY(-6px); box-shadow:0 10px 24px rgba(0,0,0,.15);}
+  .video-card{ width:100%; max-width:180px; background-color: #ffffff; border-radius:14px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.08); transition:transform .25s ease, box-shadow .25s ease; }
+  @media (prefers-color-scheme: dark) { .video-card { background-color: #111827; } }
+  .video-card:hover{ transform:translateY(-6px); box-shadow:0 10px 24px rgba(0,0,0,.15);}
   
   .thumb{ position:relative; aspect-ratio:9/16; background:#000; display:block; cursor: pointer; }
   .thumb img{ width:100%; height:100%; object-fit:cover; display:block;}
   .play{ position:absolute; right:10px; bottom:10px; background:rgba(0,0,0,.6); color:#fff; font-size:11px; padding:5px 9px; border-radius:999px;}
   
   .yt{ text-align:center; padding:8px 10px 12px;}
-  .yt a{ color:var(--accent); font-size:.85rem; text-decoration:none;}
+  .yt a{ color: #7b1fa2; font-size:.85rem; text-decoration:none;}
+  @media (prefers-color-scheme: dark) { .yt a { color: #8b5cf6; } }
   .yt a:hover{ text-decoration:underline; }
 
-  /* Contact Modal */
+  /* Modal & Lightbox */
   .modal{ position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; z-index:1000; }
-  .modal-content{ background:var(--card-bg); color:var(--text); padding:2rem; border-radius:.75rem; width:min(92vw,420px); text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.35); }
-  .btn{ background:var(--brand); color:#fff; padding:.6rem 1rem; border-radius:.6rem; }
-  .btn:hover{ background:var(--brand-hover); }
+  .modal-content{ background-color: #ffffff; color: var(--text); padding:2rem; border-radius:.75rem; width:min(92vw,420px); text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.35); }
+  @media (prefers-color-scheme: dark) { .modal-content { background-color: #111827; } }
+  
+  .btn-primary{ background-color: #2b5aa6; color:#fff; padding:.6rem 1rem; border-radius:.6rem; }
+  .btn-primary:hover{ background-color: #234b8b; }
 
-  /* Lightbox (Vertical 9:16 Optimized) */
   .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:1100; padding:24px; }
   .lightbox-inner{ width:min(96vw, calc(90vh * 9 / 16)); }
   .lb-close{ position:absolute; top:16px; right:16px; background:rgba(255,255,255,.15); color:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; }
 
-  /* Responsive Grid Adjustments */
-  @media (min-width:1280px){ .grid{ grid-template-columns:repeat(6,1fr);} }
-  @media (min-width:1024px) and (max-width:1279px){ .grid{ grid-template-columns:repeat(5,1fr);} }
+  @media (min-width:1280px){ .grid-layout{ grid-template-columns:repeat(6,1fr);} }
+  @media (min-width:1024px) and (max-width:1279px){ .grid-layout{ grid-template-columns:repeat(5,1fr);} }
   @media (max-width:768px){
-    .header{ font-size:28px; height:200px;}
     .intro{ width:90%; padding:16px;}
     .navbar{ flex-wrap:wrap; padding:10px;}
     .nav-btn{ margin:5px; padding:8px 12px;}
-    .grid{ grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:12px; }
-    .card{ max-width:45vw; }
+    .grid-layout{ grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:12px; }
+    .video-card{ max-width:45vw; }
   }
 </style>
 </head>
 <body>
-  <div class="header">Tony's SkyView Portfolio</div>
+
+  <!-- HERO / Banner slider -->
+  <header class="relative w-full h-[320px] md:h-[480px] overflow-hidden bg-gray-900">
+    <div id="slider-track"
+         class="absolute inset-y-0 left-0 flex h-full slider-transition">
+      <!-- Images injected via JS below -->
+    </div>
+
+    <!-- overlay -->
+    <div class="absolute inset-0 bg-black/45"></div>
+
+    <!-- Title -->
+    <h1 class="absolute left-1/2 -translate-x-1/2 top-[18%]
+               text-5xl md:text-7xl font-extrabold text-white text-shadow tracking-tight z-20 w-full text-center px-4">
+      Tony's Sky View
+    </h1>
+  </header>
 
   <!-- Navigation Bar -->
   <div class="navbar flex justify-center py-2 shadow-md">
@@ -141,7 +163,7 @@
     <a href="#" class="nav-btn" id="contact-btn">Contact Me</a>
   </div>
 
-  <!-- Motto/Intro -->
+  <!-- Intro -->
   <div class="intro mx-auto my-8 p-6 rounded-xl shadow-lg w-3/5 text-center">
     자유와 행복이 중요한 이유는 그것들이 삶(생존)의 질(質)을 좋게 하고, 
     양질의 삶을 증가시키기 때문이다.
@@ -152,21 +174,20 @@
   <!-- Main Video Grid -->
   <div id="shorts" class="text-center py-6">
     <h2 class="video-section-title">9:16 Shorts</h2>
-    <!-- Simple Loading State -->
     <div id="loading" class="text-gray-500 mb-4 font-bold">Loading shorts...</div>
-    <div id="shorts-container" class="grid"></div>
+    <div id="shorts-container" class="grid-layout"></div>
   </div>
 
-  <!-- Contact Modal -->
+  <!-- Modal -->
   <div id="contact-modal" class="modal" aria-hidden="true">
     <div class="modal-content">
       <h3 class="text-xl font-bold mb-4">Contact Information</h3>
       <p class="text-gray-700 mb-6" style="color:var(--muted)">Email: smile21c@korea.com</p>
-      <button id="close-modal-btn" class="btn">Close</button>
+      <button id="close-modal-btn" class="btn-primary">Close</button>
     </div>
   </div>
 
-  <!-- Lightbox Player -->
+  <!-- Lightbox -->
   <div id="lightbox" class="lightbox" aria-hidden="true">
     <div class="lightbox-inner">
       <button class="lb-close" id="lb-close" aria-label="Close video">Close ✕</button>
@@ -176,14 +197,110 @@
 
 <script>
   /**
-   * [설정] Google Apps Script 배포 URL
-   * 주인님께서 제공하신 URL을 사용합니다.
+   * [Config] Google Apps Script URL
    */
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec"; 
 
   /**
-   * YouTube ID Extraction Logic (Robust)
+   * [Config] Banner Images
+   * 주인님 요청: 6장의 이미지가 모두 롤링되도록 설정
    */
+  const BANNER_IMAGES = [
+    "./images/songak.png",
+    "./images/sanbang.png",
+    "./images/sanbangsan.jpg",
+    "./images/baksu.png",
+    "./images/tiger.png",
+    "./images/sup.png"
+  ];
+  
+  /**
+   * Banner Slider Logic
+   */
+  document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('slider-track');
+    if (!track) return;
+
+    // Use images array from config
+    const imagesToUse = (BANNER_IMAGES && BANNER_IMAGES.length > 0) ? BANNER_IMAGES : [];
+    
+    // Safety check for empty image list
+    if (imagesToUse.length === 0) return;
+
+    // Clone first image for seamless loop
+    const imagesToRender = [...imagesToUse, imagesToUse[0]];
+    
+    // Total slides (including clone)
+    const totalSlides = imagesToUse.length;
+    const slidesWithClone = imagesToRender.length;
+    const slideWidthPercent = 100 / slidesWithClone;
+
+    // Inject images
+    track.innerHTML = imagesToRender.map((src, i) => `
+      <img src="${src}" 
+           class="h-full object-cover flex-shrink-0" 
+           alt="Banner ${i}" 
+           style="width: ${slideWidthPercent}%;"
+           onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/CCCCCC/666666?text=Image+Loading...';"> 
+    `).join('');
+
+    // Slider settings
+    // Set track width
+    track.style.width = `${slidesWithClone * 100}%`;
+    
+    const durationMs = 1000; 
+    const intervalMs = 10000; // 10 seconds
+    let index = 0;
+    let timer = null;
+
+    function goTo(i, withTransition = true) {
+      track.style.transition = withTransition ? `transform ${durationMs}ms ease-in-out` : 'none';
+      // Move by index * (100 / slidesWithClone)%
+      track.style.transform = `translateX(-${i * slideWidthPercent}%)`;
+    }
+
+    function scheduleNext() {
+      clearTimeout(timer);
+      timer = setTimeout(nextSlide, intervalMs);
+    }
+
+    function nextSlide() {
+      index += 1;
+      goTo(index, true);
+
+      if (index === totalSlides) {
+        const onEnd = (e) => {
+          if (e.propertyName !== 'transform') return;
+          track.removeEventListener('transitionend', onEnd);
+
+          index = 0;
+          goTo(index, false);
+
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              track.style.transition = `transform ${durationMs}ms ease-in-out`;
+            });
+          });
+
+          scheduleNext();
+        };
+        track.addEventListener('transitionend', onEnd);
+      } else {
+        scheduleNext();
+      }
+    }
+
+    goTo(0, false);
+    scheduleNext();
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clearTimeout(timer);
+      else scheduleNext();
+    });
+  });
+
+  // --- YouTube Data Loading Logic (Existing) ---
+  
   function getId(url){
     if(!url) return null;
     try{
@@ -202,13 +319,12 @@
     return null;
   }
 
-  // Lightbox DOM Elements
   const lb = document.getElementById('lightbox');
   const lbClose = document.getElementById('lb-close');
   const lbTarget = document.getElementById('lb-target');
 
   function openLB(id){
-    lbTarget.innerHTML = `<iframe title="YouTube Shorts player" style="width:100%;aspect-ratio:9/16;border:0;border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    lbTarget.innerHTML = `<iframe title="Shorts player" style="width:100%;aspect-ratio:9/16;border:0;border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
     lb.style.display='flex'; 
     lb.setAttribute('aria-hidden','false');
   }
@@ -223,20 +339,13 @@
   lb.addEventListener('click', e=>{ if(e.target===lb) closeLB(); });
   window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLB(); });
 
-  /**
-   * Render List Logic for Shorts
-   */
   function render(list, containerId){
     const el=document.getElementById(containerId); 
     const loadingEl = document.getElementById('loading');
-    
     if(!el) return;
-    
-    // Clear loading message
     if(loadingEl) loadingEl.style.display = 'none';
     el.innerHTML = ''; 
 
-    // Sort by date descending
     list.sort((a,b)=> new Date(b.date)-new Date(a.date));
     
     list.forEach(v=>{
@@ -244,56 +353,37 @@
       if(!id) return; 
       
       const card=document.createElement('div'); 
-      card.className='card'; 
+      card.className='video-card'; 
       card.setAttribute('role','button'); 
       card.tabIndex=0;
-      
       card.innerHTML=`
         <a class="thumb"><img loading="lazy" src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="${v.title} 썸네일"><span class="play">Play</span></a>
         <div class="yt"><a href="${v.url}" target="_blank" rel="noopener">[유튜브 바로가기]</a></div>
       `;
-      
       const act=(e)=>{ 
         const isYt = e.target.closest('.yt'); 
         if(!isYt){ openLB(id); } 
       };
       card.addEventListener('click', act);
-      card.addEventListener('keydown', e=>{ 
-        if(e.key==='Enter'||e.key===' '){ 
-          e.preventDefault(); 
-          openLB(id); 
-        }
-      });
+      card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLB(id); } });
       el.appendChild(card);
     });
   }
 
-  /**
-   * Fetch Data from Google Spreadsheet (Shorts Sheet)
-   * 요청 시 '?sheet=shorts' 파라미터를 추가하여 구별합니다.
-   */
   async function loadShorts() {
     const loadingEl = document.getElementById('loading');
     try {
-      // * KEY POINT: Add query parameter to request specific sheet
       const response = await fetch(SCRIPT_URL + "?sheet=shorts", {
         method: 'GET',
         redirect: 'follow'
       });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP Error Status: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
       const data = await response.json();
-      
       if(!data || !Array.isArray(data) || data.length === 0) {
         if(loadingEl) loadingEl.textContent = 'No shorts found.';
         return;
       }
-
       render(data, 'shorts-container');
-      
     } catch (error) {
       console.error('Fetch error:', error);
       if(loadingEl) {
@@ -303,10 +393,8 @@
     }
   }
 
-  // Execution
   loadShorts();
 
-  // Modal Interaction Logic
   const contactBtn=document.getElementById('contact-btn');
   const contactModal=document.getElementById('contact-modal');
   const closeModalBtn=document.getElementById('close-modal-btn');
@@ -329,7 +417,6 @@
     });
   }
 
-  // Helper: Open External Links
   document.addEventListener('click', (e)=>{
     const link = e.target.closest('.yt a');
     if(!link) return;
@@ -342,4 +429,3 @@
 </script>
 </body>
 </html>
-
