@@ -4,16 +4,40 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tony's SkyView Portfolio - 9:16 Shorts</title>
+<!-- Tailwind CSS -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<!-- Google Fonts (Inter) -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root{ --brand-dark:#1f3556; --brand:#2b5aa6; --brand-hover:#234b8b; --accent:#7b1fa2;
-         --card-bg:#ffffff; --page-bg:#f2f2f2; --text:#111827; --muted:#6b7280; }
-  @media (prefers-color-scheme: dark){
-    :root{ --card-bg:#111827; --page-bg:#0b1220; --text:#e5e7eb; --muted:#9ca3af;
-           --brand-dark:#162640; --brand:#2b5aa6; --brand-hover:#234b8b; --accent:#8b5cf6; }
+  /* * Design System Variables */
+  :root{ 
+    --brand-dark:#1f3556; 
+    --brand:#2b5aa6; 
+    --brand-hover:#234b8b; 
+    --accent:#7b1fa2;
+    --card-bg:#ffffff; 
+    --page-bg:#f2f2f2; 
+    --text:#111827; 
+    --muted:#6b7280; 
   }
+  
+  /* Dark Mode Support */
+  @media (prefers-color-scheme: dark){
+    :root{ 
+      --card-bg:#111827; 
+      --page-bg:#0b1220; 
+      --text:#e5e7eb; 
+      --muted:#9ca3af;
+      --brand-dark:#162640; 
+      --brand:#2b5aa6; 
+      --brand-hover:#234b8b; 
+      --accent:#8b5cf6; 
+    }
+  }
+
   body{ font-family:'Inter',sans-serif; background:var(--page-bg); color:var(--text); }
+  
+  /* Header Section */
   .header{
     background-image:url('https://yt3.googleusercontent.com/JHTHRsm3_keOY7f6dLzgDkG7e_olnUvd9Nd0hNfcCbGDScdnOyKDFmuaARWFX05zWaPjwjsAJw=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj');
     background-size:cover;
@@ -23,13 +47,13 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:48px;       /* 크고 선명하게 */
-    font-weight:900;      /* Extra Bold */
+    font-size:48px;
+    font-weight:900;
     text-align:center;
-
-    /* 깔끔한 강조: 그림자만 적용, 외곽선 없음 */
     text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
   }
+  
+  /* Navigation */
   .navbar{ background:var(--brand-dark); }
   .nav-btn{
     background:var(--brand); 
@@ -41,66 +65,65 @@
     text-decoration:none; 
     font-size:14px; 
     transition:background .25s ease;
-    min-width:110px;         /* 버튼 최소 너비 고정 */
-    text-align:center;       /* 글자 중앙 정렬 */
+    min-width:110px;
+    text-align:center;
     display:inline-block;
   }
   .nav-btn:hover{ background:var(--brand-hover); }
-    .intro{
-    /* 배경을 더 선명한 그라데이션으로 */
-    background: linear-gradient(90deg, var(--brand), var(--accent));
-
-    /* 글자 가독성 강화 */
-    color: #ffffff;
-    font-size: 1.25rem;   /* 20px 정도: 기존보다 크게 */
-    font-weight: 700;     /* 굵게 */
-    line-height: 1.8;     /* 줄 간격 넉넉하게 */
-
-    /* 박스 자체를 카드처럼 돋보이게 */
-    padding: 1.5rem;      /* 안쪽 여백(HTML의 p-6과 동일, 중복되어도 괜찮습니다) */
-    border-radius: 12px;  /* 둥근 모서리 */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
   
-    /* 레이아웃(HTML의 유틸 클래스를 보완/강화) */
+  /* Intro Banner */
+  .intro{
+    background: linear-gradient(90deg, var(--brand), var(--accent));
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.8;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
     text-align: center;
     max-width: 70%;
     margin: 2rem auto;
-  
-    /* 좌측 보더는 제거(깔끔하게) */
     border: 0;
   }
+  
   .video-section-title{ color:var(--brand-dark); font-size:2rem; font-weight:800; margin-bottom:1rem; }
   @media (prefers-color-scheme:dark){ .video-section-title{ color:#cbd5e1; } }
-
+  
+  /* Grid Layout for Shorts (Vertical Cards) */
   .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:18px; padding:16px; justify-items:center; }
+  
+  /* Card Component */
   .card{ width:100%; max-width:180px; background:var(--card-bg); border-radius:14px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.08); transition:transform .25s ease, box-shadow .25s ease; }
   .card:hover{ transform:translateY(-6px); box-shadow:0 10px 24px rgba(0,0,0,.15);}
-  .thumb{ position:relative; aspect-ratio:9/16; background:#000; display:block; }
-  .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .play{ position:absolute; right:10px; bottom:10px; background:rgba(0,0,0,.6); color:#fff; font-size:11px; padding:5px 9px; border-radius:999px; }
-  .yt{ text-align:center; padding:8px 10px 12px; }
-  .yt a{ color:var(--accent); font-size:.85rem; text-decoration:none; }
+  
+  .thumb{ position:relative; aspect-ratio:9/16; background:#000; display:block; cursor: pointer; }
+  .thumb img{ width:100%; height:100%; object-fit:cover; display:block;}
+  .play{ position:absolute; right:10px; bottom:10px; background:rgba(0,0,0,.6); color:#fff; font-size:11px; padding:5px 9px; border-radius:999px;}
+  
+  .yt{ text-align:center; padding:8px 10px 12px;}
+  .yt a{ color:var(--accent); font-size:.85rem; text-decoration:none;}
   .yt a:hover{ text-decoration:underline; }
 
-  /* 연락 모달 */
+  /* Contact Modal */
   .modal{ position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; z-index:1000; }
   .modal-content{ background:var(--card-bg); color:var(--text); padding:2rem; border-radius:.75rem; width:min(92vw,420px); text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.35); }
   .btn{ background:var(--brand); color:#fff; padding:.6rem 1rem; border-radius:.6rem; }
   .btn:hover{ background:var(--brand-hover); }
 
-  /* 라이트박스 */
+  /* Lightbox (Vertical 9:16 Optimized) */
   .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:1100; padding:24px; }
-  /* 수정된 부분: 항상 화면 안에 들어오도록 크기 제한 */
   .lightbox-inner{ width:min(96vw, calc(90vh * 9 / 16)); }
   .lb-close{ position:absolute; top:16px; right:16px; background:rgba(255,255,255,.15); color:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; }
 
+  /* Responsive Grid Adjustments */
   @media (min-width:1280px){ .grid{ grid-template-columns:repeat(6,1fr);} }
   @media (min-width:1024px) and (max-width:1279px){ .grid{ grid-template-columns:repeat(5,1fr);} }
   @media (max-width:768px){
-    .header{ font-size:28px; height:200px; }
-    .intro{ width:90%; padding:16px; }
-    .navbar{ flex-wrap:wrap; padding:10px; }
-    .nav-btn{ margin:5px; padding:8px 12px; }
+    .header{ font-size:28px; height:200px;}
+    .intro{ width:90%; padding:16px;}
+    .navbar{ flex-wrap:wrap; padding:10px;}
+    .nav-btn{ margin:5px; padding:8px 12px;}
     .grid{ grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:12px; }
     .card{ max-width:45vw; }
   }
@@ -109,16 +132,17 @@
 <body>
   <div class="header">Tony's SkyView Portfolio</div>
 
-  <!-- Nav -->
-<div class="navbar flex justify-center py-2 shadow-md">
-  <a href="index.html" class="nav-btn">Home</a>
-  <a href="videos.html" class="nav-btn">Videos</a>
-  <a href="shorts.html" class="nav-btn">Shorts</a>
-  <a href="word_card.html" class="nav-btn">English</a>
-  <a href="https://smile21c.notion.site/my-profile" class="nav-btn" target="_blank" rel="noopener">About Me</a>
-  <a href="#" class="nav-btn" id="contact-btn">Contact Me</a>
-</div>
+  <!-- Navigation Bar -->
+  <div class="navbar flex justify-center py-2 shadow-md">
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="videos.html" class="nav-btn">Videos</a>
+    <a href="shorts.html" class="nav-btn">Shorts</a>
+    <a href="word_card.html" class="nav-btn">English</a>
+    <a href="https://smile21c.notion.site/my-profile" class="nav-btn" target="_blank" rel="noopener">About Me</a>
+    <a href="#" class="nav-btn" id="contact-btn">Contact Me</a>
+  </div>
 
+  <!-- Motto/Intro -->
   <div class="intro mx-auto my-8 p-6 rounded-xl shadow-lg w-3/5 text-center">
     자유와 행복이 중요한 이유는 그것들이 삶(생존)의 질(質)을 좋게 하고, 
     양질의 삶을 증가시키기 때문이다.
@@ -126,8 +150,11 @@
 
   <hr class="border-t-2 border-gray-300 my-8 w-4/5 mx-auto">
 
+  <!-- Main Video Grid -->
   <div id="shorts" class="text-center py-6">
     <h2 class="video-section-title">9:16 Shorts</h2>
+    <!-- Simple Loading State -->
+    <div id="loading" class="text-gray-500 mb-4 font-bold">Loading shorts...</div>
     <div id="shorts-container" class="grid"></div>
   </div>
 
@@ -149,54 +176,17 @@
   </div>
 
 <script>
-  // 원본 데이터(그대로)
-  const shorts9_16Data = `
-2025-09-01 | 제주 서쪽 끝, 당산봉 · 화산재 들판과 바다의 풍경 | https://youtube.com/shorts/KhXbO2nAg4U 
-2025-08-23 | 차귀도의 바위, 제주를 지키는 이야기 | https://www.youtube.com/watch?v=acf6hH2hiz4
-2025-08-21 | 범섬의 항문굴과 콧구멍굴: 드디어 담아낸 순간 | https://www.youtube.com/watch?v=ydfu3b079_g
-2025-08-20 | 와도(臥島): 차귀도 곁에 잠든 작은 섬 | https://www.youtube.com/watch?v=RwNmtBAZwik
-2025-08-12 | 어머니의 고향, 저지오름 | https://www.youtube.com/watch?v=4VP27WbwbWw
-2025-08-10 | 범섬아~, 다음에는 햇살 아래서 만나요~~ | https://www.youtube.com/watch?v=eXtKhu-ZgoI
-2025-08-01 | 송악산 빛과 그림자 – 우리는 무엇을 남길 것인가? | https://www.youtube.com/watch?v=LNRCvbfgwIs
-2025-07-31 | 소나무 많은 송악산 - 전설이 스며든 오름 | https://www.youtube.com/watch?v=Z-8VEY_V_a8
-2025-07-26 | 섶섬 - 시간과 인내로 깎은 美 | https://www.youtube.com/watch?v=gRbIelzHecU
-2025-07-24 | 차귀도 바다 위의 전설 | https://www.youtube.com/watch?v=A0eyvMbWcls
-2025-07-21 | 사람 없는 절벽  새들만의 쉼터 - 생이기정 | https://www.youtube.com/watch?v=scvQfcK9o9g
-2025-07-21 | 제주 차귀도 앞 전설의 눈빛을 마주하다: 매바위 - STILL WATCHING. STILL JUDGING. | https://www.youtube.com/watch?v=_lfMCfT4a8A
-2025-07-14 | 계곡의 속살을 마주하다 – 드론으로 담은 마지막 숨결 (Nature’s Hidden Heart) | https://www.youtube.com/watch?v=_bOA3CHn0kY
-2025-07-10 | Stone Sentinels – 지하여장군의 침묵 | https://www.youtube.com/watch?v=9bj-wyS2JMI
-2025-07-03 | [붉은 바위의 기억] 전설이 잠든 절벽 용머리해안 | https://www.youtube.com/watch?v=tVMZYwdMtrU
-2025-07-02 | 구름 위의 위로(慰勞) | https://www.youtube.com/watch?v=ckttHWjZttc
-2025-07-01 | 숨겨진 낙원 형제섬 | https://www.youtube.com/watch?v=vyg8zt9efS8
-2025-06-28 | 수월봉 – 속살을 드러낸 화산의 기억 | https://www.youtube.com/watch?v=c9tGH5H9K9I
-2025-06-27 | 외가리 고개를 들다 - 무인도에서 마주한 짧은 순간 | https://www.youtube.com/watch?v=_oWjMnXMf5E
-2025-06-24 | Cliff Breath - Stillness from the Edge | https://www.youtube.com/watch?v=1oln0ELhs6I
-2025-06-22 | 구름 아래 산방산 - Beyond the Clouds I See You | https://www.youtube.com/watch?v=Hg_DC2QGAZE
-2025-06-21 | 산방산 – 전설을 품은 절벽 | https://www.youtube.com/watch?v=lzlZKoB1cY
-2025-06-16 | 소가 누운 곳 쇠소깍 | https://www.youtube.com/watch?v=9BMFMOwfFto
-2025-06-12 | Sunset Memoir - 차귀도 위 붉게 스며든 빛의 한순간 #drone | https://www.youtube.com/watch?v=daAeWldst8Q
-2025-06-12 | Sunset Memoir - 차귀도 위 붉게 스며든 빛의 한순간 | https://www.youtube.com/watch?v=TsFVAozwRws
-2025-06-11 | 나를 부르는 범섬(虎島) | https://www.youtube.com/watch?v=CumZMaWmGOk
-2025-06-11 | 인연을 잇다(새연교) – A Walk to Remember | https://www.youtube.com/watch?v=GndkeWJq44c
-2025-06-10 | 에메랄드빛 바다 위에 떠오른 작은 금강산 - 섶섬 | https://www.youtube.com/watch?v=Gc1ghH1RYeU
-2025-06-10 | 에메랄드빛 바다 위에 떠오른 작은 금강산 섶섬 | https://www.youtube.com/watch?v=fBgVpjm_Sfs
-2025-06-06 | 고요한 바다 위의 형제섬 - Tony’s Skyview #shorts #drone | https://www.youtube.com/watch?v=OSs3-ZRKbeY
-2025-06-05 | 제주 청보리 섬 감성 드론 여행 | https://www.youtube.com/watch?v=8jlYXSFPn9E
-2025-06-04 | 비양도에서 만나요!(노래 제목) | https://www.youtube.com/watch?v=twgKkAx4S-c
-2025-05-03 | 알뜨르 비행장 - 제주의 아래 평야 전쟁의 흔적을 품은 공간 | https://www.youtube.com/watch?v=eGvqu9QLnGg
-2025-05-01 | 비양도 놀멍 스마트폰용 | https://www.youtube.com/watch?v=1ZaeiPeqmEk
-2025-05-01 | 비양도의 놀멍_스마트폰용 | https://www.youtube.com/watch?v=eHGIAB0T8Do
-2025-05-01 | 한림항에서 본 노을 | https://www.youtube.com/watch?v=_Aq35VxUq1c`;
+  /**
+   * [설정] Google Apps Script 배포 URL
+   * 주인님께서 제공하신 URL을 사용합니다.
+   */
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec"; 
 
-  function parseVideoData(s){
-    return s.trim().split('\n').map(line=>{
-      const p=line.split(' | '); if(p.length!==3) return null;
-      return {date:p[0].trim(), title:p[1].trim(), url:p[2].trim()};
-    }).filter(Boolean);
-  }
-
-  // ✅ 견고한 ID 추출
+  /**
+   * YouTube ID Extraction Logic (Robust)
+   */
   function getId(url){
+    if(!url) return null;
     try{
       const u = new URL(url);
       const v = u.searchParams.get('v');
@@ -213,53 +203,134 @@
     return null;
   }
 
-  // Lightbox
-  const lb=document.getElementById('lightbox');
-  const lbClose=document.getElementById('lb-close');
-  const lbTarget=document.getElementById('lb-target');
+  // Lightbox DOM Elements
+  const lb = document.getElementById('lightbox');
+  const lbClose = document.getElementById('lb-close');
+  const lbTarget = document.getElementById('lb-target');
 
-  // (수정 1) index.html과 동일 정책: 자동재생+무음+인라인
   function openLB(id){
-    lbTarget.innerHTML=`<iframe title="YouTube Shorts player" style="width:100%;aspect-ratio:9/16;border:0;border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-    lb.style.display='flex'; lb.setAttribute('aria-hidden','false');
+    lbTarget.innerHTML = `<iframe title="YouTube Shorts player" style="width:100%;aspect-ratio:9/16;border:0;border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    lb.style.display='flex'; 
+    lb.setAttribute('aria-hidden','false');
   }
-  function closeLB(){ lb.style.display='none'; lb.setAttribute('aria-hidden','true'); lbTarget.innerHTML=''; }
-  lbClose.addEventListener('click',closeLB);
-  lb.addEventListener('click',e=>{ if(e.target===lb) closeLB(); });
-  window.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLB(); });
 
+  function closeLB(){ 
+    lb.style.display='none'; 
+    lb.setAttribute('aria-hidden','true'); 
+    lbTarget.innerHTML=''; 
+  }
+
+  lbClose.addEventListener('click', closeLB);
+  lb.addEventListener('click', e=>{ if(e.target===lb) closeLB(); });
+  window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLB(); });
+
+  /**
+   * Render List Logic for Shorts
+   */
   function render(list, containerId){
-    const el=document.getElementById(containerId); if(!el) return;
+    const el=document.getElementById(containerId); 
+    const loadingEl = document.getElementById('loading');
+    
+    if(!el) return;
+    
+    // Clear loading message
+    if(loadingEl) loadingEl.style.display = 'none';
+    el.innerHTML = ''; 
+
+    // Sort by date descending
     list.sort((a,b)=> new Date(b.date)-new Date(a.date));
+    
     list.forEach(v=>{
-      const id=getId(v.url); if(!id) return;
-      const card=document.createElement('div'); card.className='card'; card.setAttribute('role','button'); card.tabIndex=0;
+      const id=getId(v.url); 
+      if(!id) return; 
+      
+      const card=document.createElement('div'); 
+      card.className='card'; 
+      card.setAttribute('role','button'); 
+      card.tabIndex=0;
+      
       card.innerHTML=`
         <a class="thumb"><img loading="lazy" src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="${v.title} 썸네일"><span class="play">Play</span></a>
         <div class="yt"><a href="${v.url}" target="_blank" rel="noopener">[유튜브 바로가기]</a></div>
       `;
-      // (수정 2-1) yt 영역 클릭 시 라이트박스 열지 않음(소리 겹침 방지)
-      const act=(e)=>{ const isYt = e.target.closest('.yt'); if(!isYt){ openLB(id); } };
-      card.addEventListener('click',act);
-      card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLB(id); }});
+      
+      const act=(e)=>{ 
+        const isYt = e.target.closest('.yt'); 
+        if(!isYt){ openLB(id); } 
+      };
+      card.addEventListener('click', act);
+      card.addEventListener('keydown', e=>{ 
+        if(e.key==='Enter'||e.key===' '){ 
+          e.preventDefault(); 
+          openLB(id); 
+        }
+      });
       el.appendChild(card);
     });
   }
 
-  const parsed=parseVideoData(shorts9_16Data);
-  render(parsed,'shorts-container');
+  /**
+   * Fetch Data from Google Spreadsheet (Shorts Sheet)
+   * 요청 시 '?sheet=shorts' 파라미터를 추가하여 구별합니다.
+   */
+  async function loadShorts() {
+    const loadingEl = document.getElementById('loading');
+    try {
+      // * KEY POINT: Add query parameter to request specific sheet
+      const response = await fetch(SCRIPT_URL + "?sheet=shorts", {
+        method: 'GET',
+        redirect: 'follow'
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP Error Status: ${response.status}`);
+      }
 
-  // 연락 모달
+      const data = await response.json();
+      
+      if(!data || !Array.isArray(data) || data.length === 0) {
+        if(loadingEl) loadingEl.textContent = 'No shorts found.';
+        return;
+      }
+
+      render(data, 'shorts-container');
+      
+    } catch (error) {
+      console.error('Fetch error:', error);
+      if(loadingEl) {
+        loadingEl.textContent = 'Failed to load shorts. Please try again later.';
+        loadingEl.style.color = '#ef4444'; 
+      }
+    }
+  }
+
+  // Execution
+  loadShorts();
+
+  // Modal Interaction Logic
   const contactBtn=document.getElementById('contact-btn');
   const contactModal=document.getElementById('contact-modal');
   const closeModalBtn=document.getElementById('close-modal-btn');
+  
   if(contactBtn && contactModal && closeModalBtn){
-    contactBtn.addEventListener('click',e=>{ e.preventDefault(); contactModal.style.display='flex'; contactModal.setAttribute('aria-hidden','false');});
-    closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; contactModal.setAttribute('aria-hidden','true');});
-    contactModal.addEventListener('click',e=>{ if(e.target===contactModal){ contactModal.style.display='none'; contactModal.setAttribute('aria-hidden','true');}});
+    contactBtn.addEventListener('click',e=>{ 
+      e.preventDefault(); 
+      contactModal.style.display='flex'; 
+      contactModal.setAttribute('aria-hidden','false');
+    });
+    closeModalBtn.addEventListener('click',()=>{ 
+      contactModal.style.display='none'; 
+      contactModal.setAttribute('aria-hidden','true');
+    });
+    contactModal.addEventListener('click',e=>{ 
+      if(e.target===contactModal){ 
+        contactModal.style.display='none'; 
+        contactModal.setAttribute('aria-hidden','true');
+      }
+    });
   }
 
-  // (수정 2-2) [유튜브 바로가기]는 새 창 전체크기로 열기
+  // Helper: Open External Links
   document.addEventListener('click', (e)=>{
     const link = e.target.closest('.yt a');
     if(!link) return;
@@ -272,5 +343,3 @@
 </script>
 </body>
 </html>
-
-
