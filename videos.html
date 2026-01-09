@@ -4,10 +4,47 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tony's SkyView Portfolio - 16:9 Videos</title>
-<!-- Tailwind CSS (Utility Framework) -->
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<!-- Google Fonts (Inter) -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- [중요] Tailwind CSS 최신 버전 (슬라이더 호환용) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Google Fonts (Inter & Pretendard) -->
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+<!-- Preload banner images (Performance Optimization) -->
+<link rel="preload" as="image" href="./images/songak.png">
+<link rel="preload" as="image" href="./images/sanbang.png">
+<link rel="preload" as="image" href="./images/sanbangsan.jpg">
+<link rel="preload" as="image" href="./images/baksu.png">
+<link rel="preload" as="image" href="./images/tiger.png">
+<link rel="preload" as="image" href="./images/sup.png">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            dark: '#1f3556',
+            DEFAULT: '#2b5aa6',
+            hover: '#234b8b',
+          },
+          accent: '#7b1fa2',
+          page: '#f2f2f2',
+          card: '#ffffff',
+          primary: "#16A34A",
+          ink: "#1F2933",
+          warm: "#FFFBEA",
+        },
+        fontFamily: {
+          sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+
 <style>
   /* * Design System Variables */
   :root{ 
@@ -33,27 +70,16 @@
       --brand-hover:#234b8b; 
       --accent:#8b5cf6; 
     }
+    body { background-color: #0b1220; color: #e5e7eb; }
   }
 
-  body{ font-family:'Inter',sans-serif; background:var(--page-bg); color:var(--text); }
+  body{ font-family:'Pretendard', sans-serif; background:var(--page-bg); color:var(--text); line-height: 1.6; word-break: keep-all; }
   
-  /* Header Section */
-  .header{
-    background-image:url('https://yt3.googleusercontent.com/JHTHRsm3_keOY7f6dLzgDkG7e_olnUvd9Nd0hNfcCbGDScdnOyKDFmuaARWFX05zWaPjwjsAJw=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj');
-    background-size:cover;
-    background-position:center;
-    height:250px;
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:48px;
-    font-weight:900;
-    text-align:center;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-  }
+  /* [Slider Styles] 배너 슬라이드 전용 */
+  .slider-transition { transition: transform 1s ease-in-out; }
+  .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,.55); }
   
-  /* Navigation */
+  /* [Navigation] 스타일 */
   .navbar{ background:var(--brand-dark); }
   .nav-btn{
     background:var(--brand); 
@@ -91,11 +117,12 @@
   @media (prefers-color-scheme:dark){ .video-section-title{ color:#cbd5e1; } }
   
   /* Grid Layout for Video Cards */
-  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px; padding:16px; justify-items:center; }
+  .grid-layout{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px; padding:16px; justify-items:center; }
   
   /* Card Component */
-  .card{ width:100%; max-width:320px; background:var(--card-bg); border-radius:14px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.08); transition:transform .25s ease, box-shadow .25s ease; }
-  .card:hover{ transform:translateY(-6px); box-shadow:0 10px 24px rgba(0,0,0,.15);}
+  .video-card{ width:100%; max-width:320px; background:var(--card-bg); border-radius:14px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.08); transition:transform .25s ease, box-shadow .25s ease; }
+  @media (prefers-color-scheme: dark) { .video-card { background-color: #111827; } }
+  .video-card:hover{ transform:translateY(-6px); box-shadow:0 10px 24px rgba(0,0,0,.15);}
   
   .thumb{ position:relative; aspect-ratio:16/9; background:#000; display:block; cursor: pointer; }
   .thumb img{ width:100%; height:100%; object-fit:cover; display:block;}
@@ -103,11 +130,13 @@
   
   .yt{ text-align:center; padding:10px 12px 14px;}
   .yt a{ color:var(--accent); font-size:.9rem; text-decoration:none;}
+  @media (prefers-color-scheme: dark) { .yt a { color: #8b5cf6; } }
   .yt a:hover{ text-decoration:underline; }
 
   /* Contact Modal */
   .modal{ position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; z-index:1000; }
   .modal-content{ background:var(--card-bg); color:var(--text); padding:2rem; border-radius:.75rem; width:min(92vw,420px); text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.35); }
+  @media (prefers-color-scheme: dark) { .modal-content { background-color: #111827; } }
   .btn{ background:var(--brand); color:#fff; padding:.6rem 1rem; border-radius:.6rem; }
   .btn:hover{ background:var(--brand-hover); }
 
@@ -118,15 +147,34 @@
   
   /* Mobile Responsiveness */
   @media (max-width:768px){
-    .header{ font-size:28px; height:200px;}
     .intro{ width:90%; padding:16px;}
     .navbar{ flex-wrap:wrap; padding:10px;}
     .nav-btn{ margin:5px; padding:8px 12px;}
+    .header-title { font-size: 2.5rem !important; }
   }
 </style>
 </head>
 <body>
-  <div class="header">Tony's SkyView Portfolio</div>
+  
+  <!-- 
+    [HERO / Banner Slider] 
+    videos.html에도 동일하게 적용된 롤링 배너
+  -->
+  <header class="relative w-full h-[320px] md:h-[480px] overflow-hidden bg-gray-900">
+    <div id="slider-track"
+         class="absolute inset-y-0 left-0 flex h-full slider-transition">
+      <!-- Images injected via JS below -->
+    </div>
+
+    <!-- overlay -->
+    <div class="absolute inset-0 bg-black/45"></div>
+
+    <!-- Title -->
+    <h1 class="header-title absolute left-1/2 -translate-x-1/2 top-[50%] -translate-y-[50%]
+               text-5xl md:text-7xl font-extrabold text-white text-shadow tracking-tight z-20 w-full text-center px-4">
+      Tony's SkyView Portfolio
+    </h1>
+  </header>
 
   <!-- Navigation Bar -->
   <div class="navbar flex justify-center py-2 shadow-md">
@@ -147,9 +195,9 @@
   <!-- Main Video Grid -->
   <div id="videos" class="text-center py-6">
     <h2 class="video-section-title">16:9 Videos</h2>
-    <!-- Loading State with more space for debug info -->
+    <!-- Loading State -->
     <div id="loading" class="text-gray-500 mb-4 font-bold max-w-2xl mx-auto px-4">Loading videos...</div>
-    <div id="videos-container" class="grid"></div>
+    <div id="videos-container" class="grid-layout"></div>
   </div>
 
   <!-- Contact Modal -->
@@ -171,10 +219,93 @@
 
 <script>
   /**
-   * [설정] Google Apps Script 배포 URL
-   * 주인님께서 제공하신 URL을 사용합니다.
+   * [설정 1] Google Apps Script 배포 URL
    */
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec"; 
+
+  /**
+   * [설정 2] Banner Images
+   */
+  const BANNER_IMAGES = [
+    "./images/songak.png",
+    "./images/sanbang.png",
+    "./images/sanbangsan.jpg",
+    "./images/baksu.png",
+    "./images/tiger.png",
+    "./images/sup.png"
+  ];
+  
+  /**
+   * Banner Slider Logic
+   */
+  document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('slider-track');
+    if (!track) return;
+
+    const imagesToUse = (BANNER_IMAGES && BANNER_IMAGES.length > 0) ? BANNER_IMAGES : [];
+    if (imagesToUse.length === 0) return;
+
+    const imagesToRender = [...imagesToUse, imagesToUse[0]];
+    const totalSlides = imagesToUse.length;
+    const slidesWithClone = imagesToRender.length;
+    const slideWidthPercent = 100 / slidesWithClone;
+
+    track.innerHTML = imagesToRender.map((src, i) => `
+      <img src="${src}" 
+           class="h-full object-cover flex-shrink-0" 
+           alt="Banner ${i}" 
+           style="width: ${slideWidthPercent}%;"
+           onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/CCCCCC/666666?text=Image+Loading...';"> 
+    `).join('');
+
+    track.style.width = `${slidesWithClone * 100}%`;
+    
+    const durationMs = 1000; 
+    const intervalMs = 10000; // 10 seconds
+    let index = 0;
+    let timer = null;
+
+    function goTo(i, withTransition = true) {
+      track.style.transition = withTransition ? `transform ${durationMs}ms ease-in-out` : 'none';
+      track.style.transform = `translateX(-${i * slideWidthPercent}%)`;
+    }
+
+    function scheduleNext() {
+      clearTimeout(timer);
+      timer = setTimeout(nextSlide, intervalMs);
+    }
+
+    function nextSlide() {
+      index += 1;
+      goTo(index, true);
+
+      if (index === totalSlides) {
+        const onEnd = (e) => {
+          if (e.propertyName !== 'transform') return;
+          track.removeEventListener('transitionend', onEnd);
+          index = 0;
+          goTo(index, false);
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              track.style.transition = `transform ${durationMs}ms ease-in-out`;
+            });
+          });
+          scheduleNext();
+        };
+        track.addEventListener('transitionend', onEnd);
+      } else {
+        scheduleNext();
+      }
+    }
+
+    goTo(0, false);
+    scheduleNext();
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clearTimeout(timer);
+      else scheduleNext();
+    });
+  });
 
   /**
    * YouTube ID Extraction Logic
@@ -239,7 +370,7 @@
       if(!id) return; 
       
       const card=document.createElement('div'); 
-      card.className='card'; 
+      card.className='video-card'; 
       card.setAttribute('role','button'); 
       card.tabIndex=0;
       
@@ -264,13 +395,11 @@
   }
 
   /**
-   * Fetch Data from Google Spreadsheet (Diagnostic Mode)
-   * 에러 발생 시 서버가 보낸 원본 텍스트를 화면에 표시하여 원인 파악
+   * Fetch Data from Google Spreadsheet
    */
   async function loadVideos() {
     const loadingEl = document.getElementById('loading');
     try {
-      // 1. Fetch with explicit redirect handling
       const response = await fetch(SCRIPT_URL, {
         method: 'GET',
         redirect: 'follow'
@@ -280,16 +409,12 @@
         throw new Error(`HTTP Error Status: ${response.status}`);
       }
 
-      // 2. Get Raw Text first to inspect
       const text = await response.text();
       let data;
       
-      // 3. Attempt JSON Parsing
       try {
         data = JSON.parse(text);
       } catch (e) {
-        // JSON 파싱 실패는 서버가 HTML(에러페이지/로그인페이지)을 보냈다는 뜻
-        // 화면에 에러 내용을 출력하기 위해 예외 발생
         const previewText = text.length > 400 ? text.substring(0, 400) + "..." : text;
         throw new Error(`서버가 JSON 데이터 대신 다른 메시지를 보냈습니다.\n\n[서버 응답 내용]:\n${previewText.replace(/</g, '&lt;')}`);
       }
@@ -308,11 +433,6 @@
           <div style="color:#991b1b; background:#fee2e2; padding:20px; border-radius:12px; text-align:left; border:2px solid #f87171; font-family: monospace; white-space: pre-wrap; overflow-x: auto;">
             <h3 style="font-weight:bold; font-size:1.2rem; margin-bottom:10px;">⚠️ 진단 결과 (Diagnostic Result)</h3>
             <p style="margin-bottom:10px;"><strong>오류 메시지:</strong> ${error.message}</p>
-            <hr style="border-color:#fca5a5; margin:10px 0;">
-            <p><strong>[해결 가이드]</strong></p>
-            1. 만약 <strong>"Sign in"</strong>이나 <strong>"Google Accounts"</strong>가 보이면: 배포 설정에서 <strong>'모든 사용자(Anyone)'</strong>가 아닙니다.<br>
-            2. 만약 <strong>"Sheet not found"</strong>가 보이면: 시트 이름 <strong>"landscape"</strong> 오타입니다.<br>
-            3. 만약 <strong>"ScriptError"</strong>가 보이면: <strong>[배포 관리] -> [수정] -> [새 버전]</strong> 선택 후 배포를 안 한 것입니다.
           </div>
         `;
       }
@@ -358,4 +478,3 @@
 </script>
 </body>
 </html>
-
