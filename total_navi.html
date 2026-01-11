@@ -8,10 +8,17 @@
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
 <style>
   body{ font-family:'Pretendard', sans-serif; background-color: #f2f2f2; color: #111827; }
-  .navbar { background-color: #1f3556; display: flex; justify-content: center; padding: 10px 0; }
-  .nav-btn { background-color: #2b5aa6; color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; margin: 0 5px; }
-  .nav-btn:hover { background-color: #234b8b; }
   
+  /* Navbar (Consistent) */
+  .navbar-wrapper { background: #1f3556; width: 100%; }
+  .navbar { display: flex; justify-content: center; padding: 10px 0; flex-wrap: wrap; gap: 5px; }
+  .nav-btn {
+    background: #2b5aa6; color: #fff; border: none; padding: 10px 20px; border-radius: 8px;
+    text-decoration: none; font-size: 14px; transition: background .25s ease;
+    min-width: 100px; text-align: center; display: inline-block; cursor: pointer;
+  }
+  .nav-btn:hover { background: #234b8b; }
+
   .container { max-width: 800px; margin: 40px auto; padding: 20px; text-align: center; }
   .index-btn {
     display: inline-block; margin: 8px; padding: 12px 24px;
@@ -24,9 +31,12 @@
 </head>
 <body>
 
-  <div class="navbar">
-    <a href="places.html" class="nav-btn">← Back to Places</a>
-    <a href="index.html" class="nav-btn">Home</a>
+  <!-- Navigation -->
+  <div class="navbar-wrapper">
+    <div class="navbar">
+      <a href="index.html" class="nav-btn">Home</a>
+      <a href="places.html" class="nav-btn">← Back to Places</a>
+    </div>
   </div>
 
   <div class="container">
@@ -44,9 +54,8 @@
     try {
       const res = await fetch(SCRIPT_URL);
       const json = await res.json();
-      const places = json.places || []; // Places 시트의 데이터
+      const places = json.places || []; 
 
-      // 이름만 추출하여 가나다 정렬 (중복 제거)
       const names = [...new Set(places.map(p => p.name))].sort((a, b) => a.localeCompare(b));
 
       const container = document.getElementById('list-container');
