@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tony's SkyView - All Places</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<style>
+  body{ font-family:'Pretendard', sans-serif; background-color: #f2f2f2; color: #111827; }
+  .navbar { background-color: #1f3556; display: flex; justify-content: center; padding: 10px 0; }
+  .nav-btn { background-color: #2b5aa6; color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; margin: 0 5px; }
+  .nav-btn:hover { background-color: #234b8b; }
+  
+  .container { max-width: 800px; margin: 40px auto; padding: 20px; text-align: center; }
+  .index-btn {
+    display: inline-block; margin: 8px; padding: 12px 24px;
+    background: white; border: 1px solid #ddd; border-radius: 12px;
+    color: #333; font-size: 16px; font-weight: 600; text-decoration: none;
+    transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  .index-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 12px rgba(0,0,0,0.1); border-color: #2b5aa6; color: #2b5aa6; }
+</style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="places.html" class="nav-btn">← Back to Places</a>
+    <a href="index.html" class="nav-btn">Home</a>
+  </div>
+
+  <div class="container">
+    <h1 class="text-3xl font-bold mb-2 text-gray-800">모든 장소 보기</h1>
+    <p class="text-gray-500 mb-10">가나다 순으로 정렬되어 있습니다</p>
+    
+    <div id="loading">Loading...</div>
+    <div id="list-container"></div>
+  </div>
+
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec";
+
+  async function load() {
+    try {
+      const res = await fetch(SCRIPT_URL);
+      const json = await res.json();
+      const places = json.places || []; // Places 시트의 데이터
+
+      // 이름만 추출하여 가나다 정렬 (중복 제거)
+      const names = [...new Set(places.map(p => p.name))].sort((a, b) => a.localeCompare(b));
+
+      const container = document.getElementById('list-container');
+      document.getElementById('loading').style.display = 'none';
+
+      names.forEach(name => {
+        const a = document.createElement('a');
+        a.className = 'index-btn';
+        a.innerText = name;
+        a.href = `places.html?place=${encodeURIComponent(name)}`;
+        container.appendChild(a);
+      });
+
+    } catch (e) {
+      document.getElementById('loading').innerText = "로드 실패";
+    }
+  }
+  load();
+</script>
+</body>
+</html>
