@@ -7,11 +7,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="./images/songak.png">
-<link rel="preload" as="image" href="./images/sanbangsan.jpg">
-<link rel="preload" as="image" href="./images/baksu.png">
-<link rel="preload" as="image" href="./images/tiger.png">
-<link rel="preload" as="image" href="./images/sup.png">
 
 <script>
   tailwind.config = {
@@ -33,9 +28,26 @@
   body{ font-family:'Pretendard', sans-serif; background:var(--page-bg); color:var(--text); line-height: 1.6; word-break: keep-all; }
   .slider-transition { transition: transform 1s ease-in-out; }
   .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,.55); }
-  .navbar{ background:var(--brand-dark); }
-  .nav-btn{ background:var(--brand); color:#fff; padding:10px 20px; margin:0 5px; border-radius:8px; text-decoration:none; font-size:14px; transition:background .25s ease; min-width:110px; text-align:center; display:inline-block; }
-  .nav-btn:hover{ background:var(--brand-hover); }
+  
+  /* Navbar (Updated) */
+  .navbar-wrapper { background: var(--brand-dark); width: 100%; }
+  .navbar { display: flex; justify-content: center; padding: 10px 0; flex-wrap: wrap; gap: 5px; }
+  .nav-btn {
+    background: var(--brand); color: #fff; border: none; padding: 10px 20px; border-radius: 8px;
+    text-decoration: none; font-size: 14px; transition: background .25s ease;
+    min-width: 100px; text-align: center; display: inline-block; cursor: pointer;
+  }
+  .nav-btn:hover { background: var(--brand-hover); }
+
+  /* Sub-Navbar (Expandable) */
+  .sub-navbar-container {
+    background-color: #162640; width: 100%; overflow: hidden; max-height: 0; transition: max-height 0.3s ease-out; border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .sub-navbar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 10px 0; }
+  .sub-btn { background: rgba(255,255,255,0.1); color: #ddd; padding: 6px 0; width: 90px; border-radius: 4px; font-size: 13px; text-align: center; text-decoration: none; transition: all 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sub-btn:hover { background: rgba(255,255,255,0.25); color: #fff; }
+  .sub-btn.view-all { background: #7b1fa2; color: white; }
+
   .intro{ background: linear-gradient(90deg, var(--brand), var(--accent)); color: #ffffff; font-size: 1.25rem; font-weight: 700; line-height: 1.8; padding: 1.5rem; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.18); text-align: center; max-width: 70%; margin: 2rem auto; border: 0; }
   .video-section-title{ color:var(--brand-dark); font-size:2rem; font-weight:800; margin-bottom:1rem; }
   @media (prefers-color-scheme:dark){ .video-section-title{ color:#cbd5e1; } }
@@ -58,7 +70,7 @@
   .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:1100; padding:24px; }
   .lightbox-inner{ width:min(96vw,1100px); }
   .lb-close{ position:absolute; top:16px; right:16px; background:rgba(255,255,255,.15); color:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; }
-  @media (max-width:768px){ .intro{ width:90%; padding:16px;} .navbar{ flex-wrap:wrap; padding:10px;} .nav-btn{ margin:5px; padding:8px 12px;} .header-title { font-size: 2.5rem !important; } }
+  @media (max-width:768px){ .intro{ width:90%; padding:16px;} .header-title { font-size: 2.5rem !important; } }
 </style>
 </head>
 <body>
@@ -67,14 +79,24 @@
     <div class="absolute inset-0 bg-black/20"></div>
     <h1 class="header-title absolute left-1/2 -translate-x-1/2 top-[50%] -translate-y-[50%] text-5xl md:text-7xl font-extrabold text-white text-shadow tracking-tight z-20 w-full text-center px-4">Tony's Sky View</h1>
   </header>
-  <div class="navbar flex justify-center py-2 shadow-md">
-    <a href="index.html" class="nav-btn">Home</a>
-    <a href="videos.html" class="nav-btn">Videos</a>
-    <a href="shorts.html" class="nav-btn">Shorts</a>
-    <a href="places.html" class="nav-btn">Places</a>
-    <a href="https://smile21c.notion.site/my-profile" class="nav-btn" target="_blank" rel="noopener">About Me</a>
-    <a href="#" class="nav-btn" id="contact-btn">Contact Me</a>
+
+  <!-- Navigation (Updated) -->
+  <div class="navbar-wrapper">
+    <div class="navbar">
+      <a href="index.html" class="nav-btn">Home</a>
+      <button id="places-toggle-btn" class="nav-btn" onclick="togglePlacesMenu()">Places ▼</button>
+      <a href="videos.html" class="nav-btn">Videos</a>
+      <a href="shorts.html" class="nav-btn">Shorts</a>
+      <a href="https://smile21c.notion.site/my-profile" class="nav-btn" target="_blank" rel="noopener">About Me</a>
+      <button id="contact-btn" class="nav-btn">Contact Me</button>
+    </div>
+    <div id="sub-navbar-container" class="sub-navbar-container">
+      <div id="sub-navbar-content" class="sub-navbar">
+        <span style="color:#aaa; font-size:12px;">Loading places...</span>
+      </div>
+    </div>
   </div>
+
   <div class="intro mx-auto my-8 p-6 rounded-xl shadow-lg w-3/5 text-center">행복은 삶의 질을 좋게 하는 수단이지 결코 그 자체가 목적이 되어서는 안 된다.</div>
   <hr class="border-t-2 border-gray-300 my-8 w-4/5 mx-auto">
   <div id="videos" class="text-center py-6">
@@ -82,6 +104,7 @@
     <div id="loading" class="text-gray-500 mb-4 font-bold max-w-2xl mx-auto px-4">Loading videos...</div>
     <div id="videos-container" class="grid-layout"></div>
   </div>
+
   <div id="contact-modal" class="modal" aria-hidden="true">
     <div class="modal-content">
       <h3 class="text-xl font-bold mb-4">Contact Information</h3>
@@ -95,9 +118,12 @@
       <div id="lb-target"></div>
     </div>
   </div>
+
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec"; 
   const BANNER_IMAGES = ["./images/songak.png", "./images/sanbangsan.jpg", "./images/baksu.png", "./images/tiger.png", "./images/sup.png"];
+  
+  // Banner
   document.addEventListener('DOMContentLoaded', () => {
     const track = document.getElementById('slider-track');
     if (!track) return;
@@ -115,19 +141,46 @@
     function nextSlide() { index += 1; goTo(index, true); if (index === totalSlides) { const onEnd = (e) => { if (e.propertyName !== 'transform') return; track.removeEventListener('transitionend', onEnd); index = 0; goTo(index, false); requestAnimationFrame(() => { requestAnimationFrame(() => { track.style.transition = `transform ${durationMs}ms ease-in-out`; }); }); scheduleNext(); }; track.addEventListener('transitionend', onEnd); } else { scheduleNext(); } }
     goTo(0, false); scheduleNext();
     document.addEventListener('visibilitychange', () => { if (document.hidden) clearTimeout(timer); else scheduleNext(); });
+    loadPlacesForNav();
   });
+
+  // Nav Logic
+  function togglePlacesMenu() {
+    const container = document.getElementById('sub-navbar-container');
+    container.style.maxHeight = (container.style.maxHeight && container.style.maxHeight !== '0px') ? '0px' : '200px';
+  }
+  async function loadPlacesForNav() {
+    const container = document.getElementById('sub-navbar-content');
+    try {
+      let places = [];
+      const cached = sessionStorage.getItem('skyview_places');
+      if (cached) { places = JSON.parse(cached); } else {
+        const res = await fetch(SCRIPT_URL);
+        const json = await res.json();
+        if (!Array.isArray(json) && json.places) {
+          places = json.places;
+          sessionStorage.setItem('skyview_places', JSON.stringify(places));
+        }
+      }
+      if (!places || places.length === 0) { container.innerHTML = "<span style='color:#ccc; font-size:12px;'>메뉴 로드 실패</span>"; return; }
+      const topPlaces = places.filter(p => p.priority >= 1 && p.priority <= 7).sort((a,b) => a.priority - b.priority);
+      container.innerHTML = '';
+      topPlaces.forEach(p => { const a = document.createElement('a'); a.className = 'sub-btn'; a.innerText = p.name; a.href = `places.html?place=${encodeURIComponent(p.name)}`; container.appendChild(a); });
+      const allBtn = document.createElement('a'); allBtn.className = 'sub-btn view-all'; allBtn.innerText = '전체보기'; allBtn.href = 'total_navi.html'; container.appendChild(allBtn);
+    } catch (e) { console.warn("Nav load failed", e); }
+  }
+
   function getId(url){ if(!url) return null; try{ const u = new URL(url); const v = u.searchParams.get('v'); if (v && v.length === 11) return v; const parts = u.pathname.split('/'); for (let i = parts.length - 1; i >= 0; i--) { const seg = parts[i]; if (seg && seg.length === 11) return seg; } }catch(e){ const m = url.match(/(?:watch\?v=|youtu\.be\/|embed\/|v\/)([A-Za-z0-9_-]{11})/); if (m) return m[1]; } return null; }
   const lb = document.getElementById('lightbox'); const lbClose = document.getElementById('lb-close'); const lbTarget = document.getElementById('lb-target');
   function openLB(id){ lbTarget.innerHTML = `<iframe title="YouTube video player" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`; lb.style.display='flex'; lb.setAttribute('aria-hidden','false'); }
   function closeLB(){ lb.style.display='none'; lb.setAttribute('aria-hidden','true'); lbTarget.innerHTML=''; }
   lbClose.addEventListener('click', closeLB); lb.addEventListener('click', e=>{ if(e.target===lb) closeLB(); }); window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLB(); });
+
   function render(list, containerId){ const el=document.getElementById(containerId); const loadingEl = document.getElementById('loading'); if(!el) return; if(loadingEl) loadingEl.style.display = 'none'; el.innerHTML = ''; 
     list.sort((a,b)=> new Date(b.date)-new Date(a.date));
     list.forEach(v=>{
       const id=getId(v.url); if(!id) return;
-      // Videos 페이지이므로 'landscape' 타입만 렌더링하도록 필터링 (안전장치)
       if (v.type && v.type.toLowerCase() !== 'landscape') return;
-
       const card=document.createElement('div'); card.className='video-card'; card.setAttribute('role','button'); card.tabIndex=0;
       card.innerHTML=`<a class="thumb"><img loading="lazy" src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="${v.title} 썸네일"><span class="play">Play</span></a><div class="yt"><a href="${v.url}" target="_blank" rel="noopener">[유튜브 바로가기]</a></div>`;
       const act=(e)=>{ const isYt = e.target.closest('.yt'); if(!isYt){ openLB(id); } };
@@ -137,23 +190,22 @@
   async function loadVideos() {
     const loadingEl = document.getElementById('loading');
     try {
-      const response = await fetch(SCRIPT_URL); // 전체 데이터를 한 번에 가져옴
+      const response = await fetch(SCRIPT_URL);
       if (!response.ok) throw new Error(`HTTP Error Status: ${response.status}`);
       const json = await response.json();
-      
-      // [수정 핵심] json.videos 배열을 꺼내서 사용
       const allVideos = json.videos || [];
-      
-      if(!allVideos || allVideos.length === 0) {
-        if(loadingEl) loadingEl.textContent = '데이터가 비어있습니다.';
-        return;
-      }
+      if(!allVideos || allVideos.length === 0) { if(loadingEl) loadingEl.textContent = '데이터가 비어있습니다.'; return; }
       render(allVideos, 'videos-container');
     } catch (error) { console.error('Fetch error:', error); if(loadingEl) loadingEl.textContent = 'Error loading videos.'; }
   }
   loadVideos();
+
   const contactBtn=document.getElementById('contact-btn'); const contactModal=document.getElementById('contact-modal'); const closeModalBtn=document.getElementById('close-modal-btn');
-  if(contactBtn && contactModal && closeModalBtn){ contactBtn.addEventListener('click',e=>{ e.preventDefault(); contactModal.style.display='flex'; contactModal.setAttribute('aria-hidden','false'); }); closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; contactModal.setAttribute('aria-hidden','true'); }); contactModal.addEventListener('click',e=>{ if(e.target===contactModal){ contactModal.style.display='none'; contactModal.setAttribute('aria-hidden','true'); } }); }
+  if(contactBtn && contactModal && closeModalBtn){
+    contactBtn.addEventListener('click',e=>{ e.preventDefault(); contactModal.style.display='flex'; contactModal.setAttribute('aria-hidden','false'); });
+    closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; contactModal.setAttribute('aria-hidden','true'); });
+    contactModal.addEventListener('click',e=>{ if(e.target===contactModal){ contactModal.style.display='none'; contactModal.setAttribute('aria-hidden','true'); } });
+  }
   document.addEventListener('click', (e)=>{ const link = e.target.closest('.yt a'); if(!link) return; e.preventDefault(); const url = link.href; const w = window.screen.width, h = window.screen.height; const win = window.open(url, '_blank', `scrollbars=yes,width=${w},height=${h},top=0,left=0`); if(win && win.focus) win.focus(); });
 </script>
 </body>
