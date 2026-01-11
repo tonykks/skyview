@@ -332,7 +332,7 @@
   const lbTarget = document.getElementById('lb-target');
 
   function openLB(id){
-    lbTarget.innerHTML = `<iframe title="YouTube video player" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    lbTarget.innerHTML = `<iframe title="YouTube video player" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
     lb.style.display='flex'; 
     lb.setAttribute('aria-hidden','false');
   }
@@ -477,6 +477,7 @@
 </body>
 
 </html>
+
 
 
 
