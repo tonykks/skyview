@@ -7,6 +7,11 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="./images/songak.png">
+<link rel="preload" as="image" href="./images/sanbangsan.jpg">
+<link rel="preload" as="image" href="./images/baksu.png">
+<link rel="preload" as="image" href="./images/tiger.png">
+<link rel="preload" as="image" href="./images/sup.png">
 
 <script>
   tailwind.config = {
@@ -23,121 +28,92 @@
 </script>
 
 <style>
-  body{ font-family:'Pretendard', sans-serif; background:var(--page-bg); color:#111827; }
-  
-  /* --- Navigation --- */
-  .navbar-container { position: relative; background-color: #1f3556; z-index: 50; }
-  .navbar { display: flex; justify-content: center; padding: 10px 0; align-items: center; }
+  :root{ --brand-dark:#1f3556; --brand:#2b5aa6; --brand-hover:#234b8b; --accent:#7b1fa2; --card-bg:#ffffff; --page-bg:#f2f2f2; --text:#111827; --muted:#6b7280; }
+  @media (prefers-color-scheme: dark){ :root{ --card-bg:#111827; --page-bg:#0b1220; --text:#e5e7eb; --muted:#9ca3af; --brand-dark:#162640; --brand:#2b5aa6; --brand-hover:#234b8b; --accent:#8b5cf6; } body { background-color: #0b1220; color: #e5e7eb; } }
+  body{ font-family:'Pretendard', sans-serif; background:var(--page-bg); color:var(--text); line-height: 1.6; word-break: keep-all; }
+  .slider-transition { transition: transform 1s ease-in-out; }
+  .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,.55); }
+
+  /* Navbar (Updated) */
+  .navbar-wrapper { background: var(--brand-dark); width: 100%; }
+  .navbar { display: flex; justify-content: center; padding: 10px 0; flex-wrap: wrap; gap: 5px; }
   .nav-btn {
-    background-color: #2b5aa6; color: #fff; padding: 10px 20px; margin: 0 5px; border-radius: 8px;
-    text-decoration: none; font-size: 14px; min-width: 100px; text-align: center; display: inline-block;
-    transition: background-color .25s ease; cursor: pointer; border: none; height: 40px; line-height: 20px;
+    background: var(--brand); color: #fff; border: none; padding: 10px 20px; border-radius: 8px;
+    text-decoration: none; font-size: 14px; transition: background .25s ease;
+    min-width: 100px; text-align: center; display: inline-block; cursor: pointer;
   }
-  .nav-btn:hover, .nav-btn.active { background-color: #234b8b; }
-  
-  /* Sub-Navbar (Hidden by default) */
-  .sub-navbar {
-    display: none; 
-    position: absolute; top: 100%; left: 0; width: 100%;
-    background-color: #234b8b; padding: 10px 0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    justify-content: center; gap: 8px; flex-wrap: wrap; z-index: 40;
-  }
-  /* Show sub-navbar when hovering over parent container or itself */
-  .nav-item-places:hover .sub-navbar, .sub-navbar:hover { display: flex; }
+  .nav-btn:hover { background: var(--brand-hover); }
 
-  .sub-btn {
-    background: rgba(255,255,255,0.1); color: white; 
-    padding: 8px 0; 
-    width: 100px; /* 고정 길이 */
-    border-radius: 4px; font-size: 13px; text-align: center;
-    text-decoration: none; transition: all 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  /* Sub-Navbar (Expandable) */
+  .sub-navbar-container {
+    background-color: #162640; width: 100%; overflow: hidden; max-height: 0; transition: max-height 0.3s ease-out; border-bottom: 1px solid rgba(255,255,255,0.1);
   }
-  .sub-btn:hover { background: rgba(255,255,255,0.3); font-weight: bold; }
-  .sub-btn.view-all { background: #7b1fa2; border: 1px solid rgba(255,255,255,0.2); }
+  .sub-navbar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 10px 0; }
+  .sub-btn { background: rgba(255,255,255,0.1); color: #ddd; padding: 6px 0; width: 90px; border-radius: 4px; font-size: 13px; text-align: center; text-decoration: none; transition: all 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sub-btn:hover { background: rgba(255,255,255,0.25); color: #fff; }
+  .sub-btn.view-all { background: #7b1fa2; color: white; }
 
-  /* --- Mixed Grid Layout (Flex) --- */
-  .mixed-container {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; padding: 20px;
-    max-width: 1400px; margin: 0 auto;
-  }
-
-  /* --- Card Styles (From videos.html & shorts.html) --- */
-  .video-card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,.08); transition: transform .25s ease, box-shadow .25s ease; position: relative; }
+  /* Mixed Grid */
+  .mixed-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; padding: 20px; max-width: 1400px; margin: 0 auto; }
+  .video-card { background: var(--card-bg); border-radius: 14px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,.08); transition: transform .25s ease, box-shadow .25s ease; position: relative; }
   .video-card:hover { transform: translateY(-6px); box-shadow: 0 10px 24px rgba(0,0,0,.15); }
-  
-  /* Landscape Style (16:9) */
-  .card-land { width: 300px; max-width: 100%; }
-  .thumb-land { aspect-ratio: 16/9; background: #000; display: block; position: relative; cursor: pointer; }
-  
-  /* Shorts Style (9:16) */
-  .card-short { width: 170px; max-width: 45vw; }
-  .thumb-short { aspect-ratio: 9/16; background: #000; display: block; position: relative; cursor: pointer; }
-
+  .card-land { width: 300px; max-width: 100%; } .thumb-land { aspect-ratio: 16/9; background: #000; display: block; position: relative; cursor: pointer; }
+  .card-short { width: 170px; max-width: 45vw; } .thumb-short { aspect-ratio: 9/16; background: #000; display: block; position: relative; cursor: pointer; }
   .thumb-img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .play-badge { position: absolute; right: 10px; bottom: 10px; background: rgba(0,0,0,.6); color: #fff; font-size: 11px; padding: 5px 9px; border-radius: 999px; pointer-events: none;}
-  
-  .yt-link { text-align: center; padding: 10px; }
-  .yt-link a { color: #7b1fa2; font-size: 0.85rem; text-decoration: none; }
-  .yt-link a:hover { text-decoration: underline; }
-
-  /* --- Header Area --- */
+  .yt-link { text-align: center; padding: 10px; } .yt-link a { color: var(--accent); font-size: 0.85rem; text-decoration: none; } .yt-link a:hover { text-decoration: underline; }
   .place-header { text-align: center; margin: 40px 0 20px; }
-  .place-title-link { 
-    font-size: 2.5rem; font-weight: 800; color: #1f3556; text-decoration: none; 
-    border-bottom: 3px solid transparent; transition: all 0.3s;
-    cursor: pointer;
-  }
-  .place-title-link:hover { border-color: #2b5aa6; color: #2b5aa6; }
-  
-  /* Lightbox */
+  .place-title-link { font-size: 2.5rem; font-weight: 800; color: var(--brand-dark); text-decoration: none; border-bottom: 3px solid transparent; transition: all 0.3s; cursor: pointer; }
+  .place-title-link:hover { border-color: var(--brand); color: var(--brand); }
+  @media (prefers-color-scheme:dark){ .place-title-link{ color:#cbd5e1; } }
   .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; }
   .lb-content { position: relative; width: 100%; display: flex; justify-content: center;}
   .lb-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 30px; cursor: pointer; z-index: 2100; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 8px;}
+  @media (max-width:768px){ .header-title { font-size: 2.5rem !important; } }
 </style>
 </head>
 <body>
 
-  <!-- Navigation -->
-  <div class="navbar-container">
+  <header class="relative w-full h-[320px] md:h-[480px] overflow-hidden bg-gray-900">
+    <div id="slider-track" class="absolute inset-y-0 left-0 flex h-full slider-transition"></div>
+    <div class="absolute inset-0 bg-black/20"></div>
+    <h1 class="header-title absolute left-1/2 -translate-x-1/2 top-[50%] -translate-y-[50%] text-5xl md:text-7xl font-extrabold text-white text-shadow tracking-tight z-20 w-full text-center px-4">Tony's Sky View</h1>
+  </header>
+
+  <!-- Navigation (Updated) -->
+  <div class="navbar-wrapper">
     <div class="navbar">
       <a href="index.html" class="nav-btn">Home</a>
-      
-      <!-- Places Dropdown Wrapper (Moved to 2nd Position) -->
-      <div class="nav-item-places relative h-full">
-        <a href="places.html" class="nav-btn active flex items-center justify-center">Places</a>
-        <!-- Sub Navbar -->
-        <div id="sub-nav" class="sub-navbar">
-          <!-- JS will inject buttons here -->
-          <div class="text-white text-xs">Loading...</div>
-        </div>
-      </div>
-
+      <button id="places-toggle-btn" class="nav-btn active" onclick="togglePlacesMenu()">Places ▼</button>
       <a href="videos.html" class="nav-btn">Videos</a>
       <a href="shorts.html" class="nav-btn">Shorts</a>
-      <a href="https://smile21c.notion.site/my-profile" class="nav-btn" target="_blank">About Me</a>
+      <a href="https://smile21c.notion.site/my-profile" class="nav-btn" target="_blank" rel="noopener">About Me</a>
+      <button id="contact-btn" class="nav-btn">Contact Me</button>
+    </div>
+    <div id="sub-navbar-container" class="sub-navbar-container">
+      <div id="sub-navbar-content" class="sub-navbar">
+        <span style="color:#aaa; font-size:12px;">Loading places...</span>
+      </div>
     </div>
   </div>
 
-  <!-- Content Area -->
   <div id="loading" class="text-center text-gray-500 font-bold my-10">데이터를 불러오는 중...</div>
-
   <div id="main-content" style="display:none;">
-    <!-- Place Header -->
     <div class="place-header">
-      <a id="place-link" href="#" target="_blank" class="place-title-link">
-        <span id="place-name-display"></span>
-      </a>
+      <a id="place-link" href="#" target="_blank" class="place-title-link"><span id="place-name-display"></span></a>
       <p class="text-gray-500 mt-2 text-sm">위 타이틀을 클릭하면 소개 페이지로 이동합니다</p>
     </div>
-
     <hr class="border-t-2 border-gray-300 w-4/5 mx-auto mb-8">
-
-    <!-- Video Grid -->
     <div id="video-container" class="mixed-container"></div>
   </div>
-
-  <!-- Lightbox -->
+  
+  <div id="contact-modal" class="modal" aria-hidden="true" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); align-items:center; justify-content:center; z-index:1000;">
+    <div class="modal-content" style="background:var(--card-bg); padding:2rem; border-radius:.75rem; text-align:center;">
+      <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+      <p class="text-gray-700 mb-6" style="color:var(--muted)">Email: smile21c@korea.com</p>
+      <button id="close-modal-btn" class="nav-btn">Close</button>
+    </div>
+  </div>
   <div id="lightbox" class="lightbox">
     <div class="lb-close" onclick="closeLightbox()">✕</div>
     <div id="lb-player" class="lb-content"></div>
@@ -145,215 +121,92 @@
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec";
+  const BANNER_IMAGES = ["./images/songak.png", "./images/sanbangsan.jpg", "./images/baksu.png", "./images/tiger.png", "./images/sup.png"];
 
-  let g_videos = [];
-  let g_places = [];
-
-  // 1. 초기화 및 데이터 로드
+  let g_videos = []; let g_places = [];
   async function init() {
     const loadingEl = document.getElementById('loading');
     try {
       const res = await fetch(SCRIPT_URL);
       const json = await res.json();
+      if (Array.isArray(json)) { g_videos = json; g_places = []; } else { g_videos = json.videos || []; g_places = json.places || []; }
       
-      // [중요] 구버전(배열)과 신버전(객체) 모두 대응하도록 처리
-      if (Array.isArray(json)) {
-        // 만약 Code.gs가 업데이트되지 않아 배열이 온 경우 (videos 데이터만 있다고 가정)
-        g_videos = json;
-        g_places = []; // 장소 메타데이터 없음
-        console.warn("서버에서 구버전 데이터(배열)가 수신되었습니다. Code.gs 배포를 확인해주세요.");
-      } else {
-        // 정상적인 신버전 객체 수신
-        g_videos = json.videos || [];
-        g_places = json.places || [];
-      }
+      sessionStorage.setItem('skyview_places', JSON.stringify(g_places));
+      loadPlacesForNav(g_places); // Pass directly
 
-      // 서브 네비게이션 렌더링 (데이터가 없으면 기본값 표시)
-      renderSubNav();
-      
-      // URL 파라미터 확인 (예: places.html?place=범섬)
       const params = new URLSearchParams(window.location.search);
       let targetPlace = params.get('place');
-      
-      // 한글 깨짐 방지 디코딩
       if(targetPlace) targetPlace = decodeURIComponent(targetPlace);
-
       loadingEl.style.display = 'none';
-
-      if (targetPlace) {
-        loadPlaceContent(targetPlace);
-      } else {
-        // 장소가 지정되지 않았다면 첫 번째 우선순위 장소 또는 안내 메시지
-        // 우선순위가 있는 장소 중 1번 찾기, 없으면 아무거나
+      if (targetPlace) { loadPlaceContent(targetPlace); } else {
         const first = g_places.find(p => p.priority <= 7) || g_places[0];
-        
-        if(first) {
-          loadPlaceContent(first.name);
-        } else {
-          // 데이터가 아예 없을 경우 (Code.gs 배포 문제 등)
-          if (g_videos.length > 0) {
-             // 영상은 있는데 장소 메타데이터가 없는 경우 -> 영상의 'place' 속성으로라도 목록 생성 시도
-             const uniquePlaces = [...new Set(g_videos.map(v => v.place).filter(Boolean))];
-             if(uniquePlaces.length > 0) loadPlaceContent(uniquePlaces[0]);
-             else showEmptyState();
-          } else {
-             showEmptyState();
-          }
+        if(first) { loadPlaceContent(first.name); } else {
+          if (g_videos.length > 0) { const uniquePlaces = [...new Set(g_videos.map(v => v.place).filter(Boolean))]; if(uniquePlaces.length > 0) loadPlaceContent(uniquePlaces[0]); else showEmptyState(); } else { showEmptyState(); }
         }
       }
-      
       document.getElementById('main-content').style.display = 'block';
+    } catch (e) { console.error(e); loadingEl.innerHTML = `<div style="color:red">데이터 로딩 오류: ${e.message}</div>`; }
+  }
 
-    } catch (e) {
-      console.error(e);
-      loadingEl.innerHTML = `<div style="color:red">데이터 로딩 오류: ${e.message}<br>Code.gs 최신 버전 배포 여부를 확인해주세요.</div>`;
+  // Banner
+  document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('slider-track');
+    if (track) {
+      const imagesToUse = (BANNER_IMAGES && BANNER_IMAGES.length > 0) ? BANNER_IMAGES : [];
+      if (imagesToUse.length > 0) {
+        const imagesToRender = [...imagesToUse, imagesToUse[0]];
+        const slideWidthPercent = 100 / imagesToRender.length;
+        track.innerHTML = imagesToRender.map((src, i) => `<img src="${src}" class="h-full object-cover flex-shrink-0" style="width: ${slideWidthPercent}%;" onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/CCCCCC/666666?text=Image+Loading...';">`).join('');
+        track.style.width = `${imagesToRender.length * 100}%`;
+        let index=0; setInterval(()=>{ index++; track.style.transition='transform 1s ease'; track.style.transform=`translateX(-${index*slideWidthPercent}%)`; if(index===imagesToUse.length){ setTimeout(()=>{ track.style.transition='none'; index=0; track.style.transform='translateX(0)'; },1000); } }, 10000);
+      }
     }
-  }
+  });
 
-  function showEmptyState() {
-    document.getElementById('place-name-display').innerText = "장소 선택";
-    document.getElementById('video-container').innerHTML = "<div class='text-center mt-10'>표시할 데이터가 없습니다.</div>";
-  }
-
-  // 2. 서브 네비게이션 렌더링 (가로바)
-  function renderSubNav() {
-    const container = document.getElementById('sub-nav');
+  // Nav Logic
+  function togglePlacesMenu() { const c = document.getElementById('sub-navbar-container'); c.style.maxHeight = (c.style.maxHeight && c.style.maxHeight !== '0px') ? '0px' : '200px'; }
+  function loadPlacesForNav(places) {
+    const container = document.getElementById('sub-navbar-content');
+    if (!places || places.length === 0) { container.innerHTML = "<span style='color:#ccc; font-size:12px;'>메뉴 로드 실패</span>"; return; }
+    const topPlaces = places.filter(p => p.priority >= 1 && p.priority <= 7).sort((a,b) => a.priority - b.priority);
     container.innerHTML = '';
-
-    // 우선순위 1~7 필터링 및 정렬
-    // 메타데이터(g_places)가 없으면 영상 데이터(g_videos)에서 추출하여 임시 버튼 생성
-    let topPlaces = [];
-    
-    if (g_places.length > 0) {
-      topPlaces = g_places
-        .filter(p => p.priority >= 1 && p.priority <= 7)
-        .sort((a,b) => a.priority - b.priority);
-    } else {
-      // Fallback: 영상 데이터에서 장소 추출 (최대 7개)
-      const unique = [...new Set(g_videos.map(v => v.place).filter(p => p && p !== '기타'))];
-      topPlaces = unique.slice(0, 7).map(name => ({ name, priority: 99 }));
-    }
-
-    if(topPlaces.length === 0) {
-      container.innerHTML = "<span class='text-white text-xs'>장소 정보 없음</span>";
-    }
-
-    // 버튼 생성
-    topPlaces.forEach(p => {
-      const btn = document.createElement('a');
-      btn.className = 'sub-btn';
-      btn.innerText = p.name;
-      // 클릭 시 페이지 리로드 없이 콘텐츠 교체 (SPA 느낌) 또는 링크 이동
-      btn.href = `places.html?place=${encodeURIComponent(p.name)}`;
-      container.appendChild(btn);
-    });
-
-    // 전체보기 버튼 추가
-    const allBtn = document.createElement('a');
-    allBtn.className = 'sub-btn view-all';
-    allBtn.innerText = '전체보기';
-    allBtn.href = 'total_navi.html';
-    container.appendChild(allBtn);
+    topPlaces.forEach(p => { const a = document.createElement('a'); a.className = 'sub-btn'; a.innerText = p.name; a.href = `places.html?place=${encodeURIComponent(p.name)}`; container.appendChild(a); });
+    const allBtn = document.createElement('a'); allBtn.className = 'sub-btn view-all'; allBtn.innerText = '전체보기'; allBtn.href = 'total_navi.html'; container.appendChild(allBtn);
   }
 
-  // 3. 메인 콘텐츠 로드 (장소별)
   function loadPlaceContent(placeName) {
-    const displayEl = document.getElementById('place-name-display');
+    document.getElementById('place-name-display').innerText = `${placeName}`;
     const linkEl = document.getElementById('place-link');
-    const container = document.getElementById('video-container');
-
-    // 3-1. 헤더 설정
-    displayEl.innerText = `장소명: ${placeName}`;
-    
-    // 메타데이터에서 링크 찾기
     const meta = g_places.find(p => p.name === placeName);
-    if (meta && meta.introUrl) {
-      linkEl.href = meta.introUrl;
-      linkEl.style.pointerEvents = "auto";
-      linkEl.title = "소개 페이지로 이동";
-      linkEl.classList.remove('cursor-default');
-    } else {
-      linkEl.removeAttribute('href');
-      linkEl.style.pointerEvents = "none";
-      linkEl.title = "링크가 없습니다";
-      linkEl.classList.add('cursor-default');
-    }
-
-    // 3-2. 영상 필터링
-    // placeName과 일치하는 영상 필터링 (공백 제거 후 비교)
+    if (meta && meta.introUrl) { linkEl.href = meta.introUrl; linkEl.style.pointerEvents = "auto"; } else { linkEl.removeAttribute('href'); linkEl.style.pointerEvents = "none"; }
+    
+    const container = document.getElementById('video-container');
     const filtered = g_videos.filter(v => (v.place || "").trim() === placeName.trim());
-    
     container.innerHTML = '';
-    
-    if (filtered.length === 0) {
-      container.innerHTML = '<div class="w-full text-center text-gray-500 py-10">이 장소에 등록된 영상이 아직 없습니다.</div>';
-      return;
-    }
-
-    // 최신순 정렬
+    if (filtered.length === 0) { container.innerHTML = '<div class="w-full text-center text-gray-500 py-10">등록된 영상 없음</div>'; return; }
     filtered.sort((a,b) => new Date(b.date) - new Date(a.date));
-
-    // 3-3. 카드 렌더링 (Hybrid)
     filtered.forEach(v => {
       const isShorts = (v.type && v.type.toLowerCase() === 'shorts');
-      const videoId = getId(v.url);
-      if(!videoId) return;
-
-      const card = document.createElement('div');
-      // 타입에 따라 클래스 분기
-      card.className = `video-card ${isShorts ? 'card-short' : 'card-land'}`;
-      
+      const videoId = getId(v.url); if(!videoId) return;
+      const card = document.createElement('div'); card.className = `video-card ${isShorts ? 'card-short' : 'card-land'}`;
       const thumbClass = isShorts ? 'thumb-short' : 'thumb-land';
-      
-      card.innerHTML = `
-        <a class="${thumbClass}" onclick="openLightbox('${videoId}', ${isShorts})">
-          <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" class="thumb-img" loading="lazy" alt="${v.title}">
-          <span class="play-badge">Play</span>
-        </a>
-        <div class="yt-link">
-          <a href="${v.url}" target="_blank">[유튜브 바로가기]</a>
-        </div>
-      `;
+      card.innerHTML = `<a class="${thumbClass}" onclick="openLightbox('${videoId}', ${isShorts})"><img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" class="thumb-img" loading="lazy"><span class="play-badge">Play</span></a><div class="yt-link"><a href="${v.url}" target="_blank">[유튜브]</a></div>`;
       container.appendChild(card);
     });
   }
 
-  // --- 유틸리티 ---
-  function getId(url){
-    if(!url) return null;
-    const m = url.match(/(?:watch\?v=|youtu\.be\/|embed\/|v\/|shorts\/)([A-Za-z0-9_-]{11})/);
-    return m ? m[1] : null;
-  }
-
+  function getId(url){ if(!url) return null; const m = url.match(/(?:watch\?v=|youtu\.be\/|embed\/|v\/|shorts\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : null; }
   function openLightbox(id, isShorts) {
-    const lb = document.getElementById('lightbox');
-    const player = document.getElementById('lb-player');
-    
-    // 반응형 사이즈 계산
-    // Shorts: PC에서는 폰화면처럼 좁게, 모바일에서는 꽉 차게
-    // Landscape: PC에서는 크게, 모바일에서는 꽉 차게
-    
-    const style = isShorts 
-      ? "width: min(90vw, 450px); aspect-ratio: 9/16;" 
-      : "width: min(90vw, 1000px); aspect-ratio: 16/9;";
-
-    player.innerHTML = `
-      <iframe src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0" 
-        style="${style} border:0; border-radius:12px;" 
-        allow="autoplay; encrypted-media" allowfullscreen>
-      </iframe>
-    `;
+    const lb = document.getElementById('lightbox'); const player = document.getElementById('lb-player');
+    const style = isShorts ? "width: min(90vw, 450px); aspect-ratio: 9/16;" : "width: min(90vw, 1000px); aspect-ratio: 16/9;";
+    player.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0" style="${style} border:0; border-radius:12px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
     lb.style.display = 'flex';
   }
+  function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; document.getElementById('lb-player').innerHTML = ''; }
+  const contactBtn=document.getElementById('contact-btn'); const contactModal=document.getElementById('contact-modal'); const closeModalBtn=document.getElementById('close-modal-btn');
+  if(contactBtn){ contactBtn.addEventListener('click',e=>{ e.preventDefault(); contactModal.style.display='flex'; }); closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; }); }
 
-  function closeLightbox() {
-    document.getElementById('lightbox').style.display = 'none';
-    document.getElementById('lb-player').innerHTML = '';
-  }
-
-  // 실행
   init();
-
 </script>
 </body>
 </html>
