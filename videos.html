@@ -398,9 +398,9 @@
   async function loadVideos() {
     const loadingEl = document.getElementById('loading');
     try {
-      const response = await fetch(SCRIPT_URL, {
-        method: 'GET',
-        redirect: 'follow'
+      const response = await fetch(SCRIPT_URL + "?sheet=landscape", { 
+          method: 'GET', 
+          redirect: 'follow' 
       });
       
       if (!response.ok) {
@@ -477,6 +477,7 @@
 </body>
 
 </html>
+
 
 
 
