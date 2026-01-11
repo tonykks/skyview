@@ -27,28 +27,28 @@
   
   /* --- Navigation --- */
   .navbar-container { position: relative; background-color: #1f3556; z-index: 50; }
-  .navbar { display: flex; justify-content: center; padding: 10px 0; }
+  .navbar { display: flex; justify-content: center; padding: 10px 0; align-items: center; }
   .nav-btn {
     background-color: #2b5aa6; color: #fff; padding: 10px 20px; margin: 0 5px; border-radius: 8px;
     text-decoration: none; font-size: 14px; min-width: 100px; text-align: center; display: inline-block;
-    transition: background-color .25s ease; cursor: pointer; border: none;
+    transition: background-color .25s ease; cursor: pointer; border: none; height: 40px; line-height: 20px;
   }
   .nav-btn:hover, .nav-btn.active { background-color: #234b8b; }
   
   /* Sub-Navbar (Hidden by default) */
   .sub-navbar {
-    display: none; /* JS로 제어하거나 hover css로 제어 */
+    display: none; 
     position: absolute; top: 100%; left: 0; width: 100%;
     background-color: #234b8b; padding: 10px 0;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    justify-content: center; gap: 8px; flex-wrap: wrap;
+    justify-content: center; gap: 8px; flex-wrap: wrap; z-index: 40;
   }
   /* Show sub-navbar when hovering over parent container or itself */
   .nav-item-places:hover .sub-navbar, .sub-navbar:hover { display: flex; }
 
   .sub-btn {
     background: rgba(255,255,255,0.1); color: white; 
-    padding: 8px 0; /* 좌우 패딩 대신 width 고정 */
+    padding: 8px 0; 
     width: 100px; /* 고정 길이 */
     border-radius: 4px; font-size: 13px; text-align: center;
     text-decoration: none; transition: all 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -103,9 +103,9 @@
     <div class="navbar">
       <a href="index.html" class="nav-btn">Home</a>
       
-      <!-- Places Dropdown Wrapper -->
-      <div class="nav-item-places relative">
-        <a href="places.html" class="nav-btn active">Places</a>
+      <!-- Places Dropdown Wrapper (Moved to 2nd Position) -->
+      <div class="nav-item-places relative h-full">
+        <a href="places.html" class="nav-btn active flex items-center justify-center">Places</a>
         <!-- Sub Navbar -->
         <div id="sub-nav" class="sub-navbar">
           <!-- JS will inject buttons here -->
@@ -126,7 +126,7 @@
     <!-- Place Header -->
     <div class="place-header">
       <a id="place-link" href="#" target="_blank" class="place-title-link">
-        장소명: <span id="place-name-display"></span>
+        <span id="place-name-display"></span>
       </a>
       <p class="text-gray-500 mt-2 text-sm">위 타이틀을 클릭하면 소개 페이지로 이동합니다</p>
     </div>
@@ -151,36 +151,68 @@
 
   // 1. 초기화 및 데이터 로드
   async function init() {
+    const loadingEl = document.getElementById('loading');
     try {
       const res = await fetch(SCRIPT_URL);
       const json = await res.json();
       
-      g_videos = json.videos || [];
-      g_places = json.places || [];
+      // [중요] 구버전(배열)과 신버전(객체) 모두 대응하도록 처리
+      if (Array.isArray(json)) {
+        // 만약 Code.gs가 업데이트되지 않아 배열이 온 경우 (videos 데이터만 있다고 가정)
+        g_videos = json;
+        g_places = []; // 장소 메타데이터 없음
+        console.warn("서버에서 구버전 데이터(배열)가 수신되었습니다. Code.gs 배포를 확인해주세요.");
+      } else {
+        // 정상적인 신버전 객체 수신
+        g_videos = json.videos || [];
+        g_places = json.places || [];
+      }
 
+      // 서브 네비게이션 렌더링 (데이터가 없으면 기본값 표시)
       renderSubNav();
       
       // URL 파라미터 확인 (예: places.html?place=범섬)
       const params = new URLSearchParams(window.location.search);
-      const targetPlace = params.get('place');
+      let targetPlace = params.get('place');
+      
+      // 한글 깨짐 방지 디코딩
+      if(targetPlace) targetPlace = decodeURIComponent(targetPlace);
 
-      document.getElementById('loading').style.display = 'none';
+      loadingEl.style.display = 'none';
 
       if (targetPlace) {
         loadPlaceContent(targetPlace);
       } else {
         // 장소가 지정되지 않았다면 첫 번째 우선순위 장소 또는 안내 메시지
-        const first = g_places.find(p => p.priority <= 7);
-        if(first) loadPlaceContent(first.name);
-        else document.getElementById('main-content').innerHTML = "<div class='text-center mt-10'>장소를 선택해주세요.</div>";
+        // 우선순위가 있는 장소 중 1번 찾기, 없으면 아무거나
+        const first = g_places.find(p => p.priority <= 7) || g_places[0];
+        
+        if(first) {
+          loadPlaceContent(first.name);
+        } else {
+          // 데이터가 아예 없을 경우 (Code.gs 배포 문제 등)
+          if (g_videos.length > 0) {
+             // 영상은 있는데 장소 메타데이터가 없는 경우 -> 영상의 'place' 속성으로라도 목록 생성 시도
+             const uniquePlaces = [...new Set(g_videos.map(v => v.place).filter(Boolean))];
+             if(uniquePlaces.length > 0) loadPlaceContent(uniquePlaces[0]);
+             else showEmptyState();
+          } else {
+             showEmptyState();
+          }
+        }
       }
       
       document.getElementById('main-content').style.display = 'block';
 
     } catch (e) {
       console.error(e);
-      document.getElementById('loading').innerText = "데이터 로딩 실패";
+      loadingEl.innerHTML = `<div style="color:red">데이터 로딩 오류: ${e.message}<br>Code.gs 최신 버전 배포 여부를 확인해주세요.</div>`;
     }
+  }
+
+  function showEmptyState() {
+    document.getElementById('place-name-display').innerText = "장소 선택";
+    document.getElementById('video-container').innerHTML = "<div class='text-center mt-10'>표시할 데이터가 없습니다.</div>";
   }
 
   // 2. 서브 네비게이션 렌더링 (가로바)
@@ -189,9 +221,22 @@
     container.innerHTML = '';
 
     // 우선순위 1~7 필터링 및 정렬
-    const topPlaces = g_places
-      .filter(p => p.priority >= 1 && p.priority <= 7)
-      .sort((a,b) => a.priority - b.priority);
+    // 메타데이터(g_places)가 없으면 영상 데이터(g_videos)에서 추출하여 임시 버튼 생성
+    let topPlaces = [];
+    
+    if (g_places.length > 0) {
+      topPlaces = g_places
+        .filter(p => p.priority >= 1 && p.priority <= 7)
+        .sort((a,b) => a.priority - b.priority);
+    } else {
+      // Fallback: 영상 데이터에서 장소 추출 (최대 7개)
+      const unique = [...new Set(g_videos.map(v => v.place).filter(p => p && p !== '기타'))];
+      topPlaces = unique.slice(0, 7).map(name => ({ name, priority: 99 }));
+    }
+
+    if(topPlaces.length === 0) {
+      container.innerHTML = "<span class='text-white text-xs'>장소 정보 없음</span>";
+    }
 
     // 버튼 생성
     topPlaces.forEach(p => {
@@ -199,7 +244,6 @@
       btn.className = 'sub-btn';
       btn.innerText = p.name;
       // 클릭 시 페이지 리로드 없이 콘텐츠 교체 (SPA 느낌) 또는 링크 이동
-      // 여기서는 ?place=... 로 이동하여 새로고침 효과를 줍니다 (구조 단순화)
       btn.href = `places.html?place=${encodeURIComponent(p.name)}`;
       container.appendChild(btn);
     });
@@ -219,7 +263,7 @@
     const container = document.getElementById('video-container');
 
     // 3-1. 헤더 설정
-    displayEl.innerText = placeName;
+    displayEl.innerText = `장소명: ${placeName}`;
     
     // 메타데이터에서 링크 찾기
     const meta = g_places.find(p => p.name === placeName);
@@ -227,25 +271,31 @@
       linkEl.href = meta.introUrl;
       linkEl.style.pointerEvents = "auto";
       linkEl.title = "소개 페이지로 이동";
+      linkEl.classList.remove('cursor-default');
     } else {
       linkEl.removeAttribute('href');
       linkEl.style.pointerEvents = "none";
       linkEl.title = "링크가 없습니다";
+      linkEl.classList.add('cursor-default');
     }
 
     // 3-2. 영상 필터링
-    const filtered = g_videos.filter(v => v.place === placeName);
+    // placeName과 일치하는 영상 필터링 (공백 제거 후 비교)
+    const filtered = g_videos.filter(v => (v.place || "").trim() === placeName.trim());
     
     container.innerHTML = '';
     
     if (filtered.length === 0) {
-      container.innerHTML = '<div class="w-full text-center text-gray-500">등록된 영상이 없습니다.</div>';
+      container.innerHTML = '<div class="w-full text-center text-gray-500 py-10">이 장소에 등록된 영상이 아직 없습니다.</div>';
       return;
     }
 
+    // 최신순 정렬
+    filtered.sort((a,b) => new Date(b.date) - new Date(a.date));
+
     // 3-3. 카드 렌더링 (Hybrid)
     filtered.forEach(v => {
-      const isShorts = v.type === 'shorts';
+      const isShorts = (v.type && v.type.toLowerCase() === 'shorts');
       const videoId = getId(v.url);
       if(!videoId) return;
 
