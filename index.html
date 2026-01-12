@@ -70,14 +70,9 @@
     /* Header title shadow */
     .text-shadow-crisp{ text-shadow: 2px 2px 4px rgba(0,0,0,0.85); }
 
-    /* ✅ Mobile banner: keep full image (no crop) */
-    .banner-header{ background:#0b1220; }
+    /* ✅ Banner: keep 16:9 image fully visible (no crop) */
     .banner-img{ width:100%; height:100%; display:block; object-fit:contain; }
-    @media (min-width: 768px){
-      .banner-img{ object-fit:cover; }
-    }
-
-    /* Navigation */
+/* Navigation */
     .navbar-wrapper { background: var(--brand-dark); width: 100%; }
     .navbar { display:flex; justify-content:center; padding: 10px 0; flex-wrap:wrap; gap:5px; }
     .nav-btn{
@@ -240,14 +235,7 @@
 
     #back-to-top{ position:fixed; right:16px; bottom:16px; z-index:1200; background: var(--brand); color:#fff; border:none; border-radius:999px; padding:10px 14px; box-shadow:0 8px 20px rgba(0,0,0,.25); cursor:pointer; display:none; }
     #back-to-top:hover{ background: var(--brand-hover); }
-
-    /* ✅ 배너 폭을 콘텐츠 폭(1600px)으로 강제 */
-    .banner-header{
-      width: 100% !important;
-      max-width: 1600px !important;
-      margin: 0 auto !important;
-    }
-  </style>
+</style>
 </head>
 
 <body>
