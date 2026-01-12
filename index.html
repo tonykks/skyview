@@ -34,6 +34,12 @@
   </script>
 
   <style>
+    .banner-area { background: #0b1220; }
+    .banner-wrap{
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
     :root{
       --brand-dark:#1f3556; --brand:#2b5aa6; --brand-hover:#234b8b;
       --accent:#7b1fa2; --card-bg:#ffffff; --page-bg:#f2f2f2;
@@ -240,16 +246,23 @@
 <body>
 
   <!-- ✅ Requirement #1: mobile keeps rectangle + shows whole image -->
-  <header class="banner-header relative w-full overflow-hidden bg-gray-900 aspect-[16/9] max-h-[440px]">
-    <div id="slider-track" class="absolute inset-y-0 left-0 flex h-full slider-transition"></div>
-
-    <!-- overlay (kept) -->
-    <div class="absolute inset-0 bg-black/20"></div>
-
-    <h1 class="header-title absolute left-1/2 -translate-x-1/2 top-[50%] -translate-y-[50%] text-5xl md:text-7xl font-extrabold text-white text-shadow-crisp tracking-tight z-20 w-full text-center px-4">
-      Tony's Sky View
-    </h1>
-  </header>
+  <div class="banner-area">
+    <div class="banner-wrap">
+      <header class="banner-header relative w-full overflow-hidden bg-gray-900 aspect-[16/9] max-h-[440px]">
+        <div id="slider-track" class="absolute inset-y-0 left-0 flex h-full slider-transition"></div>
+  
+        <!-- overlay -->
+        <div class="absolute inset-0 bg-black/20"></div>
+  
+        <h1 class="header-title absolute left-1/2 -translate-x-1/2 top-[50%] -translate-y-[50%]
+                   text-5xl md:text-7xl font-extrabold text-white text-shadow-crisp tracking-tight z-20
+                   w-full text-center px-4">
+          Tony's Sky View
+        </h1>
+      </header>
+    </div>
+  </div>
+  
 
   <!-- Navigation -->
   <div class="navbar-wrapper">
