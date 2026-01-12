@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <!-- test: 2026-01-04 -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tony's SkyView Portfolio</title>
@@ -54,8 +53,6 @@
       color:var(--text);
       line-height:1.6;
       word-break:keep-all;
-
-      /* (선택) 텍스트 렌더링 안정화 */
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: geometricPrecision;
@@ -64,182 +61,189 @@
     /* Slider */
     .slider-transition { transition: transform 1s ease-in-out; }
 
-    /* Crisp shadow for big title */
-    .text-shadow-crisp{
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.85);
+    /* Header title shadow */
+    .text-shadow-crisp{ text-shadow: 2px 2px 4px rgba(0,0,0,0.85); }
+
+    /* ✅ Mobile banner: keep full image (no crop) */
+    .banner-header{ background:#0b1220; }
+    .banner-img{ width:100%; height:100%; display:block; object-fit:contain; }
+    @media (min-width: 768px){
+      .banner-img{ object-fit:cover; }
     }
 
     /* Navigation */
     .navbar-wrapper { background: var(--brand-dark); width: 100%; }
-    .navbar { display:flex; justify-content:center; padding:10px 0; flex-wrap:wrap; gap:5px; }
+    .navbar { display:flex; justify-content:center; padding: 10px 0; flex-wrap:wrap; gap:5px; }
     .nav-btn{
-      background:var(--brand); color:#fff; border:none; padding:10px 20px; border-radius:8px;
-      text-decoration:none; font-size:14px; transition:background .25s ease;
-      min-width:100px; text-align:center; display:inline-block; cursor:pointer;
+      background: var(--brand); color:#fff; border:none; padding:10px 20px; border-radius:8px;
+      text-decoration:none; font-size:14px; transition: background .25s ease;
+      min-width: 100px; text-align:center; display:inline-block; cursor:pointer;
     }
-    .nav-btn:hover { background: var(--brand-hover); }
+    .nav-btn:hover{ background: var(--brand-hover); }
 
-    /* Sub-Navbar */
     .sub-navbar-container{
       background-color:#162640; width:100%; overflow:hidden; max-height:0;
-      transition:max-height 0.3s ease-out; border-bottom:1px solid rgba(255,255,255,0.1);
+      transition:max-height 0.3s ease-out; border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    .sub-navbar{ display:flex; justify-content:center; gap:8px; flex-wrap:wrap; padding:10px 0; }
+    .sub-navbar{ display:flex; justify-content:center; gap:8px; flex-wrap:wrap; padding: 10px 0; }
     .sub-btn{
-      background:rgba(255,255,255,0.1); color:#ddd; padding:6px 0; width:90px; border-radius:4px;
-      font-size:13px; text-align:center; text-decoration:none; transition:all 0.2s;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      background: rgba(255,255,255,0.1); color:#ddd; padding:6px 0; width:90px; border-radius:4px;
+      font-size:13px; text-align:center; text-decoration:none; transition: all 0.2s;
+      white-space: nowrap; overflow:hidden; text-overflow: ellipsis;
     }
-    .sub-btn:hover { background: rgba(255,255,255,0.25); color:#fff; }
-    .sub-btn.view-all { background:#7b1fa2; color:#fff; }
+    .sub-btn:hover{ background: rgba(255,255,255,0.25); color:#fff; }
+    .sub-btn.view-all{ background:#7b1fa2; color:#fff; }
 
     /* Intro */
     .intro{
       background: linear-gradient(90deg, var(--brand), var(--accent));
-      color:#fff; font-size:1.1rem; font-weight:600; line-height:1.7;
-      padding:1.5rem 3rem; border-radius:12px;
-      box-shadow:0 8px 20px rgba(0,0,0,0.18);
-      text-align:center; max-width:800px; width:90%; margin:2rem auto; border:0;
+      color:#fff; font-size: 1.1rem; font-weight:600; line-height:1.7;
+      padding: 1.5rem 3rem; border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+      text-align:center; max-width: 800px; width: 90%; margin: 2rem auto;
+      border:0;
     }
 
-    .section{ text-align:center; margin-top:24px; }
+    .section{ text-align:center; margin-top: 24px; }
 
-    /* ✅ 핵심: 제목바를 “완전 불투명 + 위 레이어 + 배경”으로 고정 */
+    /* Title bar */
     .video-title-bar{
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:20px;
-      margin-bottom:12px;
-      flex-wrap:wrap;
-
-      width:100%;
-      max-width:1600px;
+      gap: 14px;
+      margin-bottom: 12px;
+      width: 100%;
+      max-width: 1600px;
       margin-left:auto;
       margin-right:auto;
       padding: 8px 16px;
-
       position: relative;
       z-index: 5;
-
-      /* 제목이 카드/그림자/무슨 효과 영향도 덜 받도록 ‘얇은 배경’ 부여 */
-      background: transparent;
       opacity: 1;
       filter: none;
+      flex-wrap: wrap;
     }
 
-    /* ✅ 핵심: h3를 강제로 진하게(흐림/연함 방지) */
+    /* ✅ Requirement #3: title in ONE line on mobile + slightly smaller + ellipsis */
     .video-title-bar h3{
       font-family:'Pretendard', sans-serif;
-      font-size:1.3rem;
-      font-weight:800;
+      font-weight: 800;
       color: var(--text);
-      margin:0;
-      line-height:1.5;
+      margin: 0;
+      line-height: 1.35;
       text-align:center;
+
+      /* one-line + ellipsis */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: min(92vw, 900px);
+
+      /* slightly smaller (responsive) */
+      font-size: clamp(1.02rem, 3.6vw, 1.22rem);
 
       opacity: 1 !important;
       filter: none !important;
       mix-blend-mode: normal !important;
       transform: none !important;
-
-      /* “흐려 보임” 방지: 그림자 제거(라이트 배경에서 회색처럼 보이는 경우 방지) */
       text-shadow: none !important;
     }
 
     .epilogue-btn{
-      background:#34495e; color:#fff; padding:8px 16px; border-radius:8px;
-      font-size:14px; text-decoration:none; transition:opacity .25s ease;
-      white-space:nowrap; font-weight:600;
-      opacity:1;
+      background:#34495e; color:#fff; padding: 8px 16px; border-radius: 10px;
+      font-size: 14px; text-decoration:none; transition: opacity .25s ease;
+      white-space: nowrap; font-weight: 700;
     }
-    .epilogue-btn:hover{ opacity:.9; }
+    .epilogue-btn:hover{ opacity: .9; }
 
-    /* Grid */
+    /* Layout */
     .video-container{
       display:flex; flex-wrap:wrap; justify-content:center; gap:20px;
-      padding:0 16px 30px 16px; max-width:1600px; margin:0 auto;
+      padding: 0 16px 30px 16px; max-width: 1600px; margin: 0 auto;
       align-items:flex-start;
     }
 
-    /* Card */
     .video-card{
-      background:var(--card-bg);
-      border-radius:14px;
-      overflow:hidden;
-      box-shadow:0 6px 18px rgba(0,0,0,.08);
+      background: var(--card-bg);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,.08);
       transition: transform .25s ease, box-shadow .25s ease;
-      position:relative;
-      display:flex; flex-direction:column;
+      position: relative;
+      display:flex;
+      flex-direction: column;
     }
-    .video-card:hover{ transform: translateY(-6px); box-shadow:0 10px 24px rgba(0,0,0,.15); }
+    .video-card:hover{ transform: translateY(-6px); box-shadow: 0 10px 24px rgba(0,0,0,.15); }
 
     .thumb-wrapper{
-      height:320px; position:relative; background:#000; cursor:pointer; overflow:hidden;
+      height: 320px;
+      position: relative;
+      background:#000;
+      cursor: pointer;
+      overflow: hidden;
     }
-    .thumb-img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .thumb-img{ width:100%; height:100%; object-fit: cover; display:block; }
 
-    .card-land{ width:568px; max-width:100%; }
-    @media (max-width:768px){
-      .card-land{ width:100%; }
-      .card-land .thumb-wrapper{ height:auto; aspect-ratio:16/9; }
+    .card-land{ width: 568px; max-width: 100%; }
+    @media (max-width: 768px){
+      .card-land{ width: 100%; }
+      .card-land .thumb-wrapper{ height:auto; aspect-ratio: 16/9; }
+      .intro{ width: 90%; padding: 16px; }
+      .header-title{ font-size: 2.5rem !important; }
     }
 
-    .card-short{ width:180px; max-width:45vw; }
-    @media (max-width:768px){
-      .card-short .thumb-wrapper{ height:280px; }
-      .intro{ width:90%; padding:16px; }
-      .header-title{ font-size:2.5rem !important; }
-    }
+    .card-short{ width: 180px; max-width: 45vw; }
+    @media (max-width: 768px){ .card-short .thumb-wrapper{ height: 280px; } }
 
-    .play-badge{
-      position:absolute; right:10px; bottom:10px;
-      background:rgba(0,0,0,.6); color:#fff; font-size:11px;
-      padding:5px 9px; border-radius:999px; pointer-events:none;
-    }
+    .play-badge{ position:absolute; right: 10px; bottom: 10px; background: rgba(0,0,0,.6); color:#fff; font-size: 11px; padding: 5px 9px; border-radius: 999px; pointer-events:none; }
 
     .info-area{
-      padding:12px 16px;
-      display:flex; align-items:center; justify-content:space-between;
-      background:var(--card-bg);
-      border-top:1px solid rgba(0,0,0,0.05);
+      padding: 12px 16px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      border-top: 1px solid rgba(0,0,0,0.05);
     }
 
     .video-title{
-      font-size:1rem; font-weight:700; color:var(--text);
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      flex-grow:1; margin-right:10px; text-align:left;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-grow: 1;
+      margin-right: 10px;
+      text-align: left;
     }
 
-    .yt-link-btn{ font-size:0.8rem; color:var(--accent); text-decoration:none; white-space:nowrap; flex-shrink:0; }
-    .yt-link-btn:hover{ text-decoration:underline; }
+    .yt-link-btn{ font-size: 0.8rem; color: var(--accent); text-decoration:none; white-space: nowrap; flex-shrink:0; }
+    .yt-link-btn:hover{ text-decoration: underline; }
 
     .modal{ position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; z-index:1000; }
     .modal-content{ background:var(--card-bg); color:var(--text); padding:2rem; border-radius:.75rem; width:min(92vw,420px); text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.35); }
-    @media (prefers-color-scheme: dark) { .modal-content { background-color:#111827; } }
-    .btn{ background:var(--brand); color:#fff; padding:.6rem 1rem; border-radius:.6rem; }
-    .btn:hover{ background:var(--brand-hover); }
+    @media (prefers-color-scheme: dark){ .modal-content{ background-color:#111827; } }
+    .btn{ background: var(--brand); color:#fff; padding:.6rem 1rem; border-radius:.6rem; }
+    .btn:hover{ background: var(--brand-hover); }
 
     .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:1100; padding:24px; }
     .lightbox-inner{ width:min(96vw,1100px); }
     .lb-close{ position:absolute; top:16px; right:16px; background:rgba(255,255,255,.15); color:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; }
 
-    #back-to-top{
-      position:fixed; right:16px; bottom:16px; z-index:1200;
-      background:var(--brand); color:#fff; border:none; border-radius:999px;
-      padding:10px 14px; box-shadow:0 8px 20px rgba(0,0,0,.25);
-      cursor:pointer; display:none;
-    }
-    #back-to-top:hover{ background:var(--brand-hover); }
+    #back-to-top{ position:fixed; right:16px; bottom:16px; z-index:1200; background: var(--brand); color:#fff; border:none; border-radius:999px; padding:10px 14px; box-shadow:0 8px 20px rgba(0,0,0,.25); cursor:pointer; display:none; }
+    #back-to-top:hover{ background: var(--brand-hover); }
   </style>
 </head>
 
-<!-- ✅ body에 Tailwind bg 클래스 제거 -->
 <body>
 
-  <header class="relative w-full h-[320px] md:h-[480px] overflow-hidden bg-gray-900">
+  <!-- ✅ Requirement #1: mobile keeps rectangle + shows whole image -->
+  <header class="banner-header relative w-full overflow-hidden bg-gray-900 aspect-[16/9] md:aspect-auto md:h-[480px]">
     <div id="slider-track" class="absolute inset-y-0 left-0 flex h-full slider-transition"></div>
 
+    <!-- overlay (kept) -->
     <div class="absolute inset-0 bg-black/45"></div>
 
     <h1 class="header-title absolute left-1/2 -translate-x-1/2 top-[50%] -translate-y-[50%] text-5xl md:text-7xl font-extrabold text-white text-shadow-crisp tracking-tight z-20 w-full text-center px-4">
@@ -247,6 +251,7 @@
     </h1>
   </header>
 
+  <!-- Navigation -->
   <div class="navbar-wrapper">
     <div class="navbar">
       <a href="index.html" class="nav-btn">Home</a>
@@ -263,16 +268,17 @@
     </div>
   </div>
 
+  <!-- ✅ Requirement #2: new line after the period -->
   <div class="intro">
     환갑을 넘긴 나이에 드론을 만나, 궁금했던 풍경을 직접 담을 수 있는 기쁨을 알게 되었고<br class="hidden md:block">
-    그 감동을 영상뿐만이 아닌, 노래로도 표현하고 싶어졌습니다.<br class="hidden md:block">
+    그 감동을 영상뿐만이 아닌, 노래로도 표현하고 싶어졌습니다.<br>
     이제는 세상을 여행하며 제가 느낀 소소한 감동을 나누는 "디지털 노마드"로 살아가고자 합니다.
   </div>
 
   <!-- 섹션 1 -->
   <div class="section">
     <div class="video-title-bar">
-      <h3>제목: 섶섬 | 시간과 인내로 깎은 美</h3>
+      <h3 title="제목: 섶섬 | 시간과 인내로 깎은 美">제목: 섶섬 | 시간과 인내로 깎은 美</h3>
       <a href="https://blog.naver.com/tonykks/223959038689" class="epilogue-btn" target="_blank" rel="noopener">Epilogue</a>
     </div>
 
@@ -304,7 +310,7 @@
   <!-- 섹션 2 -->
   <div class="section">
     <div class="video-title-bar">
-      <h3>제목: 송악의 수호신들: 주상절리의 군단을 만나다</h3>
+      <h3 title="제목: 송악의 수호신들: 주상절리의 군단을 만나다">제목: 송악의 수호신들: 주상절리의 군단을 만나다</h3>
       <a href="https://blog.naver.com/tonykks/223964965719" class="epilogue-btn" target="_blank" rel="noopener">Epilogue</a>
     </div>
 
@@ -347,13 +353,13 @@
       <div id="lb-target"></div>
     </div>
   </div>
-
   <button id="back-to-top" aria-label="맨 위로">▲</button>
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec";
     const BANNER_IMAGES = ["./images/songak.png", "./images/sanbangsan.jpg", "./images/baksu.png", "./images/tiger.png", "./images/sup.png"];
 
+    // Banner
     document.addEventListener('DOMContentLoaded', () => {
       const track = document.getElementById('slider-track');
       if (!track) return;
@@ -366,9 +372,12 @@
       const slidesWithClone = imagesToRender.length;
       const slideWidthPercent = 100 / slidesWithClone;
 
+      // ✅ Use object-contain on mobile, object-cover on md+
       track.innerHTML = imagesToRender.map((src, i) => `
-        <img src="${src}" class="h-full object-cover flex-shrink-0" alt="Banner ${i}"
-             style="width:${slideWidthPercent}%"
+        <img src="${src}"
+             class="h-full flex-shrink-0 banner-img"
+             alt="Banner ${i}"
+             style="width:${slideWidthPercent}%;"
              onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/CCCCCC/666666?text=Image+Loading...';">
       `).join('');
 
@@ -399,9 +408,11 @@
             track.removeEventListener('transitionend', onEnd);
             index = 0;
             goTo(index, false);
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-              track.style.transition = `transform ${durationMs}ms ease-in-out`;
-            }));
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                track.style.transition = `transform ${durationMs}ms ease-in-out`;
+              });
+            });
             scheduleNext();
           };
           track.addEventListener('transitionend', onEnd);
@@ -421,6 +432,7 @@
       loadPlacesForNav();
     });
 
+    // Places Toggle Logic
     function togglePlacesMenu() {
       const container = document.getElementById('sub-navbar-container');
       container.style.maxHeight = (container.style.maxHeight && container.style.maxHeight !== '0px') ? '0px' : '200px';
@@ -447,7 +459,7 @@
           return;
         }
 
-        const topPlaces = places.filter(p => p.priority >= 1 && p.priority <= 7).sort((a,b) => a.priority - b.priority);
+        const topPlaces = places.filter(p => p.priority >= 1 && p.priority <= 7).sort((a, b) => a.priority - b.priority);
         container.innerHTML = '';
 
         topPlaces.forEach(p => {
@@ -468,6 +480,7 @@
       }
     }
 
+    // Contact Modal
     const contactBtn = document.getElementById('contact-btn');
     const contactModal = document.getElementById('contact-modal');
     const closeModalBtn = document.getElementById('close-modal-btn');
@@ -476,44 +489,47 @@
       contactBtn.addEventListener('click', e => {
         e.preventDefault();
         contactModal.style.display = 'flex';
-        contactModal.setAttribute('aria-hidden','false');
+        contactModal.setAttribute('aria-hidden', 'false');
       });
       closeModalBtn.addEventListener('click', () => {
         contactModal.style.display = 'none';
-        contactModal.setAttribute('aria-hidden','true');
+        contactModal.setAttribute('aria-hidden', 'true');
       });
       contactModal.addEventListener('click', e => {
         if (e.target === contactModal) {
           contactModal.style.display = 'none';
-          contactModal.setAttribute('aria-hidden','true');
+          contactModal.setAttribute('aria-hidden', 'true');
         }
       });
     }
 
+    // Lightbox
     const lb = document.getElementById('lightbox');
     const lbClose = document.getElementById('lb-close');
     const lbTarget = document.getElementById('lb-target');
 
     function openLightbox(videoId, isShorts) {
       const style = isShorts
-        ? "width:min(90vw,450px); aspect-ratio:9/16;"
-        : "width:min(90vw,1000px); aspect-ratio:16/9;";
+        ? "width: min(90vw, 450px); aspect-ratio: 9/16;"
+        : "width: min(90vw, 1000px); aspect-ratio: 16/9;";
+
       const url = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&playsinline=1`;
       lbTarget.innerHTML = `<iframe title="YouTube video player" style="${style} border:0; border-radius:12px;" src="${url}" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
       lb.style.display = 'flex';
-      lb.setAttribute('aria-hidden','false');
+      lb.setAttribute('aria-hidden', 'false');
     }
 
-    function closeLightbox(){
-      lb.style.display='none';
-      lb.setAttribute('aria-hidden','true');
-      lbTarget.innerHTML='';
+    function closeLightbox() {
+      lb.style.display = 'none';
+      lb.setAttribute('aria-hidden', 'true');
+      lbTarget.innerHTML = '';
     }
 
     lbClose.addEventListener('click', closeLightbox);
     lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
     window.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
+    // 썸네일 카드 바인딩
     document.querySelectorAll('.video-card').forEach(card => {
       const vid = card.getAttribute('data-video-id');
       const isShorts = card.classList.contains('card-short');
@@ -525,10 +541,14 @@
 
       card.addEventListener('click', activate);
       card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(e); }
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activate(e);
+        }
       });
     });
 
+    // 유튜브 바로가기
     document.querySelectorAll('.yt-link-btn').forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
