@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8"/>
@@ -7,6 +7,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+
 <link rel="preload" as="image" href="./images/songak.png">
 <link rel="preload" as="image" href="./images/sanbangsan.png">
 <link rel="preload" as="image" href="./images/baksu.png">
@@ -26,171 +28,28 @@
     }
   }
 </script>
-
-<style>
-  :root{ --brand-dark:#1f3556; --brand:#2b5aa6; --brand-hover:#234b8b; --accent:#7b1fa2; --card-bg:#ffffff; --page-bg:#f2f2f2; --text:#111827; --muted:#6b7280; }
-  @media (prefers-color-scheme: dark){ :root{ --card-bg:#111827; --page-bg:#0b1220; --text:#e5e7eb; --muted:#9ca3af; --brand-dark:#162640; --brand:#2b5aa6; --brand-hover:#234b8b; --accent:#8b5cf6; } body { background-color: #0b1220; color: #e5e7eb; } }
-  body{ font-family:'Pretendard', sans-serif; background:var(--page-bg); color:var(--text); line-height: 1.6; word-break: keep-all; }
-  .slider-transition { transition: transform 1s ease-in-out; }
-  .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,.55); }
-
-  /* Navbar (Consistent) */
-  .navbar-wrapper { background: var(--brand-dark); width: 100%; }
-  .navbar { display: flex; justify-content: center; padding: 10px 0; flex-wrap: wrap; gap: 5px; }
-  .nav-btn {
-    background: var(--brand); color: #fff; border: none; padding: 10px 20px; border-radius: 8px;
-    text-decoration: none; font-size: 14px; transition: background .25s ease;
-    min-width: 100px; text-align: center; display: inline-block; cursor: pointer;
-  }
-  .nav-btn:hover { background: var(--brand-hover); }
-
-  /* Sub-Navbar (Expandable) */
-  .sub-navbar-container {
-    background-color: #162640; width: 100%; overflow: hidden; max-height: 0; transition: max-height 0.3s ease-out; border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-  .sub-navbar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 10px 0; }
-  .sub-btn { background: rgba(255,255,255,0.1); color: #ddd; padding: 6px 0; width: 90px; border-radius: 4px; font-size: 13px; text-align: center; text-decoration: none; transition: all 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .sub-btn:hover { background: rgba(255,255,255,0.25); color: #fff; }
-  .sub-btn.view-all { background: #7b1fa2; color: white; }
-
-  /* [Updated] Mixed Grid Layout Logic */
-  .mixed-container { 
-    display: flex; 
-    flex-wrap: wrap; 
-    justify-content: center; 
-    gap: 20px; 
-    padding: 20px; 
-    max-width: 1600px; 
-    margin: 0 auto;
-    align-items: flex-start; /* 상단 정렬 */
-  }
-
-  /* Card Base */
-  .video-card { 
-    background: var(--card-bg); 
-    border-radius: 14px; 
-    overflow: hidden; 
-    box-shadow: 0 6px 18px rgba(0,0,0,.08); 
-    transition: transform .25s ease, box-shadow .25s ease; 
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-  .video-card:hover { transform: translateY(-6px); box-shadow: 0 10px 24px rgba(0,0,0,.15); }
-
-  /* 높이 기준 설계 (Height-based Design) 
-     - 16:9 와 9:16 카드의 '썸네일 높이'를 동일하게 맞추거나, '전체 높이'를 맞춥니다.
-     - 여기서는 시각적 안정감을 위해 '썸네일 높이'를 고정값(예: 320px)으로 맞추고 너비를 유동적으로 합니다.
-  */
-  
-  /* 공통 썸네일 높이 설정 */
-  .thumb-wrapper {
-    height: 320px; /* 고정 높이 */
-    position: relative;
-    background: #000;
-    cursor: pointer;
-    overflow: hidden;
-  }
-  
-  .thumb-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 꽉 차게 */
-    display: block;
-  }
-
-  /* Landscape (16:9) -> 높이가 320px이면 너비는 약 568px */
-  .card-land {
-    width: 568px; /* 320 * (16/9) */
-    max-width: 100%; /* 모바일 대응 */
-  }
-  /* Mobile adjustment for landscape: 높이를 줄여서 비율 유지 */
-  @media (max-width: 768px) {
-    .card-land {
-      width: 100%; 
-    }
-    .card-land .thumb-wrapper {
-      height: auto;
-      aspect-ratio: 16/9;
-    }
-  }
-
-  /* Shorts (9:16) -> 높이가 320px이면 너비는 약 180px */
-  .card-short {
-    width: 180px; /* 320 * (9/16) */
-    max-width: 45vw;
-  }
-  @media (max-width: 768px) {
-    .card-short .thumb-wrapper {
-      height: 280px; /* 모바일에서는 조금 작게 */
-    }
-  }
-
-  .play-badge { position: absolute; right: 10px; bottom: 10px; background: rgba(0,0,0,.6); color: #fff; font-size: 11px; padding: 5px 9px; border-radius: 999px; pointer-events: none;}
-  
-  /* [Updated] Info Area */
-  .info-area {
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--card-bg);
-    border-top: 1px solid rgba(0,0,0,0.05);
-  }
-  
-  /* [Updated] Title Truncation */
-  .video-title {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text);
-    white-space: nowrap;      /* 한 줄로 표시 */
-    overflow: hidden;         /* 넘치는 부분 숨김 */
-    text-overflow: ellipsis;  /* ... 처리 */
-    max-width: 70%;           /* 버튼 공간 확보 */
-    display: block;
-  }
-
-  .yt-link-btn { 
-    font-size: 0.8rem; 
-    color: var(--accent); 
-    text-decoration: none; 
-    white-space: nowrap;
-    flex-shrink: 0;
-    margin-left: 8px;
-  }
-  .yt-link-btn:hover { text-decoration: underline; }
-
-  .place-header { text-align: center; margin: 40px 0 20px; }
-  .place-title-link { font-size: 2.5rem; font-weight: 800; color: var(--brand-dark); text-decoration: none; border-bottom: 3px solid transparent; transition: all 0.3s; cursor: pointer; }
-  .place-title-link:hover { border-color: var(--brand); color: var(--brand); }
-  @media (prefers-color-scheme:dark){ .place-title-link{ color:#cbd5e1; } }
-  .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; }
-  .lb-content { position: relative; width: 100%; display: flex; justify-content: center;}
-  .lb-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 30px; cursor: pointer; z-index: 2100; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 8px;}
-  @media (max-width:768px){ .header-title { font-size: 2.5rem !important; } }
-</style>
 </head>
 <body>
 
-  <header class="banner-header relative w-full overflow-hidden aspect-[16/5]">
-    <div id="slider-track" class="absolute inset-y-0 left-0 flex h-full slider-transition"></div>
-    <div class="absolute inset-0 bg-black/20"></div>
-    <h1 class="header-title absolute left-1/2 -translate-x-1/2 top-[50%] -translate-y-[50%] text-5xl md:text-7xl font-extrabold text-white text-shadow tracking-tight z-20 w-full text-center px-4">Tony's Sky View</h1>
+  <header class="hero">
+    <div id="slider-track" class="hero__track slider-transition"></div>
+    <div class="hero__overlay"></div>
+    <h1 class="hero__title text-shadow">Tony's Sky View</h1>
   </header>
 
   <!-- Navigation -->
   <div class="navbar-wrapper">
-    <div class="navbar">
-      <a href="index.html" class="nav-btn">Home</a>
-      <button id="places-toggle-btn" class="nav-btn active" onclick="togglePlacesMenu()">Places ▼</button>
-      <a href="videos.html" class="nav-btn">Videos</a>
-      <a href="shorts.html" class="nav-btn">Shorts</a>
-      <a href="https://smile21c.notion.site/my-profile" class="nav-btn" target="_blank" rel="noopener">About Me</a>
-      <button id="contact-btn" class="nav-btn">Contact Me</button>
+    <div class="navbar nav">
+      <a href="index.html" class="nav-btn nav__link">Home</a>
+      <button id="places-toggle-btn" class="nav-btn nav__link active" onclick="togglePlacesMenu()">Places ▼</button>
+      <a href="videos.html" class="nav-btn nav__link">Videos</a>
+      <a href="shorts.html" class="nav-btn nav__link">Shorts</a>
+      <a href="https://smile21c.notion.site/my-profile" class="nav-btn nav__link" target="_blank" rel="noopener">About Me</a>
+      <button id="contact-btn" class="nav-btn nav__link">Contact Me</button>
     </div>
     <div id="sub-navbar-container" class="sub-navbar-container">
       <div id="sub-navbar-content" class="sub-navbar">
-        <span style="color:#aaa; font-size:12px;">Loading places...</span>
+        <span class="subnav__placeholder">Loading places...</span>
       </div>
     </div>
   </div>
@@ -199,21 +58,21 @@
   <div id="main-content" style="display:none;">
     <div class="place-header">
       <a id="place-link" href="#" target="_blank" class="place-title-link"><span id="place-name-display"></span></a>
-      <p class="text-gray-500 mt-2 text-sm">위 타이틀을 클릭하면 소개 페이지로 이동합니다</p>
+      <p class="text-gray-500 text-muted mt-2 text-sm">위 타이틀을 클릭하면 소개 페이지로 이동합니다</p>
     </div>
     <hr class="border-t-2 border-gray-300 w-4/5 mx-auto mb-8">
-    <div id="video-container" class="mixed-container"></div>
+    <div id="video-container" class="mixed-container grid--flex"></div>
   </div>
   
-  <div id="contact-modal" class="modal" aria-hidden="true" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); align-items:center; justify-content:center; z-index:1000;">
-    <div class="modal-content" style="background:var(--card-bg); padding:2rem; border-radius:.75rem; text-align:center;">
+  <div id="contact-modal" class="modal" aria-hidden="true">
+    <div class="modal-content modal__content">
       <h3 class="text-xl font-bold mb-4">Contact Information</h3>
-      <p class="text-gray-700 mb-6" style="color:var(--muted)">Email: smile21c@korea.com</p>
-      <button id="close-modal-btn" class="nav-btn">Close</button>
+      <p class="text-gray-700 mb-6 text-muted">Email: smile21c@korea.com</p>
+      <button id="close-modal-btn" class="btn btn--primary">Close ×</button>
     </div>
   </div>
   <div id="lightbox" class="lightbox">
-    <div class="lb-close" onclick="closeLightbox()">✕</div>
+    <button class="lb-close lightbox__close" onclick="closeLightbox()" aria-label="Close">Close ×</button>
     <div id="lb-player" class="lb-content"></div>
   </div>
 
@@ -243,7 +102,7 @@
         }
       }
       document.getElementById('main-content').style.display = 'block';
-    } catch (e) { console.error(e); loadingEl.innerHTML = `<div style="color:red">데이터 로딩 오류: ${e.message}</div>`; }
+    } catch (e) { console.error(e); loadingEl.innerHTML = `<div class="text-error">데이터 로딩 오류: ${e.message}</div>`; }
   }
 
   // Banner
@@ -254,7 +113,7 @@
       if (imagesToUse.length > 0) {
         const imagesToRender = [...imagesToUse, imagesToUse[0]];
         const slideWidthPercent = 100 / imagesToRender.length;
-        track.innerHTML = imagesToRender.map((src, i) => `<img src="${src}" class="h-full object-contain flex-shrink-0" style="width: ${slideWidthPercent}%;" onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/CCCCCC/666666?text=Image+Loading...';">`).join('');
+        track.innerHTML = imagesToRender.map((src, i) => `<img src="${src}" class="hero__img banner-img" style="width: ${slideWidthPercent}%;" onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/CCCCCC/666666?text=Image+Loading...';">`).join('');
         track.style.width = `${imagesToRender.length * 100}%`;
         let index=0; setInterval(()=>{ index++; track.style.transition='transform 1s ease'; track.style.transform=`translateX(-${index*slideWidthPercent}%)`; if(index===imagesToUse.length){ setTimeout(()=>{ track.style.transition='none'; index=0; track.style.transform='translateX(0)'; },1000); } }, 10000);
       }
@@ -265,11 +124,11 @@
   function togglePlacesMenu() { const c = document.getElementById('sub-navbar-container'); c.style.maxHeight = (c.style.maxHeight && c.style.maxHeight !== '0px') ? '0px' : '200px'; }
   function loadPlacesForNav(places) {
     const container = document.getElementById('sub-navbar-content');
-    if (!places || places.length === 0) { container.innerHTML = "<span style='color:#ccc; font-size:12px;'>메뉴 로드 실패</span>"; return; }
+    if (!places || places.length === 0) { container.innerHTML = "<span class='subnav__placeholder subnav__placeholder--error'>메뉴 로드 실패</span>"; return; }
     const topPlaces = places.filter(p => p.priority >= 1 && p.priority <= 7).sort((a,b) => a.priority - b.priority);
     container.innerHTML = '';
-    topPlaces.forEach(p => { const a = document.createElement('a'); a.className = 'sub-btn'; a.innerText = p.name; a.href = `places.html?place=${encodeURIComponent(p.name)}`; container.appendChild(a); });
-    const allBtn = document.createElement('a'); allBtn.className = 'sub-btn view-all'; allBtn.innerText = '전체보기'; allBtn.href = 'total_navi.html'; container.appendChild(allBtn);
+    topPlaces.forEach(p => { const a = document.createElement('a'); a.className = 'sub-btn subnav__link'; a.innerText = p.name; a.href = `places.html?place=${encodeURIComponent(p.name)}`; container.appendChild(a); });
+    const allBtn = document.createElement('a'); allBtn.className = 'sub-btn subnav__link subnav__link--all'; allBtn.innerText = '전체보기'; allBtn.href = 'total_navi.html'; container.appendChild(allBtn);
   }
 
   function loadPlaceContent(placeName) {
@@ -289,19 +148,19 @@
       const videoId = getId(v.url); if(!videoId) return;
       
       const card = document.createElement('div');
-      card.className = `video-card ${isShorts ? 'card-short' : 'card-land'}`;
+      card.className = `video-card card card--fixed-thumb ${isShorts ? 'card--short' : 'card--land'}`;
       
       // 제목이 없으면 '제목 없음' 처리
       const titleText = v.title || "제목 없음";
       
       card.innerHTML = `
-        <div class="thumb-wrapper" onclick="openLightbox('${videoId}', ${isShorts})">
+        <div class="thumb-wrapper card__thumb" onclick="openLightbox('${videoId}', ${isShorts})">
           <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" class="thumb-img" loading="lazy" alt="${titleText}">
-          <span class="play-badge">Play</span>
+          <span class="play-badge card__badge">Play</span>
         </div>
-        <div class="info-area">
-          <span class="video-title" title="${titleText}">${titleText}</span>
-          <a href="${v.url}" target="_blank" class="yt-link-btn">[유튜브]</a>
+        <div class="info-area card__body">
+          <span class="video-title card__title" title="${titleText}">${titleText}</span>
+          <a href="${v.url}" target="_blank" class="yt-link-btn card__action">[유튜브]</a>
         </div>
       `;
       container.appendChild(card);
@@ -323,5 +182,9 @@
 </script>
 </body>
 </html>
+
+
+
+
 
 

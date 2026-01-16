@@ -11,8 +11,8 @@
   <!-- Fonts -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-
-  <!-- Preload banner images -->
+  <link rel="stylesheet" href="style.css" />
+<!-- Preload banner images -->
   <link rel="preload" as="image" href="./images/songak.png">
   <link rel="preload" as="image" href="./images/sanbangsan.png">
   <link rel="preload" as="image" href="./images/baksu.png">
@@ -32,224 +32,18 @@
       }
     }
   </script>
-
-  <style>
-    .banner-area{
-      background: linear-gradient(90deg, #2b5aa6 0%, #7b1fa2 100%);
-    }
-    .banner-wrap{
-      max-width: 1600px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-    :root{
-      --brand-dark:#1f3556; --brand:#2b5aa6; --brand-hover:#234b8b;
-      --accent:#7b1fa2; --card-bg:#ffffff; --page-bg:#f2f2f2;
-      --text:#111827; --muted:#6b7280;
-    }
-    @media (prefers-color-scheme: dark){
-      :root{
-        --card-bg:#111827; --page-bg:#0b1220; --text:#e5e7eb; --muted:#9ca3af;
-        --brand-dark:#162640; --brand:#2b5aa6; --brand-hover:#234b8b; --accent:#8b5cf6;
-      }
-      body { background-color:#0b1220; color:#e5e7eb; }
-    }
-
-    body{
-      font-family:'Pretendard', sans-serif;
-      background:var(--page-bg);
-      color:var(--text);
-      line-height:1.6;
-      word-break:keep-all;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: geometricPrecision;
-    }
-
-    /* Slider */
-    .slider-transition { transition: transform 1s ease-in-out; }
-
-    /* Header title shadow */
-    .text-shadow{ text-shadow: 2px 2px 4px rgba(0,0,0,.55); }
-
-    /* ✅ Banner: keep 16:9 image fully visible (no crop) */
-    .banner-img{ width:100%; height:100%; display:block; object-fit:contain; }
-/* Navigation */
-    .navbar-wrapper { background: var(--brand-dark); width: 100%; }
-    .navbar { display:flex; justify-content:center; padding: 10px 0; flex-wrap:wrap; gap:5px; }
-    .nav-btn{
-      background: var(--brand); color:#fff; border:none; padding:10px 20px; border-radius:8px;
-      text-decoration:none; font-size:14px; transition: background .25s ease;
-      min-width: 100px; text-align:center; display:inline-block; cursor:pointer;
-    }
-    .nav-btn:hover{ background: var(--brand-hover); }
-
-    .sub-navbar-container{
-      background-color:#162640; width:100%; overflow:hidden; max-height:0;
-      transition:max-height 0.3s ease-out; border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .sub-navbar{ display:flex; justify-content:center; gap:8px; flex-wrap:wrap; padding: 10px 0; }
-    .sub-btn{
-      background: rgba(255,255,255,0.1); color:#ddd; padding:6px 0; width:90px; border-radius:4px;
-      font-size:13px; text-align:center; text-decoration:none; transition: all 0.2s;
-      white-space: nowrap; overflow:hidden; text-overflow: ellipsis;
-    }
-    .sub-btn:hover{ background: rgba(255,255,255,0.25); color:#fff; }
-    .sub-btn.view-all{ background:#7b1fa2; color:#fff; }
-
-    /* Intro */
-    .intro{
-      background: linear-gradient(90deg, var(--brand), var(--accent));
-      color:#fff; font-size: 1.1rem; font-weight:600; line-height:1.7;
-      padding: 1.5rem 3rem; border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-      text-align:center; max-width: 800px; width: 90%; margin: 2rem auto;
-      border:0;
-    }
-
-    .section{ text-align:center; margin-top: 24px; }
-
-    /* Title bar */
-    .video-title-bar{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap: 14px;
-      margin-bottom: 12px;
-      width: 100%;
-      max-width: 1600px;
-      margin-left:auto;
-      margin-right:auto;
-      padding: 8px 16px;
-      position: relative;
-      z-index: 5;
-      opacity: 1;
-      filter: none;
-      flex-wrap: wrap;
-    }
-
-    /* ✅ Requirement #3: title in ONE line on mobile + slightly smaller + ellipsis */
-    .video-title-bar h3{
-      font-family:'Pretendard', sans-serif;
-      font-weight: 800;
-      color: var(--text);
-      margin: 0;
-      line-height: 1.35;
-      text-align:center;
-
-      /* one-line + ellipsis */
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: min(92vw, 900px);
-
-      /* slightly smaller (responsive) */
-      font-size: clamp(1.02rem, 3.6vw, 1.22rem);
-
-      opacity: 1 !important;
-      filter: none !important;
-      mix-blend-mode: normal !important;
-      transform: none !important;
-      text-shadow: none !important;
-    }
-
-    .epilogue-btn{
-      background:#34495e; color:#fff; padding: 8px 16px; border-radius: 10px;
-      font-size: 14px; text-decoration:none; transition: opacity .25s ease;
-      white-space: nowrap; font-weight: 700;
-    }
-    .epilogue-btn:hover{ opacity: .9; }
-
-    /* Layout */
-    .video-container{
-      display:flex; flex-wrap:wrap; justify-content:center; gap:20px;
-      padding: 0 16px 30px 16px; max-width: 1600px; margin: 0 auto;
-      align-items:flex-start;
-    }
-
-    .video-card{
-      background: var(--card-bg);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 6px 18px rgba(0,0,0,.08);
-      transition: transform .25s ease, box-shadow .25s ease;
-      position: relative;
-      display:flex;
-      flex-direction: column;
-    }
-    .video-card:hover{ transform: translateY(-6px); box-shadow: 0 10px 24px rgba(0,0,0,.15); }
-
-    .thumb-wrapper{
-      height: 320px;
-      position: relative;
-      background:#000;
-      cursor: pointer;
-      overflow: hidden;
-    }
-    .thumb-img{ width:100%; height:100%; object-fit: cover; display:block; }
-
-    .card-land{ width: 568px; max-width: 100%; }
-    @media (max-width: 768px){
-      .card-land{ width: 100%; }
-      .card-land .thumb-wrapper{ height:auto; aspect-ratio: 16/9; }
-      .intro{ width: 90%; padding: 16px; }
-      .header-title{ font-size: 2.5rem !important; }
-    }
-
-    .card-short{ width: 180px; max-width: 45vw; }
-    @media (max-width: 768px){ .card-short .thumb-wrapper{ height: 280px; } }
-
-    .play-badge{ position:absolute; right: 10px; bottom: 10px; background: rgba(0,0,0,.6); color:#fff; font-size: 11px; padding: 5px 9px; border-radius: 999px; pointer-events:none; }
-
-    .info-area{
-      padding: 12px 16px;
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      background: var(--card-bg);
-      border-top: 1px solid rgba(0,0,0,0.05);
-    }
-
-    .video-title{
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      flex-grow: 1;
-      margin-right: 10px;
-      text-align: left;
-    }
-
-    .yt-link-btn{ font-size: 0.8rem; color: var(--accent); text-decoration:none; white-space: nowrap; flex-shrink:0; }
-    .yt-link-btn:hover{ text-decoration: underline; }
-
-    .modal{ position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; z-index:1000; }
-    .modal-content{ background:var(--card-bg); color:var(--text); padding:2rem; border-radius:.75rem; width:min(92vw,420px); text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.35); }
-    @media (prefers-color-scheme: dark){ .modal-content{ background-color:#111827; } }
-    .btn{ background: var(--brand); color:#fff; padding:.6rem 1rem; border-radius:.6rem; }
-    .btn:hover{ background: var(--brand-hover); }
-
-    .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:1100; padding:24px; }
-    .lightbox-inner{ width:min(96vw,1100px); display:flex; justify-content:center; align-items:center; }
-    .lb-close{ position:absolute; top:16px; right:16px; background:rgba(255,255,255,.15); color:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; }
-
-    #back-to-top{ position:fixed; right:16px; bottom:16px; z-index:1200; background: var(--brand); color:#fff; border:none; border-radius:999px; padding:10px 14px; box-shadow:0 8px 20px rgba(0,0,0,.25); cursor:pointer; display:none; }
-    #back-to-top:hover{ background: var(--brand-hover); }
-</style>
 </head>
 
 <body>
 
   <!-- ✅ Requirement #1: mobile keeps rectangle + shows whole image -->
-      <header class="banner-header relative w-full overflow-hidden aspect-[16/5]">
-        <div id="slider-track" class="absolute inset-y-0 left-0 flex h-full slider-transition"></div>
+      <header class="hero">
+        <div id="slider-track" class="hero__track slider-transition"></div>
   
         <!-- overlay -->
-        <div class="absolute inset-0 bg-black/20"></div>
-  
-        <h1 class="header-title absolute left-1/2 -translate-x-1/2 top-[50%] -translate-y-[50%] text-5xl md:text-7xl font-extrabold text-white text-shadow tracking-tight z-20 w-full text-center px-4">
+        <div class="hero__overlay"></div>
+
+        <h1 class="hero__title text-shadow">
           Tony's Sky View
         </h1>
       </header>
@@ -257,17 +51,17 @@
 
   <!-- Navigation -->
   <div class="navbar-wrapper">
-    <div class="navbar">
-      <a href="index.html" class="nav-btn">Home</a>
-      <button id="places-toggle-btn" class="nav-btn" onclick="togglePlacesMenu()">Places ▼</button>
-      <a href="videos.html" class="nav-btn">Videos</a>
-      <a href="shorts.html" class="nav-btn">Shorts</a>
-      <a href="https://smile21c.notion.site/my-profile" class="nav-btn" target="_blank" rel="noopener">About Me</a>
-      <button id="contact-btn" class="nav-btn">Contact Me</button>
+    <div class="navbar nav">
+      <a href="index.html" class="nav-btn nav__link">Home</a>
+      <button id="places-toggle-btn" class="nav-btn nav__link" onclick="togglePlacesMenu()">Places ▼</button>
+      <a href="videos.html" class="nav-btn nav__link">Videos</a>
+      <a href="shorts.html" class="nav-btn nav__link">Shorts</a>
+      <a href="https://smile21c.notion.site/my-profile" class="nav-btn nav__link" target="_blank" rel="noopener">About Me</a>
+      <button id="contact-btn" class="nav-btn nav__link">Contact Me</button>
     </div>
     <div id="sub-navbar-container" class="sub-navbar-container">
       <div id="sub-navbar-content" class="sub-navbar">
-        <span style="color:#aaa; font-size:12px;">Loading places...</span>
+        <span class="subnav__placeholder">Loading places...</span>
       </div>
     </div>
   </div>
@@ -286,26 +80,26 @@
       <a href="https://blog.naver.com/tonykks/223959038689" class="epilogue-btn" target="_blank" rel="noopener">Epilogue</a>
     </div>
 
-    <div class="video-container">
-      <div class="video-card card-land" data-video-id="8q55ruguf1A" aria-label="섶섬 영상 1 썸네일" role="button" tabindex="0">
-        <div class="thumb-wrapper">
+    <div class="video-container grid grid--index-mix grid--center grid--index-center">
+      <div class="video-card card card--land card--fixed-thumb" data-video-id="8q55ruguf1A" aria-label="섶섬 영상 1 썸네일" role="button" tabindex="0">
+        <div class="thumb-wrapper card__thumb">
           <img src="https://img.youtube.com/vi/8q55ruguf1A/hqdefault.jpg" class="thumb-img" alt="섶섬 | 시간과 인내로 깎은 美 썸네일">
-          <span class="play-badge">Play</span>
+          <span class="play-badge card__badge">Play</span>
         </div>
-        <div class="info-area">
-          <span class="video-title" title="섶섬 | 시간과 인내로 깎은 美">섶섬 | 시간과 인내로 깎은 美</span>
-          <a href="https://www.youtube.com/watch?v=8q55ruguf1A" class="yt-link-btn" target="_blank" rel="noopener">[유튜브]</a>
+        <div class="info-area card__body">
+          <span class="video-title card__title" title="섶섬 | 시간과 인내로 깎은 美">섶섬 | 시간과 인내로 깎은 美</span>
+          <a href="https://www.youtube.com/watch?v=8q55ruguf1A" class="yt-link-btn card__action" target="_blank" rel="noopener">[유튜브]</a>
         </div>
       </div>
 
-      <div class="video-card card-short" data-video-id="gRbIelzHecU" aria-label="섶섬 쇼츠 썸네일" role="button" tabindex="0">
-        <div class="thumb-wrapper">
+      <div class="video-card card card--short card--fixed-thumb" data-video-id="gRbIelzHecU" aria-label="섶섬 쇼츠 썸네일" role="button" tabindex="0">
+        <div class="thumb-wrapper card__thumb">
           <img src="https://img.youtube.com/vi/gRbIelzHecU/hqdefault.jpg" class="thumb-img" alt="섶섬 쇼츠 썸네일">
-          <span class="play-badge">Play</span>
+          <span class="play-badge card__badge">Play</span>
         </div>
-        <div class="info-area">
-          <span class="video-title" title="섶섬 쇼츠">섶섬 쇼츠</span>
-          <a href="https://www.youtube.com/watch?v=gRbIelzHecU" class="yt-link-btn" target="_blank" rel="noopener">[유튜브]</a>
+        <div class="info-area card__body">
+          <span class="video-title card__title" title="섶섬 쇼츠">섶섬 쇼츠</span>
+          <a href="https://www.youtube.com/watch?v=gRbIelzHecU" class="yt-link-btn card__action" target="_blank" rel="noopener">[유튜브]</a>
         </div>
       </div>
     </div>
@@ -318,42 +112,42 @@
       <a href="https://blog.naver.com/tonykks/223964965719" class="epilogue-btn" target="_blank" rel="noopener">Epilogue</a>
     </div>
 
-    <div class="video-container">
-      <div class="video-card card-land" data-video-id="UApfY8GWE-Y" aria-label="송악의 수호신들 본편 썸네일" role="button" tabindex="0">
-        <div class="thumb-wrapper">
+    <div class="video-container grid grid--index-mix grid--center grid--index-center">
+      <div class="video-card card card--land card--fixed-thumb" data-video-id="UApfY8GWE-Y" aria-label="송악의 수호신들 본편 썸네일" role="button" tabindex="0">
+        <div class="thumb-wrapper card__thumb">
           <img src="https://img.youtube.com/vi/UApfY8GWE-Y/hqdefault.jpg" class="thumb-img" alt="송악의 수호신들 본편 썸네일">
-          <span class="play-badge">Play</span>
+          <span class="play-badge card__badge">Play</span>
         </div>
-        <div class="info-area">
-          <span class="video-title" title="송악의 수호신들: 주상절리의 군단을 만나다">송악의 수호신들: 주상절리의 군단을 만나다</span>
-          <a href="https://www.youtube.com/watch?v=UApfY8GWE-Y" class="yt-link-btn" target="_blank" rel="noopener">[유튜브]</a>
+        <div class="info-area card__body">
+          <span class="video-title card__title" title="송악의 수호신들: 주상절리의 군단을 만나다">송악의 수호신들: 주상절리의 군단을 만나다</span>
+          <a href="https://www.youtube.com/watch?v=UApfY8GWE-Y" class="yt-link-btn card__action" target="_blank" rel="noopener">[유튜브]</a>
         </div>
       </div>
 
-      <div class="video-card card-short" data-video-id="9bj-wyS2JMI" aria-label="Stone Sentinels 쇼츠 썸네일" role="button" tabindex="0">
-        <div class="thumb-wrapper">
+      <div class="video-card card card--short card--fixed-thumb" data-video-id="9bj-wyS2JMI" aria-label="Stone Sentinels 쇼츠 썸네일" role="button" tabindex="0">
+        <div class="thumb-wrapper card__thumb">
           <img src="https://img.youtube.com/vi/9bj-wyS2JMI/hqdefault.jpg" class="thumb-img" alt="Stone Sentinels 쇼츠 썸네일">
-          <span class="play-badge">Play</span>
+          <span class="play-badge card__badge">Play</span>
         </div>
-        <div class="info-area">
-          <span class="video-title" title="Stone Sentinels 쇼츠">Stone Sentinels 쇼츠</span>
-          <a href="https://www.youtube.com/watch?v=9bj-wyS2JMI" class="yt-link-btn" target="_blank" rel="noopener">[유튜브]</a>
+        <div class="info-area card__body">
+          <span class="video-title card__title" title="Stone Sentinels 쇼츠">Stone Sentinels 쇼츠</span>
+          <a href="https://www.youtube.com/watch?v=9bj-wyS2JMI" class="yt-link-btn card__action" target="_blank" rel="noopener">[유튜브]</a>
         </div>
       </div>
     </div>
   </div>
 
   <div id="contact-modal" class="modal" aria-hidden="true">
-    <div class="modal-content">
+    <div class="modal-content modal__content">
       <h3 class="text-xl font-bold mb-4">Contact Information</h3>
-      <p class="text-gray-700 mb-6" style="color:var(--muted)">Email: smile21c@korea.com</p>
-      <button id="close-modal-btn" class="btn">Close</button>
+      <p class="text-gray-700 mb-6 text-muted">Email: smile21c@korea.com</p>
+      <button id="close-modal-btn" class="btn btn--primary">Close</button>
     </div>
   </div>
 
   <div id="lightbox" class="lightbox" aria-hidden="true">
-    <div class="lightbox-inner">
-      <button class="lb-close" id="lb-close" aria-label="Close video">Close ✕</button>
+    <div class="lightbox-inner lightbox__inner">
+      <button class="lb-close lightbox__close" id="lb-close" aria-label="Close video">Close ✕</button>
       <div id="lb-target"></div>
     </div>
   </div>
@@ -379,7 +173,7 @@
       // ✅ Use object-contain on mobile, object-cover on md+
       track.innerHTML = imagesToRender.map((src, i) => `
         <img src="${src}"
-             class="h-full flex-shrink-0 banner-img"
+             class="hero__img banner-img"
              alt="Banner ${i}"
              style="width:${slideWidthPercent}%;"
              onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/CCCCCC/666666?text=Image+Loading...';">
@@ -459,7 +253,7 @@
         }
 
         if (!places || places.length === 0) {
-          container.innerHTML = "<span style='color:#ccc; font-size:12px;'>메뉴 로드 실패</span>";
+          container.innerHTML = "<span class='subnav__placeholder subnav__placeholder--error'>메뉴 로드 실패</span>";
           return;
         }
 
@@ -468,14 +262,14 @@
 
         topPlaces.forEach(p => {
           const a = document.createElement('a');
-          a.className = 'sub-btn';
+          a.className = 'sub-btn subnav__link';
           a.innerText = p.name;
           a.href = `places.html?place=${encodeURIComponent(p.name)}`;
           container.appendChild(a);
         });
 
         const allBtn = document.createElement('a');
-        allBtn.className = 'sub-btn view-all';
+        allBtn.className = 'sub-btn subnav__link subnav__link--all';
         allBtn.innerText = '전체보기';
         allBtn.href = 'total_navi.html';
         container.appendChild(allBtn);
@@ -536,7 +330,7 @@
     // 썸네일 카드 바인딩
     document.querySelectorAll('.video-card').forEach(card => {
       const vid = card.getAttribute('data-video-id');
-      const isShorts = card.classList.contains('card-short');
+      const isShorts = card.classList.contains('card--short') || card.classList.contains('card-short');
 
       const activate = (event) => {
         const isYtLink = event.target.closest('.yt-link-btn');
@@ -568,3 +362,6 @@
   </script>
 </body>
 </html>
+
+
+
