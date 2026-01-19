@@ -88,7 +88,12 @@
       const json = await res.json();
       if (Array.isArray(json)) { g_videos = json; g_places = []; } else { g_videos = json.videos || []; g_places = json.places || []; }
       
-      sessionStorage.setItem('skyview_places', JSON.stringify(g_places));
+    try {
+          sessionStorage.setItem('skyview_places', JSON.stringify(g_places));
+        } catch (e) {
+          console.warn("Storage blocked; skip cache", e);
+        }
+
       loadPlacesForNav(g_places); 
 
       const params = new URLSearchParams(window.location.search);
