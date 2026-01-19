@@ -3,11 +3,19 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Tony's SkyView Portfolio - 16:9 Videos</title>
+<title>Tony's SkyView Portfolio - 9:16 Shorts</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css" />
+
+<!-- Preload images -->
+<link rel="preload" as="image" href="./images/songak.png">
+<link rel="preload" as="image" href="./images/sanbangsan.png">
+<link rel="preload" as="image" href="./images/baksu.png">
+<link rel="preload" as="image" href="./images/tiger.png">
+<link rel="preload" as="image" href="./images/sup.png">
+
 <script>
   tailwind.config = {
     theme: {
@@ -46,14 +54,14 @@
     </div>
   </div>
 
-  <div class="intro intro--wide">행복은 삶의 질을 좋게 하는 수단이지 결코 그 자체가 목적이 되어서는 안 된다.</div>
+  <div class="intro intro--wide">자유와 행복이 중요한 이유는 그것들이 삶(생존)의 질(質)을 좋게 하고, 양질의 삶을 증가시키기 때문이다.</div>
   <hr class="border-t-2 border-gray-300 my-8 w-4/5 mx-auto">
-  <div id="videos" class="text-center py-6">
-    <h2 class="video-section-title">16:9 Videos</h2>
-    <div id="loading" class="text-gray-500 mb-4 font-bold max-w-2xl mx-auto px-4">Loading videos...</div>
-    <div id="videos-container" class="grid-layout grid grid--videos grid--center"></div>
+  <div id="shorts" class="text-center py-6">
+    <h2 class="video-section-title">9:16 Shorts</h2>
+    <div id="loading" class="text-gray-500 mb-4 font-bold">Loading shorts...</div>
+    <div id="shorts-container" class="grid-layout grid grid--shorts grid--shorts-6"></div>
   </div>
-
+  
   <div id="contact-modal" class="modal" aria-hidden="true">
     <div class="modal-content modal__content">
       <h3 class="text-xl font-bold mb-4">Contact Information</h3>
@@ -69,37 +77,7 @@
   </div>
 
 <script>
-  
-    // ✅ Safe Storage (Edge/Private/확장프로그램/설정 차단 대비)
-    const SafeStorage = {
-      get(key) {
-        try {
-          return SafeStorage.get(key);
-        } catch (e) {
-          console.warn('[SafeStorage.get] blocked:', key, e);
-          return null;
-        }
-      },
-      set(key, value) {
-        try {
-          SafeStorage.set(key, value);
-          return true;
-        } catch (e) {
-          console.warn('[SafeStorage.set] blocked:', key, e);
-          return false;
-        }
-      },
-      remove(key) {
-        try {
-          SafeStorage.remove(key);
-          return true;
-        } catch (e) {
-          return false;
-        }
-      }
-    };
-
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec"; 
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec"; 
   const BANNER_IMAGES = ["./images/songak.png", "./images/sanbangsan.png", "./images/baksu.png", "./images/tiger.png", "./images/sup.png"];
   
   // Banner
@@ -132,13 +110,13 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqy
     const container = document.getElementById('sub-navbar-content');
     try {
       let places = [];
-      const cached = SafeStorage.get('skyview_places');
+      const cached = sessionStorage.getItem('skyview_places');
       if (cached) { places = JSON.parse(cached); } else {
         const res = await fetch(SCRIPT_URL);
         const json = await res.json();
         if (!Array.isArray(json) && json.places) {
           places = json.places;
-          SafeStorage.set('skyview_places', JSON.stringify(places));
+          sessionStorage.setItem('skyview_places', JSON.stringify(places));
         }
       }
       if (!places || places.length === 0) { container.innerHTML = "<span class='subnav__placeholder subnav__placeholder--error'>메뉴 로드 실패</span>"; return; }
@@ -151,7 +129,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqy
 
   function getId(url){ if(!url) return null; try{ const u = new URL(url); const v = u.searchParams.get('v'); if (v && v.length === 11) return v; const parts = u.pathname.split('/'); for (let i = parts.length - 1; i >= 0; i--) { const seg = parts[i]; if (seg && seg.length === 11) return seg; } }catch(e){ const m = url.match(/(?:watch\?v=|youtu\.be\/|embed\/|v\/)([A-Za-z0-9_-]{11})/); if (m) return m[1]; } return null; }
   const lb = document.getElementById('lightbox'); const lbClose = document.getElementById('lb-close'); const lbTarget = document.getElementById('lb-target');
-  function openLB(id){ lbTarget.innerHTML = `<iframe title="YouTube video player" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`; lb.style.display='flex'; lb.setAttribute('aria-hidden','false'); }
+  function openLB(id){ lbTarget.innerHTML = `<iframe title="Shorts player" style="width:100%;aspect-ratio:9/16;border:0;border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`; lb.style.display='flex'; lb.setAttribute('aria-hidden','false'); }
   function closeLB(){ lb.style.display='none'; lb.setAttribute('aria-hidden','true'); lbTarget.innerHTML=''; }
   lbClose.addEventListener('click', closeLB); lb.addEventListener('click', e=>{ if(e.target===lb) closeLB(); }); window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLB(); });
 
@@ -159,25 +137,25 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqy
     list.sort((a,b)=> new Date(b.date)-new Date(a.date));
     list.forEach(v=>{
       const id=getId(v.url); if(!id) return;
-      if (v.type && v.type.toLowerCase() !== 'landscape') return;
-      const card=document.createElement('div'); card.className='video-card card card--list'; card.setAttribute('role','button'); card.tabIndex=0;
-      card.innerHTML=`<a class="thumb card__thumb card__thumb--16x9"><img loading="lazy" src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="${v.title} 썸네일"><span class="play card__badge">Play</span></a><div class="yt card__body"><a class="card__action" href="${v.url}" target="_blank" rel="noopener">[유튜브 바로가기]</a></div>`;
+      if (v.type && v.type.toLowerCase() !== 'shorts') return;
+      const card=document.createElement('div'); card.className='video-card card card--short'; card.setAttribute('role','button'); card.tabIndex=0;
+      card.innerHTML=`<a class="thumb card__thumb card__thumb--9x16"><img loading="lazy" src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="${v.title} 썸네일"><span class="play card__badge">Play</span></a><div class="yt card__body"><a class="card__action" href="${v.url}" target="_blank" rel="noopener">[유튜브 바로가기]</a></div>`;
       const act=(e)=>{ const isYt = e.target.closest('.yt'); if(!isYt){ openLB(id); } };
       card.addEventListener('click', act); card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLB(id); } }); el.appendChild(card);
     });
   }
-  async function loadVideos() {
+  async function loadShorts() {
     const loadingEl = document.getElementById('loading');
     try {
       const response = await fetch(SCRIPT_URL);
-      if (!response.ok) throw new Error(`HTTP Error Status: ${response.status}`);
+      if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
       const json = await response.json();
       const allVideos = json.videos || [];
-      if(!allVideos || allVideos.length === 0) { if(loadingEl) loadingEl.textContent = '데이터가 비어있습니다.'; return; }
-      render(allVideos, 'videos-container');
-    } catch (error) { console.error('Fetch error:', error); if(loadingEl) loadingEl.textContent = 'Error loading videos.'; }
+      if(!allVideos || allVideos.length === 0) { if(loadingEl) loadingEl.textContent = 'No shorts found.'; return; }
+      render(allVideos, 'shorts-container');
+    } catch (error) { console.error('Fetch error:', error); if(loadingEl) { loadingEl.textContent = 'Failed to load shorts.'; loadingEl.style.color = '#ef4444'; } }
   }
-  loadVideos();
+  loadShorts();
 
   const contactBtn=document.getElementById('contact-btn'); const contactModal=document.getElementById('contact-modal'); const closeModalBtn=document.getElementById('close-modal-btn');
   if(contactBtn && contactModal && closeModalBtn){

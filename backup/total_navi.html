@@ -80,37 +80,7 @@
   </div>
 
 <script>
-  
-    // ✅ Safe Storage (Edge/Private/확장프로그램/설정 차단 대비)
-    const SafeStorage = {
-      get(key) {
-        try {
-          return SafeStorage.get(key);
-        } catch (e) {
-          console.warn('[SafeStorage.get] blocked:', key, e);
-          return null;
-        }
-      },
-      set(key, value) {
-        try {
-          SafeStorage.set(key, value);
-          return true;
-        } catch (e) {
-          console.warn('[SafeStorage.set] blocked:', key, e);
-          return false;
-        }
-      },
-      remove(key) {
-        try {
-          SafeStorage.remove(key);
-          return true;
-        } catch (e) {
-          return false;
-        }
-      }
-    };
-
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec";
   const BANNER_IMAGES = ["./images/songak.png", "./images/sanbangsan.png", "./images/baksu.png", "./images/tiger.png", "./images/sup.png"];
 
   // 1. Banner Slider Logic
@@ -148,13 +118,13 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqy
     const container = document.getElementById('sub-navbar-content');
     try {
       let places = [];
-      const cached = SafeStorage.get('skyview_places');
+      const cached = sessionStorage.getItem('skyview_places');
       if (cached) { places = JSON.parse(cached); } else {
         const res = await fetch(SCRIPT_URL);
         const json = await res.json();
         if (!Array.isArray(json) && json.places) {
           places = json.places;
-          SafeStorage.set('skyview_places', JSON.stringify(places));
+          sessionStorage.setItem('skyview_places', JSON.stringify(places));
         }
       }
       if (!places || places.length === 0) { container.innerHTML = "<span class='subnav__placeholder subnav__placeholder--error'>메뉴 로드 실패</span>"; return; }
@@ -178,7 +148,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqy
     try {
       // Use cached data if available, otherwise fetch
       let places = [];
-      const cached = SafeStorage.get('skyview_places');
+      const cached = sessionStorage.getItem('skyview_places');
       if (cached) {
         places = JSON.parse(cached);
       } else {
