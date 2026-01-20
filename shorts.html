@@ -79,33 +79,54 @@
 <script>
   
     // ✅ Safe Storage (Edge/Private/확장프로그램/설정 차단 대비)
-    const SafeStorage = {
-      get(key) {
+    // - localStorage 접근이 막히면 메모리 캐시로 graceful fallback
+    const SafeStorage = (() => {
+      const mem = Object.create(null);
+      const hasLS = () => {
         try {
-          return SafeStorage.get(key);
-        } catch (e) {
-          console.warn('[SafeStorage.get] blocked:', key, e);
-          return null;
-        }
-      },
-      set(key, value) {
-        try {
-          SafeStorage.set(key, value);
-          return true;
-        } catch (e) {
-          console.warn('[SafeStorage.set] blocked:', key, e);
-          return false;
-        }
-      },
-      remove(key) {
-        try {
-          SafeStorage.remove(key);
+          const t = '__test__';
+          localStorage.setItem(t, '1');
+          localStorage.removeItem(t);
           return true;
         } catch (e) {
           return false;
         }
-      }
-    };
+      };
+      const ok = hasLS();
+
+      return {
+        get(key) {
+          try {
+            if (ok) return localStorage.getItem(key);
+          } catch (e) {
+            console.warn('[SafeStorage.get] blocked:', key, e);
+          }
+          return mem[key] ?? null;
+        },
+        set(key, value) {
+          try {
+            if (ok) {
+              localStorage.setItem(key, value);
+              return true;
+            }
+          } catch (e) {
+            console.warn('[SafeStorage.set] blocked:', key, e);
+          }
+          mem[key] = value;
+          return true;
+        },
+        remove(key) {
+          try {
+            if (ok) {
+              localStorage.removeItem(key);
+              return true;
+            }
+          } catch (e) {}
+          delete mem[key];
+          return true;
+        }
+      };
+    })();
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec"; 
   const BANNER_IMAGES = ["./images/songak.png", "./images/sanbangsan.png", "./images/baksu.png", "./images/tiger.png", "./images/sup.png"];
