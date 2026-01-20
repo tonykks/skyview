@@ -884,3 +884,10 @@ a:focus-visible {
     height: 280px;
   }
 }
+
+/* Mobile: show 9:16 Shorts as 2 cards per row */
+@media (max-width: 768px) {
+  .grid--shorts-6 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
