@@ -1,31 +1,886 @@
+:root {
+  --max-width: 1600px;
+  --gap-sm: 12px;
+  --gap-md: 20px;
+  --gap-lg: 28px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --hero-ratio-wide: 16 / 5;
+  --color-bg: #f2f2f2;
+  --color-surface: #ffffff;
+  --color-text: #111827;
+  --color-muted: #6b7280;
+  --color-brand-dark: #1f3556;
+  --color-brand: #2b5aa6;
+  --color-brand-hover: #234b8b;
+  --color-accent: #7b1fa2;
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 10px 24px rgba(0, 0, 0, 0.15);
+  --z-modal: 1000;
+  --z-lightbox: 1100;
+  --z-to-top: 1200;
+}
 
-/* ===============================
-   Mobile Fix Patch (Append Only)
-   =============================== */
-
-/* FIX 1: Restore Shorts grid to 2 columns on mobile */
-@media (max-width: 640px) {
-  .grid--shorts-6 {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0b1220;
+    --color-surface: #111827;
+    --color-text: #e5e7eb;
+    --color-muted: #9ca3af;
+    --color-brand-dark: #162640;
+    --color-brand: #2b5aa6;
+    --color-brand-hover: #234b8b;
+    --color-accent: #8b5cf6;
   }
 }
 
-/* FIX 2: Smaller nav text on mobile + prevent 'Contact Me' clipping */
-@media (max-width: 520px) {
-  .nav-btn,
-  .nav__link {
-    font-size: 11px !important;
-    padding: 8px 4px !important;
-    line-height: 1.05 !important;
-    min-width: 0 !important;
-    white-space: normal !important;
-    word-break: keep-all !important;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Pretendard", sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.55);
+}
+
+.text-shadow-crisp {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.85);
+}
+
+.slider-transition {
+  transition: transform 1s ease-in-out;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.container--narrow {
+  max-width: 800px;
+}
+
+.page-frame {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 16px;
+  background-color: var(--color-bg);
+}
+
+.section {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.grid {
+  display: grid;
+  gap: var(--gap-md);
+  justify-items: center;
+}
+
+.grid--auto {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.grid--videos {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+@media (min-width: 1200px) {
+  .grid--videos {
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
+  }
+}
+
+.grid--index-mix {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* --- Grid alignment helpers --- */
+.grid--center {
+  justify-content: center;     /* 남는 공간이 있을 때 전체 그리드를 가운데 */
+  justify-items: center;       /* 카드 폭은 규칙대로 */
+}
+
+.grid--index-center {
+  justify-content: center;
+  justify-items: center;
+}
+
+.grid--index-mix {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+@media (min-width:900px) {
+  .grid--index-mix {
+    grid-template-columns: repeat(2, 1fr);
   }
 
+  .video-container.grid--index-mix {
+    grid-template-columns: minmax(0, 1fr) 260px;
+    align-items: start;
+    gap: 24px;
+  }
+}
+
+.grid--shorts {
+  gap: 24px;
+}
+
+.grid--shorts-6 {
+  grid-template-columns: repeat(6, minmax(140px, 1fr));
+}
+
+.grid--flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap-md);
+  align-items: flex-start;
+}
+
+.grid--places {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--gap-md);
+  justify-content: center;
+}
+
+.grid--places-4 {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+@media (min-width: 1200px) {
+  .grid--places-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 640px) {
+  .grid--places {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .grid--places {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .grid--places {
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
+  }
+}
+
+.video-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 16px 30px;
+}
+
+.video-container.grid--index-mix .card--land {
+  width: 100%;
+  max-width: 900px;
+}
+
+.video-container.grid--index-mix .card--short {
+  width: 100%;
+  max-width: 260px;
+}
+
+.video-container.grid--index-mix .card__thumb {
+  aspect-ratio: 16 / 9;
+}
+
+.video-container.grid--index-mix .card--short .card__thumb {
+  aspect-ratio: 9 / 16;
+  max-height: 340px;
+  margin: 0 auto;
+}
+
+.grid-layout {
+  padding: 16px;
+  justify-items: center;
+}
+
+.mixed-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 20px 16px;
+  align-items: flex-start;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: var(--hero-ratio-wide);
+  background: linear-gradient(90deg, var(--color-brand), var(--color-accent));
+}
+
+.hero__track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  height: 100%;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.hero__title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-weight: 800;
+  padding: 0 16px;
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
+}
+
+.hero__img,
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.navbar-wrapper,
+.nav-wrapper {
+  background: var(--color-brand-dark);
+  width: 100%;
+}
+
+.navbar,
+.nav {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.nav-btn,
+.nav__link {
+  background: var(--color-brand);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.25s ease;
+  /* Desktop: keep buttons tidy and equal to the longest label ("Contact Me") */
+  width: 140px;
+  min-width: 140px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Mobile: keep all nav buttons on ONE line (same width), smaller + ellipsis if needed */
+@media (max-width: 520px) {
+  .navbar,
+  .nav {
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 8px 10px;
+  }
+
+  .nav-btn,
   .nav__link {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 4px !important;
+    width: auto;
+    min-width: 0;
+    flex: 1 1 0;
+    padding: 8px 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.nav-btn:hover,
+.nav__link:hover {
+  background: var(--color-brand-hover);
+}
+
+.sub-navbar-container,
+.subnav {
+  background-color: #162640;
+  width: 100%;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease-out;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  /* Removed border-bottom to ensure zero visible strip when collapsed */
+}
+
+.sub-navbar,
+.subnav__list {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+
+.sub-btn,
+.subnav__link {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ddd;
+  padding: 6px 0;
+  width: 90px;
+  border-radius: 4px;
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subnav__placeholder {
+  color: #aaa;
+  font-size: 12px;
+}
+
+.subnav__placeholder--error {
+  color: #ccc;
+}
+
+.sub-btn:hover,
+.subnav__link:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.sub-btn.view-all,
+.subnav__link--all {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.intro {
+  background: linear-gradient(90deg, var(--color-brand), var(--color-accent));
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.7;
+  padding: 1.5rem 3rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  max-width: 800px;
+  width: 90%;
+  margin: 1.5rem auto;
+  border: 0;
+}
+
+.intro--wide {
+  max-width: 70%;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.video-title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 12px;
+  width: 100%;
+  padding: 8px 16px;
+  position: relative;
+  z-index: 5;
+  flex-wrap: wrap;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.video-title-bar h3 {
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.35;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: min(92vw, 900px);
+  font-size: clamp(1.02rem, 3.6vw, 1.22rem);
+}
+
+.video-section-title {
+  color: var(--color-brand-dark);
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .video-section-title {
+    color: #cbd5e1;
+  }
+}
+
+.epilogue-btn {
+  background: #34495e;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: opacity 0.25s ease;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.epilogue-btn:hover {
+  opacity: 0.9;
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.card--land {
+  width: 568px;
+  max-width: 100%;
+}
+
+.card--list {
+  width: 100%;
+  max-width: 320px;
+}
+
+.card--short {
+  width: 180px;
+  max-width: 45vw;
+}
+
+.card--fixed-thumb .card__thumb {
+  height: 320px;
+}
+
+.card__thumb {
+  display: block;
+  position: relative;
+  background: #000;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.card__thumb--16x9 {
+  aspect-ratio: 16 / 9;
+}
+
+.card__thumb--9x16 {
+  aspect-ratio: 9 / 16;
+}
+
+.card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card__badge,
+.play-badge,
+.play {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 11px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.card__body,
+.info-area {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-surface);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card__title,
+.video-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+  margin-right: 10px;
+  text-align: left;
+}
+
+.card__action,
+.yt-link-btn {
+  font-size: 0.8rem;
+  color: var(--color-accent);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.yt-link-btn:hover,
+.card__action:hover {
+  text-decoration: underline;
+}
+
+.yt {
+  text-align: center;
+}
+
+.btn,
+.btn--primary,
+.btn-primary {
+  background: var(--color-brand);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 0.6rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.25s ease;
+}
+
+.btn:hover,
+.btn--primary:hover,
+.btn-primary:hover {
+  background: var(--color-brand-hover);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-brand);
+  border: 1px solid var(--color-brand);
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+}
+
+.modal__content,
+.modal-content {
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 2rem;
+  border-radius: 0.75rem;
+  width: min(92vw, 420px);
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-lightbox);
+  padding: 24px;
+}
+
+.lightbox__inner,
+.lightbox-inner {
+  width: min(96vw, 1100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox__close,
+.lb-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.lb-content {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.lightbox iframe {
+  position: relative;
+  z-index: 1;
+}
+
+.place-header {
+  text-align: center;
+  margin: 40px 0 20px;
+}
+
+.place-title-link {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-brand-dark);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.place-title-link:hover {
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+.index-btn {
+  display: inline-block;
+  margin: 8px;
+  padding: 12px 24px;
+  background: var(--color-surface);
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  color: var(--color-text);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.index-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+#back-to-top {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: var(--z-to-top);
+  background: var(--color-brand);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  display: none;
+}
+
+#back-to-top:hover {
+  background: var(--color-brand-hover);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+
+.text-brand-dark {
+  color: var(--color-brand-dark);
+}
+
+.text-error {
+  color: #ef4444;
+}
+
+@media (max-width: 768px) {
+  .hero__title {
+    font-size: 2.5rem;
+  }
+
+  .intro {
+    width: 90%;
+    padding: 16px;
+  }
+
+  .intro--wide {
+    max-width: 90%;
+  }
+
+  .card--land {
+    width: 100%;
+  }
+
+  .card--fixed-thumb .card__thumb {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .card--short .card__thumb {
+    height: 280px;
+  }
+
+  .grid--tight {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--gap-sm);
+  }
+}
+
+@media (min-width: 900px) {
+  .grid--index-mix {
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+  }
+}
+
+/* =========================
+   HOME(index) — 배포본(ok)과 동일한 카드 세트 레이아웃
+   목표: intro(그라데이션 박스) 폭 감(≈800px) 안에서
+         16:9(568px) + 9:16(180px)이 함께 보이도록.
+   적용 범위: .video-container.grid--index-mix (index_now.html에서만 사용)
+========================= */
+
+/* grid 클래스를 쓰더라도, index의 ‘세트’는 배포본처럼 flex로 배치 */
+.video-container.grid--index-mix{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+
+  /* 배포본 ‘intro 아래 작업 폭’ 느낌 */
+  max-width: 800px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* 배포본 카드 폭(16:9=568, 9:16=180)로 고정 */
+.video-container.grid--index-mix .card--land{
+  width: 568px;
+  max-width: 100%;
+}
+
+.video-container.grid--index-mix .card--short{
+  width: 180px;
+  max-width: 45vw;
+}
+
+/* 썸네일 높이: 배포본은 세로/가로 모두 320px 고정(카드--fixed-thumb) */
+.video-container.grid--index-mix .card--fixed-thumb .card__thumb{
+  height: 320px;
+}
+
+/* 모바일: 배포본과 동일하게 16:9는 비율로, 쇼츠는 280px 높이 */
+@media (max-width: 768px){
+  .video-container.grid--index-mix{
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .video-container.grid--index-mix .card--land{
+    width: 100%;
+  }
+
+  .video-container.grid--index-mix .card--land .card__thumb{
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .video-container.grid--index-mix .card--short .card__thumb{
+    height: 280px;
   }
 }
