@@ -315,12 +315,36 @@ a:focus-visible {
   text-decoration: none;
   font-size: 14px;
   transition: background 0.25s ease;
+  /* Desktop: keep buttons tidy and equal to the longest label ("Contact Me") */
+  width: 140px;
+  min-width: 140px;
   text-align: center;
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  flex: 1 1 160px; /* make all nav buttons equal-width per row */
-  max-width: 220px; /* prevents over-stretch on wide screens */
-  box-sizing: border-box;
+}
+
+/* Mobile: keep all nav buttons on ONE line (same width), smaller + ellipsis if needed */
+@media (max-width: 520px) {
+  .navbar,
+  .nav {
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 8px 10px;
+  }
+
+  .nav-btn,
+  .nav__link {
+    width: auto;
+    min-width: 0;
+    flex: 1 1 0;
+    padding: 8px 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .nav-btn:hover,
