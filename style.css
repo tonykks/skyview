@@ -315,7 +315,7 @@ a:focus-visible {
   text-decoration: none;
   font-size: 14px;
   transition: background 0.25s ease;
-  /* Desktop: keep buttons tidy and equal to the longest label ("Contact Me") */
+  /* Desktop: keep buttons tidy and equal to the longest label ("Email Me") */
   width: 140px;
   min-width: 140px;
   text-align: center;
