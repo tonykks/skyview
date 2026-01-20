@@ -48,8 +48,6 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   word-break: keep-all;
-  /* 모바일에서 '옆으로 퍼짐(가로 스크롤)' 방지용 안전장치 */
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricPrecision;
@@ -161,33 +159,10 @@ a:focus-visible {
 
 .grid--shorts {
   gap: 24px;
-  justify-items: center;
 }
 
 .grid--shorts-6 {
-  /*
-    shorts 페이지: 모바일에서 6열 고정이면(6 * 140px) 화면 밖으로 넘쳐
-    가로 스크롤이 생깁니다. 화면 폭에 맞춰 열 수를 단계적으로 줄입니다.
-  */
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-@media (min-width: 480px) {
-  .grid--shorts-6 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 640px) {
-  .grid--shorts-6 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1024px) {
-  .grid--shorts-6 {
-    grid-template-columns: repeat(6, minmax(140px, 1fr));
-  }
+  grid-template-columns: repeat(6, minmax(140px, 1fr));
 }
 
 .grid--flex {
@@ -340,10 +315,12 @@ a:focus-visible {
   text-decoration: none;
   font-size: 14px;
   transition: background 0.25s ease;
-  min-width: 100px;
   text-align: center;
-  display: inline-block;
+  display: block;
   cursor: pointer;
+  flex: 1 1 160px; /* make all nav buttons equal-width per row */
+  max-width: 220px; /* prevents over-stretch on wide screens */
+  box-sizing: border-box;
 }
 
 .nav-btn:hover,
