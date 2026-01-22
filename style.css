@@ -313,19 +313,20 @@ a:focus-visible {
   background: var(--color-brand);
   color: #fff;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 0;
   border-radius: var(--radius-sm);
   text-decoration: none;
   font-size: 14px;
   transition: background 0.25s ease;
   /* Desktop: keep buttons tidy and equal to the longest label ("Email Me") */
-  width: 140px;
-  min-width: 140px;
+  width: 120px;
+  min-width: 0;
   text-align: center;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  white-space: nowrap; /* ✅ 글자 줄바꿈 방지 */
 }
 
 /* Mobile: keep all nav buttons on ONE line (same width), smaller + ellipsis if needed */
