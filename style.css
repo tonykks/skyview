@@ -806,6 +806,17 @@ a:focus-visible {
     max-width: 90%;
   }
 
+  /* ✅ Desktop only: intro 박스를 정확히 800px로 고정 (모바일 영향 없음) */
+  @media (min-width: 769px) {
+    .intro {
+      width: 800px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+
   .card--land {
     width: 100%;
   }
