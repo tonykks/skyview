@@ -299,7 +299,7 @@ a:focus-visible {
 .navbar,
 .nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding: 10px 0;
   flex-wrap: wrap;
   gap: 5px;
