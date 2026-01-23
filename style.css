@@ -842,7 +842,7 @@ a:focus-visible {
 .video-container.grid--index-mix{
   display:flex;
   flex-wrap:wrap;
-  justify-content:center;
+  justify-content: space-between;
   gap:20px;
 
   /* 배포본 ‘intro 아래 작업 폭’ 느낌 */
