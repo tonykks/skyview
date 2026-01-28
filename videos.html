@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8"/>
@@ -29,7 +29,6 @@
     <h1 class="hero__title text-shadow">Tony's Sky View</h1>
   </header>
 
-  <!-- Navigation (Updated) -->
   <div class="navbar-wrapper">
     <div class="navbar nav">
       <a href="index.html" class="nav-btn nav__link">Home</a>
@@ -69,8 +68,7 @@
   </div>
 
 <script>
-  
-    // ✅ Safe Storage (Edge/Private/확장프로그램/설정 차단 대비)
+    // ✅ Safe Storage
     const SafeStorage = {
       get(key) {
         try {
@@ -99,10 +97,10 @@
       }
     };
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec"; 
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec"; 
   const BANNER_IMAGES = ["./images/songak.png", "./images/sanbangsan.png", "./images/baksu.png", "./images/tiger.png", "./images/sup.png"];
   
-  // Banner
+  // Banner Logic
   document.addEventListener('DOMContentLoaded', () => {
     const track = document.getElementById('slider-track');
     if (!track) return;
@@ -150,8 +148,16 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqy
   }
 
   function getId(url){ if(!url) return null; try{ const u = new URL(url); const v = u.searchParams.get('v'); if (v && v.length === 11) return v; const parts = u.pathname.split('/'); for (let i = parts.length - 1; i >= 0; i--) { const seg = parts[i]; if (seg && seg.length === 11) return seg; } }catch(e){ const m = url.match(/(?:watch\?v=|youtu\.be\/|embed\/|v\/)([A-Za-z0-9_-]{11})/); if (m) return m[1]; } return null; }
+  
   const lb = document.getElementById('lightbox'); const lbClose = document.getElementById('lb-close'); const lbTarget = document.getElementById('lb-target');
-  function openLB(id){ lbTarget.innerHTML = `<iframe title="YouTube video player" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`; lb.style.display='flex'; lb.setAttribute('aria-hidden','false'); }
+  
+  // ✅ FIX APPLIED: iframe style updated to use min(90vw, 1000px)
+  function openLB(id){ 
+    lbTarget.innerHTML = `<iframe title="YouTube video player" style="width: min(90vw, 1000px); aspect-ratio: 16/9; border:0; border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`; 
+    lb.style.display='flex'; 
+    lb.setAttribute('aria-hidden','false'); 
+  }
+
   function closeLB(){ lb.style.display='none'; lb.setAttribute('aria-hidden','true'); lbTarget.innerHTML=''; }
   lbClose.addEventListener('click', closeLB); lb.addEventListener('click', e=>{ if(e.target===lb) closeLB(); }); window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLB(); });
 
@@ -189,8 +195,3 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqy
 </script>
 </body>
 </html>
-
-
-
-
-
