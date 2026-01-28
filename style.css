@@ -873,7 +873,6 @@ a:focus-visible {
     max-width: 100%;
     padding-left: 16px;
     padding-right: 16px;
-    justify-content: center;
   }
 
   .video-container.grid--index-mix .card--land{
