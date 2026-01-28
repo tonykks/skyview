@@ -180,7 +180,11 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqy
 
   function getId(url){ if(!url) return null; try{ const u = new URL(url); const v = u.searchParams.get('v'); if (v && v.length === 11) return v; const parts = u.pathname.split('/'); for (let i = parts.length - 1; i >= 0; i--) { const seg = parts[i]; if (seg && seg.length === 11) return seg; } }catch(e){ const m = url.match(/(?:watch\?v=|youtu\.be\/|embed\/|v\/)([A-Za-z0-9_-]{11})/); if (m) return m[1]; } return null; }
   const lb = document.getElementById('lightbox'); const lbClose = document.getElementById('lb-close'); const lbTarget = document.getElementById('lb-target');
-  function openLB(id){ lbTarget.innerHTML = `<iframe title="Shorts player" style="width:100%;aspect-ratio:9/16;border:0;border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`; lb.style.display='flex'; lb.setAttribute('aria-hidden','false'); }
+  function openLB(id){ 
+    lbTarget.innerHTML = `<iframe title="YouTube video player" style="width: min(90vw, 450px); aspect-ratio: 9/16; border:0; border-radius:12px;" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`; 
+    lb.style.display='flex'; 
+    lb.setAttribute('aria-hidden','false'); 
+  }
   function closeLB(){ lb.style.display='none'; lb.setAttribute('aria-hidden','true'); lbTarget.innerHTML=''; }
   lbClose.addEventListener('click', closeLB); lb.addEventListener('click', e=>{ if(e.target===lb) closeLB(); }); window.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLB(); });
 
