@@ -60,13 +60,18 @@
   <hr class="border-t-2 border-gray-300 w-4/5 mx-auto mb-8">
 
   <!-- Main Content -->
-  <div class="container container--narrow text-center">
-    <h2 class="text-3xl font-bold mb-2 text-brand-dark dark:text-gray-200">모든 장소 보기</h2>
-    <p class="mb-10 text-muted">가나다 순으로 정렬되어 있습니다</p>
+  <div class="container mx-auto px-2 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold mb-2 text-brand-dark dark:text-gray-200">모든 장소 보기</h2>
+    <p class="mb-8 text-muted text-sm md:text-base">가나다 순으로 정렬되어 있습니다</p>
     
     <div id="loading" class="text-gray-500 font-bold my-10">데이터를 불러오는 중...</div>
-    <!-- 버튼 정렬을 위해 flex 및 gap 설정 추가 -->
-    <div id="list-container" class="flex flex-wrap justify-center gap-3 md:gap-4 px-2"></div>
+    
+    <!-- 
+      list-container: 
+      모바일(기본): grid-cols-6 적용 (한 줄에 6개)
+      데스크탑(md): grid-cols-8 또는 flex-wrap으로 유연하게 조절 
+    -->
+    <div id="list-container" class="grid grid-cols-6 md:flex md:flex-wrap md:justify-center gap-1 md:gap-4 max-w-[1200px] mx-auto pb-20"></div>
   </div>
 
   <!-- Contact Modal -->
@@ -79,7 +84,7 @@
   </div>
 
 <script>
-  // ✅ Safe Storage (Fixed localStorage access)
+  // ✅ Safe Storage
   const SafeStorage = {
     get(key) {
       try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -143,20 +148,20 @@
       });
       const allBtn = document.createElement('a'); allBtn.className = 'sub-btn subnav__link--all'; allBtn.innerText = '전체보기'; allBtn.href = 'total_navi.html'; navContainer.appendChild(allBtn);
 
-      // Load All Places List (크기 통일 및 반응형 텍스트 적용)
+      // Load All Places List (상단 내비게이션 버튼 스타일과 완벽 통일)
       const names = [...new Set(places.map(p => p.name))].sort((a, b) => a.localeCompare(b));
       container.innerHTML = '';
       names.forEach(name => {
         const a = document.createElement('a'); 
         
         /**
-         * w-[100px]: 모바일 기준 너비 고정 (5글자 최적화)
-         * md:w-[140px]: 데스크탑 기준 너비 고정
-         * text-xs: 모바일에서 글씨 작게 (12px)
-         * md:text-base: 데스크탑에서 일반 크기 (16px)
-         * px-0: 너비가 고정되어 있으므로 좌우 패딩 제거
+         * w-full: 그리드 셀 너비를 가득 채움
+         * min-h-[40px]: 상단 nav-btn과 유사한 높이
+         * text-[10px]: 모바일 한 줄 6개 배치를 위한 미세 폰트
+         * md:text-sm: 데스크탑 표준 폰트
+         * md:w-[120px]: 데스크탑에서는 고정 너비로 통일감 부여
          */
-        a.className = 'index-btn w-[100px] md:w-[140px] text-center px-0 text-xs md:text-base flex items-center justify-center min-h-[48px] md:min-h-[56px]'; 
+        a.className = 'flex items-center justify-center w-full md:w-[120px] min-h-[40px] md:min-h-[44px] bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg shadow-sm hover:shadow-md hover:border-brand transition-all text-[10px] md:text-sm font-semibold text-gray-700 dark:text-gray-200 px-0.5';
         
         a.innerText = name;
         a.href = `places.html?place=${encodeURIComponent(name)}`; 
