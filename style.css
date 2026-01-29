@@ -708,16 +708,38 @@ a:focus-visible {
 .place-title-link {
   font-size: 2.5rem;
   font-weight: 800;
+  /* 기본 상태: 브랜드 색상을 유지하되 가독성을 위해 약간 밝게 조정 가능 */
   color: var(--color-brand-dark);
   text-decoration: none;
   border-bottom: 3px solid transparent;
   transition: all 0.3s;
   cursor: pointer;
+  /* 핵심: 흰색/밝은 테두리 효과 추가 (Light Mode에서도 글자가 더 또렷해짐) */
+  text-shadow: 
+    -1px -1px 0 rgba(255, 255, 255, 0.5),  
+     1px -1px 0 rgba(255, 255, 255, 0.5),
+    -1px  1px 0 rgba(255, 255, 255, 0.5),
+     1px  1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .place-title-link:hover {
   border-color: var(--color-brand);
   color: var(--color-brand);
+}
+
+/* 다크모드 전용 스타일 추가 */
+@media (prefers-color-scheme: dark) {
+  .place-title-link {
+    /* 다크모드에서는 더 밝은 파란색 또는 흰색 계열로 변경 */
+    color: #93c5fd; /* Tailwind blue-300: 다크 배경에서 시인성이 높음 */
+    /* 다크모드에서는 테두리보다 글로우(Glow) 효과가 더 고급스러울 수 있음 */
+    text-shadow: 0 0 8px rgba(147, 197, 253, 0.4); 
+  }
+  
+  .place-title-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+  }
 }
 
 .index-btn {
