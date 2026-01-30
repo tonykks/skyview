@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제주 쇠소깍 지질·인문 탐방 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; }
+        .serif-title { font-family: 'Playfair Display', serif; }
+        .content-transition { transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; overflow: hidden; max-height: 0; opacity: 0; }
+        .content-transition.active { max-height: 4000px; opacity: 1; padding: 2.5rem 0; }
+        .rotate-icon { transition: transform 0.4s ease; }
+        .rotate-icon.active { transform: rotate(180deg); }
+        .highlight { @apply font-bold text-teal-600; }
+    </style>
+</head>
+<body class="text-slate-900 leading-relaxed">
+
+    <!-- Hero Section -->
+    <header class="relative bg-teal-950 text-white py-24 px-6 overflow-hidden">
+        <div class="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center"></div>
+        <div class="relative z-10 max-w-5xl mx-auto text-center">
+            <h1 class="serif-title text-4xl md:text-6xl font-bold mb-6 italic">"Where the Stream Meets the Sea"</h1>
+            <p class="text-xl md:text-2xl text-teal-100 font-light mb-8 italic">쇠소깍: 효돈천의 끝에서 만나는 깊은 소(池)의 서사</p>
+            <div class="flex justify-center gap-4">
+                <span class="bg-teal-600 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">UNESCO Biosphere Reserve</span>
+                <span class="bg-blue-600 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">Scenic Site No. 78</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto my-12 px-4">
+        
+        <!-- Intro Card -->
+        <section class="mb-10 bg-white p-8 rounded-3xl shadow-lg border border-slate-100">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <span class="w-8 h-8 bg-teal-500 text-white rounded-lg flex items-center justify-center mr-3 text-sm">⚓</span>
+                쇠소깍(Soesokkak): 소가 누워있는 하구
+            </h2>
+            <p class="text-slate-600 mb-0">
+                제주특별자치도 서귀포시 하효동에 위치한 쇠소깍은 제주 현무암 지하수가 솟아오르는 효돈천 끝자락의 <span class="highlight italic">Estuary</span>입니다. 담수와 해수가 만나 형성된 깊은 웅덩이는 기암괴석과 울창한 송림으로 둘러싸여 천혜의 비경을 선사합니다.
+            </p>
+        </section>
+
+        <!-- Accordion List -->
+        <div class="space-y-6">
+            
+            <!-- 1. 지질학적 특성 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(1)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-teal-600 text-[10px] font-bold tracking-widest uppercase block mb-1">Geological Formation</span>
+                        <span class="text-2xl font-bold">1. 지질: 용암류와 하천의 협주곡</span>
+                    </div>
+                    <svg id="icon-1" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-1" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-orange-500 pl-3">조면암질 현무암과 하식 작용</h4>
+                            <p class="text-sm text-slate-600">쇠소깍 주변은 하천의 하구 부분으로, 약 70만 년 전 형성된 조면암질 현무암층이 하천의 <span class="highlight">Fluvial Erosion</span>(하식 작용)에 의해 깎여나가며 형성되었습니다. 양벽의 수직 절벽은 용암이 냉각될 때 형성된 층리와 하천 침식의 흔적을 동시에 보여줍니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-blue-500 pl-3">용천수(Spring Water)와 염분 약층</h4>
+                            <p class="text-sm text-slate-600">한라산에서 내려온 지하수가 바닥에서 솟아오르는 <span class="highlight">Submarine Groundwater Discharge</span> 지점입니다. 밀물 때는 바닷물이 밀려들어 담수와 층을 이루는 <span class="highlight">Halocline</span>(염분 약층) 현상이 나타나며, 이로 인해 물빛이 에메랄드와 감청색 사이의 신비로운 색채를 띠게 됩니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 어원과 전설 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(2)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-teal-600 text-[10px] font-bold tracking-widest uppercase block mb-1">Etymology & Legend</span>
+                        <span class="text-2xl font-bold">2. 인문: 소(牛)와 사랑의 전설</span>
+                    </div>
+                    <svg id="icon-2" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-2" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-emerald-500 pl-3">어원 해석 (Sino-Korean Analysis)</h4>
+                            <ul class="text-sm text-slate-600 space-y-2">
+                                <li><strong>쇠(牛):</strong> 소를 뜻하는 제주 방언</li>
+                                <li><strong>소(池):</strong> 연못, 웅덩이를 뜻하는 한자</li>
+                                <li><strong>깍(末):</strong> 하천이나 길의 끝을 뜻하는 제주 방언</li>
+                                <li>즉, <span class="highlight">'소가 누워있는 모습의 연못 끝'</span>이라는 지형적 형상을 담고 있습니다.</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-indigo-500 pl-3">용지기 전설</h4>
+                            <p class="text-sm text-slate-600">옛날 가뭄이 들면 이곳에서 기우제를 지냈는데, 쇠소깍 깊은 곳에는 용이 살고 있어 돌을 던지면 용이 노하여 비를 내린다는 설화가 있습니다. 또한 하효마을의 한 처녀와 머슴의 이룰 수 없는 사랑 이야기가 깃든 장소이기도 하여 서정적인 분위기를 더합니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 생물 및 생태적 특징 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(3)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-teal-600 text-[10px] font-bold tracking-widest uppercase block mb-1">Biological Ecosystem</span>
+                        <span class="text-2xl font-bold">3. 생태: 기수역의 풍요로움</span>
+                    </div>
+                    <svg id="icon-3" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-3" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-green-500 pl-3">기수역(Brackish Water) 생태계</h4>
+                            <p class="text-sm text-slate-600">민물과 바닷물이 만나는 <span class="highlight">Brackish Water</span> 구역으로, 은어, 숭어, 뱀장어 등 다양한 어류가 서식합니다. 특히 봄철이면 효돈천을 거슬러 올라가는 은어떼를 관찰할 수 있는 중요한 생태 거점입니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-700 pl-3">상록수림과 송림</h4>
+                            <p class="text-sm text-slate-600">주변 암벽에는 상록활엽수와 소나무가 울창하게 자라나 있어, 지형의 회색빛 바위와 바다의 푸른빛을 연결하는 완충 녹지 역할을 합니다. 이는 유네스코 생물권 보전지역 선정의 핵심 사유이기도 합니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 관광객을 위한 실전 가이드 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(4)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-teal-600 text-[10px] font-bold tracking-widest uppercase block mb-1">Practical Guide</span>
+                        <span class="text-2xl font-bold">4. 체험: 전통과 현대의 조화</span>
+                    </div>
+                    <svg id="icon-4" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-4" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-amber-500 pl-3">테우(Teu)와 나룻배 체험</h4>
+                            <p class="text-sm text-slate-600">제주 전통 뗏목인 <span class="highlight">Teu</span>(테우)를 타고 쇠소깍 내부를 탐방할 수 있습니다. 뱃사공의 입담과 함께 기암괴석의 명칭(사자바위, 독수리바위 등)을 들으며 지형을 입체적으로 감상할 수 있습니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-700 pl-3">드론 및 사진 촬영 포인트</h4>
+                            <ul class="text-xs space-y-3 text-slate-700">
+                                <li>🚁 **Drone:** 민물과 해수가 만나는 경계 지점의 색채 대비($Contrast$)를 담으려면 편광 필터(CPL Filter) 사용을 권장합니다.</li>
+                                <li>📸 **Perspective:** 하효항 방파제 근처에서 쇠소깍 내부를 바라보는 구도는 조면암 절벽의 수직적 위용을 가장 잘 보여줍니다.</li>
+                                <li>⚠️ **Caution:** 체험객이 많으므로 고도 유지와 안전 거리에 각별한 주의가 필요합니다.</li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-teal-950 text-teal-500 py-12 px-6 text-center mt-12 border-t border-teal-900">
+        <p class="mb-2 text-sm">Soesokkak: The Mysterious Harmony of Water and Stone</p>
+        <p class="text-[10px] uppercase tracking-[0.3em]">Geological & Cultural Heritage Archive</p>
+    </footer>
+
+    <script>
+        function toggleSection(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            const isActive = content.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.content-transition').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.rotate-icon').forEach(el => el.classList.remove('active'));
+            
+            // Toggle clicked
+            if (!isActive) {
+                content.classList.add('active');
+                icon.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

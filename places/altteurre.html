@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제주 알뜨르 비행장 다크 투어 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f4f4f5; }
+        .serif-title { font-family: 'Playfair Display', serif; }
+        .content-transition { transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; overflow: hidden; max-height: 0; opacity: 0; }
+        .content-transition.active { max-height: 4000px; opacity: 1; padding: 2.5rem 0; }
+        .rotate-icon { transition: transform 0.4s ease; }
+        .rotate-icon.active { transform: rotate(180deg); }
+        .highlight { @apply font-bold text-red-800; }
+    </style>
+</head>
+<body class="text-slate-900 leading-relaxed">
+
+    <!-- Hero Section with Altteurre-like Image -->
+    <header class="relative bg-slate-950 text-white py-32 px-6 overflow-hidden">
+        <!-- Representative image of a vast Jeju field with historical resonance -->
+        <div class="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1516466723877-e4ec1d736c8a?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center"></div>
+        <div class="relative z-10 max-w-5xl mx-auto text-center">
+            <h1 class="serif-title text-4xl md:text-6xl font-bold mb-6 italic">"Echoes of a Troubled Past"</h1>
+            <p class="text-xl md:text-2xl text-slate-300 font-light mb-8 italic">알뜨르 비행장: 평화의 들판에 새겨진 전쟁의 상흔</p>
+            <div class="flex justify-center gap-4">
+                <span class="bg-red-900 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter border border-red-700">Dark Tourism Site</span>
+                <span class="bg-slate-700 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">Registered Cultural Heritage</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto my-12 px-4">
+        
+        <!-- Intro Card -->
+        <section class="mb-10 bg-white p-8 rounded-3xl shadow-lg border border-slate-100">
+            <h2 class="text-2xl font-bold mb-4 flex items-center text-slate-900">
+                <span class="w-8 h-8 bg-slate-800 text-white rounded-lg flex items-center justify-center mr-3 text-sm">史</span>
+                알뜨르(Altteurre): 아래쪽의 너른 벌판
+            </h2>
+            <p class="text-slate-600 mb-0">
+                서귀포시 대정읍 상모리에 위치한 알뜨르 비행장은 제주 방언으로 '아래쪽 들판'이라는 뜻을 가진 평화로운 이름의 장소입니다. 하지만 이곳은 1930년대 일제강점기 일본군이 중일전쟁과 태평양전쟁을 대비해 건설한 <span class="highlight italic">Forward Base</span>(전진 기지)로서, 당시의 강제 동원과 전쟁의 참상을 고스란히 간직한 <span class="highlight">Dark Tourism</span>의 명소입니다.
+            </p>
+        </section>
+
+        <!-- Accordion List -->
+        <div class="space-y-6">
+            
+            <!-- 1. 역사적 배경 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(1)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-red-800 text-[10px] font-bold tracking-widest uppercase block mb-1">Historical Context</span>
+                        <span class="text-2xl font-bold">1. 역사: 대륙을 향한 침략의 발판</span>
+                    </div>
+                    <svg id="icon-1" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-1" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-red-800 pl-3">건설과 확장 (Construction)</h4>
+                            <p class="text-sm text-slate-600">1931년 일본군에 의해 약 20만 평 규모로 조성되었습니다. 이후 중일전쟁 발발 후 40만 평, 태평양전쟁 말기에는 80만 평까지 확장되었습니다. 이는 당시 일본이 제주도를 중국 본토 폭격을 위한 <span class="highlight">Unsinkable Aircraft Carrier</span>(침몰하지 않는 항공모함)로 인식했음을 보여줍니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-600 pl-3">오무라 해군 항공대</h4>
+                            <p class="text-sm text-slate-600">중국 난징(Nanjing) 폭격을 감행했던 '오무라 해군 항공대'가 이곳에 주둔했습니다. 당시 세계 최장거리 폭격 기록을 세웠으나, 그 이면에는 제주 도민들의 피땀 어린 <span class="highlight">Forced Labor</span>(강제 노역)가 있었습니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 토목 및 시설물적 특징 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(2)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-slate-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Engineering & Structures</span>
+                        <span class="text-2xl font-bold">2. 시설: 굳건히 버틴 전쟁의 뼈대</span>
+                    </div>
+                    <svg id="icon-2" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-2" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-800 pl-3">격납고 (Hangars / Oryum-to)</h4>
+                            <p class="text-sm text-slate-600">현재 약 20기의 콘크리트 격납고가 남아 있습니다. 철근 대신 대나무를 넣었다는 설이 있을 정도로 열악한 환경에서 지어졌으나, 70년이 넘는 세월을 견딘 <span class="highlight">Structural Durability</span>(구조적 내구성)를 보여줍니다. 공중 폭격으로부터 항공기를 보호하기 위해 낮고 견고하게 설계되었습니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-600 pl-3">지하 벙커와 관제탑</h4>
+                            <p class="text-sm text-slate-600">비행장 중심부에는 거대한 지하 지휘소와 관제탑 유적이 남아 있습니다. 이는 태평양전쟁 말기 일본이 결7호 작전(<span class="highlight">Ketsu-Go Operation</span>)을 통해 제주를 최후의 방어 기지로 삼으려 했던 전략적 흔적입니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 평화와 위령의 공간 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(3)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-indigo-800 text-[10px] font-bold tracking-widest uppercase block mb-1">Peace & Memorial</span>
+                        <span class="text-2xl font-bold">3. 상흔: 서달오름과 4.3의 아픔</span>
+                    </div>
+                    <svg id="icon-3" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-3" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-red-900 pl-3">섯알오름 탄약고 터</h4>
+                            <p class="text-sm text-slate-600">알뜨르 비행장 인근 섯알오름에는 일제 강점기 탄약고가 있었으나, 광복 후 제주 4.3 사건 당시 수많은 민간인이 <span class="highlight">Extrajudicial Execution</span>(예비검속 학살)을 당한 비극의 현장입니다. '백조일손지묘'로 이어지는 아픈 역사가 중첩되어 있습니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-indigo-500 pl-3">예술로 승화된 평화</h4>
+                            <p class="text-sm text-slate-600">비행장 곳곳에는 볏짚 등으로 만든 비행기 조형물 등 **Artistic Installations**가 설치되어 전쟁의 도구를 평화의 메시지로 변환하는 시도를 하고 있습니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 관광객 및 드론 강사 가이드 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(4)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-emerald-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Visitor & Drone Guide</span>
+                        <span class="text-2xl font-bold">4. 탐방: 아는 만큼 보이는 벌판</span>
+                    </div>
+                    <svg id="icon-4" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-4" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-emerald-600 pl-3">조망 포인트</h4>
+                            <p class="text-sm text-slate-600">알뜨르 비행장에서 바라보는 **Sanbangsan**과 **Songaksan**의 전경은 일품입니다. 광활한 밭(감자, 마늘 등) 사이에 흩어져 있는 격납고들의 모습은 기묘한 이질감과 평온함을 동시에 줍니다.</p>
+                        </section>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                            <h5 class="font-bold text-xs mb-3 flex items-center">
+                                <span class="mr-2">🛸</span> Drone Master's Perspective
+                            </h5>
+                            <ul class="text-[11px] text-slate-700 space-y-2">
+                                <li>📸 **Bird's Eye View:** 광활한 대지에 기하학적으로 배치된 격납고의 패턴을 부감 촬영하면 역사적 무게감을 시각화할 수 있습니다.</li>
+                                <li>📸 **Contrast:** 평화롭게 자라나는 농작물과 차가운 콘크리트 격납고의 대비는 강력한 **Narrative**를 형성합니다.</li>
+                                <li>⚠️ **Regulations:** 군사 시설 및 사유지(경작지)가 섞여 있으므로 비행 전 반드시 원스탑 민원 신청 및 주민 협조 확인이 필요합니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-950 text-slate-500 py-12 px-6 text-center mt-12 border-t border-slate-800">
+        <p class="mb-2 text-sm italic">"May this field of war remain forever a field of peace."</p>
+        <p class="text-[10px] uppercase tracking-[0.3em]">Altteurre Dark Tourism Archive</p>
+    </footer>
+
+    <script>
+        function toggleSection(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            const isActive = content.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.content-transition').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.rotate-icon').forEach(el => el.classList.remove('active'));
+            
+            // Toggle clicked
+            if (!isActive) {
+                content.classList.add('active');
+                icon.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제주 가파도 지질·인문 탐방 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f0fdf4; }
+        .serif-title { font-family: 'Playfair Display', serif; }
+        .content-transition { transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; overflow: hidden; max-height: 0; opacity: 0; }
+        .content-transition.active { max-height: 4000px; opacity: 1; padding: 2.5rem 0; }
+        .rotate-icon { transition: transform 0.4s ease; }
+        .rotate-icon.active { transform: rotate(180deg); }
+        .highlight { @apply font-bold text-emerald-700; }
+    </style>
+</head>
+<body class="text-slate-900 leading-relaxed">
+
+    <!-- Hero Section with Gapado-like Landscape Image -->
+    <header class="relative bg-emerald-950 text-white py-32 px-6 overflow-hidden">
+        <!-- Representative image of Gapado's flat green fields and sea -->
+        <div class="absolute inset-0 opacity-50 bg-[url('https://images.unsplash.com/photo-1500382017468-9049fee74a62?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center"></div>
+        <div class="relative z-10 max-w-5xl mx-auto text-center">
+            <h1 class="serif-title text-4xl md:text-6xl font-bold mb-6 italic">"The Horizon's Gentle Embrace"</h1>
+            <p class="text-xl md:text-2xl text-emerald-100 font-light mb-8 italic">가파도: 하늘과 바다가 가장 가까이 만나는 평평한 섬</p>
+            <div class="flex justify-center gap-4">
+                <span class="bg-emerald-700 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter border border-emerald-400">Lowest Island in Korea</span>
+                <span class="bg-blue-600 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">Carbon Free Island</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto my-12 px-4">
+        
+        <!-- Intro Card -->
+        <section class="mb-10 bg-white p-8 rounded-3xl shadow-lg border border-emerald-100">
+            <h2 class="text-2xl font-bold mb-4 flex items-center text-emerald-900">
+                <span class="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center mr-3 text-sm">平</span>
+                가파도(Gapado): 가오리를 닮은 섬
+            </h2>
+            <p class="text-slate-600 mb-0">
+                서귀포시 대정읍에 속한 가파도는 모슬포항에서 남쪽으로 약 5.5km 떨어진 섬입니다. 최고 높이가 해발 20.5m에 불과한 한국에서 가장 낮은 섬으로, 지질학적으로는 평탄한 <span class="highlight italic">Basaltic Plateau</span>(현무암 대지)의 특징을 고스란히 간직하고 있습니다.
+            </p>
+        </section>
+
+        <!-- Accordion List -->
+        <div class="space-y-6">
+            
+            <!-- 1. 지질학적 특성 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(1)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-emerald-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Geological Topography</span>
+                        <span class="text-2xl font-bold">1. 지질: 파도가 깎아 만든 해식대지</span>
+                    </div>
+                    <svg id="icon-1" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-1" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-emerald-600 pl-3">평탄한 현무암 대지</h4>
+                            <p class="text-sm text-slate-600">가파도는 제주도의 다른 오름들처럼 솟아오른 형태가 아니라, 유동성이 큰 현무암질 용암이 넓게 퍼져 형성된 뒤 오랜 시간 파도의 침식을 받아 평탄해진 <span class="highlight">Wave-cut Platform</span>(해식대지) 지형입니다. 섬 전체가 완만한 경사 없이 평지를 이루는 이유입니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-blue-500 pl-3">해안가 암석과 암맥</h4>
+                            <p class="text-sm text-slate-600">해안선을 따라 걷다 보면 단단한 현무암반이 바다와 맞닿아 있는 모습을 볼 수 있습니다. 이는 과거 화산 활동 시 용암이 흘러나온 통로인 <span class="highlight">Dyke</span>(암맥) 구조와 파도에 의해 마모된 둥근 바위들이 조화를 이룹니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 생태 및 식생 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(2)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-emerald-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Ecological Landscape</span>
+                        <span class="text-2xl font-bold">2. 생태: 청보리 물결과 기수역 식물</span>
+                    </div>
+                    <svg id="icon-2" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-2" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-emerald-600 pl-3">청보리(Green Barley)의 섬</h4>
+                            <p class="text-sm text-slate-600">매년 봄(3~5월) 가파도 면적의 절반 이상이 청보리로 덮입니다. 해풍을 맞고 자란 <span class="highlight">Chongbori</span>는 일반 보리보다 키가 크고 색이 선명하여, 드론 촬영 시 바람에 출렁이는 초록색 파도와 같은 장관을 연출합니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-teal-500 pl-3">해안 생태계와 조류</h4>
+                            <p class="text-sm text-slate-600">섬이 낮아 바닷물이 육지 안쪽까지 스며드는 구역이 많아 염생식물들이 잘 발달해 있습니다. 또한 이동 중인 도요새, 물떼새 등 다양한 <span class="highlight">Migratory Birds</span>(철새)들의 중요한 중간 기착지 역할을 합니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 인문 역사와 문화 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(3)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-indigo-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Cultural Heritage</span>
+                        <span class="text-2xl font-bold">3. 인문: 고인돌과 하멜의 기록</span>
+                    </div>
+                    <svg id="icon-3" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-3" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-indigo-600 pl-3">선사시대의 흔적: 고인돌(Dolmens)</h4>
+                            <p class="text-sm text-slate-600">가파도 전역에는 135여 기의 고인돌이 산재해 있습니다. 이는 선사시대부터 이곳에 사람이 거주했음을 보여주는 중요한 증거이며, 섬의 평탄한 지형이 초기 인류의 정착에 유리했음을 시사합니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-700 pl-3">하멜 표류기와 가파도</h4>
+                            <p class="text-sm text-slate-600">1653년 헨드릭 하멜이 표착한 지점으로 용머리해안과 함께 가파도가 거론되기도 합니다. 당시 서양 지도에 'Cover Island' 혹은 'Quepart'라는 이름의 기원이 가파도에서 유래했다는 설이 있을 만큼 지리적으로 중요한 위치에 있었습니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 관광객 및 드론 강사 가이드 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(4)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-emerald-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Practical Information</span>
+                        <span class="text-2xl font-bold">4. 탐방: 지평선을 걷는 자전거 여행</span>
+                    </div>
+                    <svg id="icon-4" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-4" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-amber-600 pl-3">탄소 없는 섬(Carbon Free Island)</h4>
+                            <p class="text-sm text-slate-600">가파도는 자동차가 거의 없는 섬입니다. 대신 자전거를 대여해 섬을 한 바퀴 도는 코스가 인기입니다. 평탄한 지형 덕분에 남녀노소 누구나 쉽게 라이딩을 즐기며 바다 건너 한라산과 산방산의 조망을 감상할 수 있습니다.</p>
+                        </section>
+                        <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
+                            <h5 class="font-bold text-xs mb-3 flex items-center">
+                                <span class="mr-2">🛸</span> Drone Master's Perspective
+                            </h5>
+                            <ul class="text-[11px] text-slate-700 space-y-2">
+                                <li>📸 **Horizontal Contrast:** 섬이 매우 낮기 때문에 드론을 저고도로 비행시키면 청보리밭의 녹색과 바다의 청색이 1:1로 대비되는 완벽한 수평 구도를 얻을 수 있습니다.</li>
+                                <li>📸 **Bird's Eye Pattern:** 바둑판처럼 정갈하게 나누어진 청보리밭 사이의 돌담 패턴을 수직 촬영하면 기하학적 미학이 돋보입니다.</li>
+                                <li>⚠️ **Wind & Connectivity:** 주변에 가릴 것이 없는 평지이므로 돌풍(Gust)에 유의해야 하며, 모슬포항으로부터의 통신 간섭을 체크하세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-emerald-950 text-emerald-500 py-12 px-6 text-center mt-12 border-t border-emerald-900">
+        <p class="mb-2 text-sm italic">"The lowest land, the highest peace."</p>
+        <p class="text-[10px] uppercase tracking-[0.3em]">Gapado Eco-History Project</p>
+    </footer>
+
+    <script>
+        function toggleSection(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            const isActive = content.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.content-transition').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.rotate-icon').forEach(el => el.classList.remove('active'));
+            
+            // Toggle clicked
+            if (!isActive) {
+                content.classList.add('active');
+                icon.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

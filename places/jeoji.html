@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제주 저지오름 지질·생태 탐방 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f7fee7; }
+        .serif-title { font-family: 'Playfair Display', serif; }
+        .content-transition { transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; overflow: hidden; max-height: 0; opacity: 0; }
+        .content-transition.active { max-height: 4000px; opacity: 1; padding: 2.5rem 0; }
+        .rotate-icon { transition: transform 0.4s ease; }
+        .rotate-icon.active { transform: rotate(180deg); }
+        .highlight { @apply font-bold text-lime-800; }
+    </style>
+</head>
+<body class="text-slate-900 leading-relaxed">
+
+    <!-- Hero Section with Jeoji-oreum-like Forest Image -->
+    <header class="relative bg-lime-950 text-white py-32 px-6 overflow-hidden">
+        <!-- Representative image of a lush Jeju forest path -->
+        <div class="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center"></div>
+        <div class="relative z-10 max-w-5xl mx-auto text-center">
+            <h1 class="serif-title text-4xl md:text-6xl font-bold mb-6 italic">"The Sanctuary of Deep Green"</h1>
+            <p class="text-xl md:text-2xl text-lime-100 font-light mb-8 italic">저지오름: 숲의 숨결이 빚어낸 생명의 분화구</p>
+            <div class="flex justify-center gap-4">
+                <span class="bg-lime-700 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter border border-lime-400">Beautiful Forest Award</span>
+                <span class="bg-green-600 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">Jeju Olle Course 13</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto my-12 px-4">
+        
+        <!-- Intro Card -->
+        <section class="mb-10 bg-white p-8 rounded-3xl shadow-lg border border-lime-100">
+            <h2 class="text-2xl font-bold mb-4 flex items-center text-lime-900">
+                <span class="w-8 h-8 bg-green-600 text-white rounded-lg flex items-center justify-center mr-3 text-sm">숲</span>
+                저지오름(Jeoji-oreum): 닥모루 오름
+            </h2>
+            <p class="text-slate-600 mb-0">
+                제주시 한경면 저지리에 위치한 저지오름은 해발 239m의 <span class="highlight italic">Cinder Cone</span>(분석구)입니다. 2007년 '제8회 아름다운 숲 전국대회'에서 대상을 수상할 만큼 울창한 식생을 자랑하며, 분화구 내부까지 탐방로가 연결되어 있어 지질학적 구조를 입체적으로 관찰할 수 있는 최적의 장소입니다.
+            </p>
+        </section>
+
+        <!-- Accordion List -->
+        <div class="space-y-6">
+            
+            <!-- 1. 지질학적 특성 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(1)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-lime-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Geological Structure</span>
+                        <span class="text-2xl font-bold">1. 지질: 완벽한 깔때기 모양의 분화구</span>
+                    </div>
+                    <svg id="icon-1" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-1" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-lime-600 pl-3">분석구(Scoria Cone)의 전형</h4>
+                            <p class="text-sm text-slate-600">저지오름은 마그마의 분출 시 화산 쇄설물인 <span class="highlight">Scoria</span>(송이)가 공중으로 솟구쳐 올랐다가 낙하하며 쌓인 지형입니다. 정상부에는 둘레 약 800m, 깊이 약 62m에 달하는 깔때기형 분화구가 형성되어 있습니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-blue-500 pl-3">원형 분화구와 층서</h4>
+                            <p class="text-sm text-slate-600">분화구 사면은 뚜렷한 경사를 이루고 있으며, 드론으로 부감 촬영 시 제주도의 일반적인 <span class="highlight">Oreum</span> 중에서도 분화구 형태가 매우 명확하게 보존되어 있음을 알 수 있습니다. 이는 지형학적으로 <span class="highlight">Geomorphology</span>의 원형을 연구하기 좋은 샘플입니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 생물학적 특성 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(2)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-emerald-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Ecological Succession</span>
+                        <span class="text-2xl font-bold">2. 생태: 숲의 천이와 종 다양성</span>
+                    </div>
+                    <svg id="icon-2" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-2" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-emerald-600 pl-3">식생의 천이 (Ecological Succession)</h4>
+                            <p class="text-sm text-slate-600">저지오름은 과거 땔감을 구하던 대머리 오름이었으나, 주민들의 보호로 현재는 울창한 숲을 이루고 있습니다. 소나무 숲에서 상록활엽수림으로 변화해가는 <span class="highlight">Succession</span> 단계를 보여주며, 현재는 220여 종의 식물이 서식하고 있습니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-emerald-500 pl-3">주요 식생군</h4>
+                            <p class="text-sm text-slate-600">팽나무, 육박나무, 후박나무 등 제주 자생 상록활엽수들이 주를 이룹니다. 특히 분화구 내부 습도와 온도가 일정하게 유지되어 희귀 식생들이 안정적으로 생존할 수 있는 <span class="highlight">Micro-climate</span>(미세기후)를 형성합니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 어원과 전설 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(3)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-indigo-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Etymology & History</span>
+                        <span class="text-2xl font-bold">3. 인문: 닥나무와 닥모루의 역사</span>
+                    </div>
+                    <svg id="icon-3" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-3" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-indigo-600 pl-3">어원 분석 (Etymology)</h4>
+                            <p class="text-sm text-slate-600">저지(楮旨)의 '저(楮)'는 한지를 만드는 재료인 닥나무를 뜻합니다. 과거 이 오름 주변에 닥나무가 많아 '닥모루(닥나무 산마루)'라고 불렸으며, 이를 한자로 표기하면서 저지오름이 되었습니다. 또한 마을의 형세가 돼지 모양이라 하여 '저(猪)지'라고 불렸다는 설도 있습니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-700 pl-3">마을의 주산(主山)</h4>
+                            <p class="text-sm text-slate-600">저지리 마을 사람들에게 이 오름은 단순한 산이 아니라 삶의 터전이자 정신적 지주였습니다. 매년 오름을 가꾸고 보존해 온 주민들의 노력은 오늘날 대한민국에서 가장 아름다운 숲이라는 칭호를 얻게 된 원동력입니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 관광객 및 드론 강사 가이드 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(4)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-lime-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Practical Information</span>
+                        <span class="text-2xl font-bold">4. 탐방: 숲을 걷는 힐링 코스</span>
+                    </div>
+                    <svg id="icon-4" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-4" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-emerald-600 pl-3">탐방로 코스</h4>
+                            <p class="text-sm text-slate-600">오름 둘레를 도는 '둘레길'과 정상 분화구를 도는 '정상 순환로', 그리고 분화구 바닥까지 내려가는 코스로 나뉩니다. 울창한 나무 터널을 지나는 구간은 빛과 그림자의 대비가 아름다워 사진 작가들에게 인기가 높습니다.</p>
+                        </section>
+                        <div class="bg-lime-50 p-6 rounded-2xl border border-lime-100">
+                            <h5 class="font-bold text-xs mb-3 flex items-center">
+                                <span class="mr-2">🛸</span> Drone Master's Perspective
+                            </h5>
+                            <ul class="text-[11px] text-slate-700 space-y-2">
+                                <li>📸 **Crater Geometry:** 분화구 중심에서 수직 상승하여 원형 크레이터와 주변 고산 평야의 대조를 포착해 보세요.</li>
+                                <li>📸 **Seasonal Color:** 가을철 상록수와 낙엽수가 섞인 풍부한 색채 단계(<span class="highlight">Color Gradient</span>)를 영상에 담기 좋습니다.</li>
+                                <li>⚠️ **Bird Habitat:** 바다새와 산새들의 서식처이므로 새들의 비행을 방해하지 않도록 저소음 비행이 필요합니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-lime-950 text-lime-500 py-12 px-6 text-center mt-12 border-t border-lime-900">
+        <p class="mb-2 text-sm italic">"The forest is the memory of the earth."</p>
+        <p class="text-[10px] uppercase tracking-[0.3em]">Jeoji-oreum Ecological Archive Project</p>
+    </footer>
+
+    <script>
+        function toggleSection(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            const isActive = content.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.content-transition').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.rotate-icon').forEach(el => el.classList.remove('active'));
+            
+            // Toggle clicked
+            if (!isActive) {
+                content.classList.add('active');
+                icon.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

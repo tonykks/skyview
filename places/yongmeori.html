@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제주 용머리해안 지질·인문 탐방 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #fefaf6; }
+        .serif-title { font-family: 'Playfair Display', serif; }
+        .content-transition { transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; overflow: hidden; max-height: 0; opacity: 0; }
+        .content-transition.active { max-height: 4000px; opacity: 1; padding: 2.5rem 0; }
+        .rotate-icon { transition: transform 0.4s ease; }
+        .rotate-icon.active { transform: rotate(180deg); }
+        .highlight { @apply font-bold text-amber-700; }
+    </style>
+</head>
+<body class="text-slate-900 leading-relaxed">
+
+    <!-- Hero Section -->
+    <header class="relative bg-amber-950 text-white py-24 px-6 overflow-hidden">
+        <div class="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center"></div>
+        <div class="relative z-10 max-w-5xl mx-auto text-center">
+            <h1 class="serif-title text-4xl md:text-6xl font-bold mb-6 italic">"The Strata of Ancient Time"</h1>
+            <p class="text-xl md:text-2xl text-amber-100 font-light mb-8 italic">용머리해안: 120만 년 전 수성화산이 빚은 시간의 예술</p>
+            <div class="flex justify-center gap-4">
+                <span class="bg-amber-700 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">Natural Monument No. 526</span>
+                <span class="bg-stone-600 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">UNESCO Global Geopark</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto my-12 px-4">
+        
+        <!-- Intro Card -->
+        <section class="mb-10 bg-white p-8 rounded-3xl shadow-lg border border-amber-100">
+            <h2 class="text-2xl font-bold mb-4 flex items-center text-amber-900">
+                <span class="w-8 h-8 bg-amber-700 text-white rounded-lg flex items-center justify-center mr-3 text-sm">龍</span>
+                용머리해안(Yongmeori): 바다로 들어가는 용
+            </h2>
+            <p class="text-slate-600 mb-0">
+                서귀포시 안덕면 사계리에 위치한 용머리해안은 제주도에서 가장 오래된 <span class="highlight italic">Tuff Ring</span>(응회환)입니다. 산방산 자락에서 바다로 뻗어 나가는 용의 머리를 닮은 이 지형은 세 번의 분출로 형성된 복잡하고 아름다운 <span class="highlight">Stratigraphy</span>(층서)를 보여줍니다.
+            </p>
+        </section>
+
+        <!-- Accordion List -->
+        <div class="space-y-6">
+            
+            <!-- 1. 지질학적 특성 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(1)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-amber-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Geological Sequence</span>
+                        <span class="text-2xl font-bold">1. 지질: 세 번의 폭발, 겹쳐진 시간</span>
+                    </div>
+                    <svg id="icon-1" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-1" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-amber-600 pl-3">수성화산의 정수 (Tuff Ring)</h4>
+                            <p class="text-sm text-slate-600">용머리해안은 마그마가 얕은 바닷물을 만나 폭발하며 쌓인 화산재 층입니다. 특이하게도 분화구가 이동하면서 서로 다른 세 개의 화산체가 겹쳐진 구조를 가지고 있습니다. 드론으로 위에서 내려다보면 각기 다른 방향으로 기울어진 층리들을 통해 <span class="highlight">Vent Migration</span>(화구 이동)의 역사를 읽을 수 있습니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-blue-500 pl-3">차별 침식과 타포니(Tafoni)</h4>
+                            <p class="text-sm text-slate-600">오랜 시간 파도와 바람에 깎이며 암석의 단단함에 따라 제각기 다르게 파여나간 <span class="highlight">Differential Erosion</span>(차별 침식)이 장관을 이룹니다. 특히 암석 표면에 벌집 모양으로 구멍이 뚫린 <span class="highlight">Tafoni</span> 구조는 용머리해안의 질감을 더욱 입체적으로 만듭니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 신화와 전설 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(2)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-amber-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Myth & Legends</span>
+                        <span class="text-2xl font-bold">2. 신화: 끊어진 용의 꼬리</span>
+                    </div>
+                    <svg id="icon-2" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-2" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-red-700 pl-3">진시황과 호종달 전설</h4>
+                            <p class="text-sm text-slate-600">중국 천하를 통일한 진시황이 제주도에서 왕이 태어날 기미가 보이자, 지관인 고종달(호종달)을 보내 제주의 혈을 끊으라고 명했습니다. 고종달은 용머리해안에 이르러 바다로 나아가려는 용의 꼬리와 잔등을 칼로 끊어버렸고, 이때 용의 울음소리가 들리며 피가 흘러나와 지금의 붉은 암벽이 되었다는 전설이 전해집니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-stone-500 pl-3">지형적 형상</h4>
+                            <p class="text-sm text-slate-600">실제로 바닷가로 길게 뻗은 지형은 용의 머리를, 그 뒤로 이어진 능선은 용의 몸통을 연상시켜 보는 이로 하여금 전설의 개연성을 느끼게 합니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 역사적 사건: 하멜의 표류 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(3)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-amber-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Historical Encounter</span>
+                        <span class="text-2xl font-bold">3. 역사: 서양에 비친 조선의 첫인상</span>
+                    </div>
+                    <svg id="icon-3" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-3" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-indigo-600 pl-3">헨드릭 하멜(Hendrik Hamel)의 표착</h4>
+                            <p class="text-sm text-slate-600">1653년 네덜란드 동인도회사 소속의 스페르베르호가 폭풍우를 만나 용머리해안 인근에 표착했습니다. 생존자 중 한 명인 헨드릭 하멜은 13년간의 조선 억류 생활을 기록한 <span class="highlight italic">Hamel's Journal</span>(하멜 표류기)을 남겼으며, 이는 조선을 서구 세계에 알린 최초의 기록이 되었습니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-700 pl-3">하멜 상선 전시관</h4>
+                            <p class="text-sm text-slate-600">용머리해안 입구에는 당시의 스페르베르호를 재현한 범선 모양의 전시관이 있어, 대항해시대의 역사와 조선의 조우를 생생하게 체험할 수 있습니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 관광객 필수 체크 리스트 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(4)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-amber-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Practical Information</span>
+                        <span class="text-2xl font-bold">4. 관광: 물때가 허락해야 열리는 문</span>
+                    </div>
+                    <svg id="icon-4" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-4" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-red-500 pl-3 text-red-600">반드시 확인해야 할 물때(Tide)</h4>
+                            <p class="text-sm text-slate-600">용머리해안은 만조 시나 파도가 높을 때 안전을 위해 출입이 엄격히 통제됩니다. <span class="highlight">Low Tide</span>(간조) 시간을 미리 확인하거나 당일 관리소에 전화 문의가 필수입니다. (매일 관람 시간이 변동됩니다.)</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-emerald-600 pl-3 text-emerald-700">연계 관광: 산방산과의 조화</h4>
+                            <p class="text-sm text-slate-600">용머리해안 바로 뒤에는 웅장한 거대 용암돔인 산방산이 솟아 있습니다. 바다 위에서 산방산과 용머리해안을 한 앵글에 담는 구도는 드론 촬영의 정점으로 꼽힙니다.</p>
+                        </section>
+                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                            <h5 class="font-bold text-xs mb-2">Drone Shooting Suggestion</h5>
+                            <ul class="text-[11px] text-slate-700 space-y-1">
+                                <li>✨ **Texture:** 절벽면의 가로 층리를 낮은 고도에서 근접 촬영해 보세요.</li>
+                                <li>✨ **Color:** 맑은 날 정오보다는 황금빛 햇살이 비끼는 늦은 오후에 층리의 굴곡이 더 잘 표현됩니다.</li>
+                                <li>✨ **Warning:** 주변에 고압선과 산방산 추락 위험이 있으므로 비행 전 반드시 환경을 체크하세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-amber-950 text-amber-500 py-12 px-6 text-center mt-12 border-t border-amber-900">
+        <p class="mb-2 text-sm">Yongmeori: The Dragon's Strata Whispering 1.2 Million Years</p>
+        <p class="text-[10px] uppercase tracking-[0.3em]">Geological & Cultural Archive Project</p>
+    </footer>
+
+    <script>
+        function toggleSection(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            const isActive = content.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.content-transition').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.rotate-icon').forEach(el => el.classList.remove('active'));
+            
+            // Toggle clicked
+            if (!isActive) {
+                content.classList.add('active');
+                icon.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

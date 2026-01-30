@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제주 비양도 지질·생태 탐방 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f0f9ff; }
+        .serif-title { font-family: 'Playfair Display', serif; }
+        .content-transition { transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; overflow: hidden; max-height: 0; opacity: 0; }
+        .content-transition.active { max-height: 4000px; opacity: 1; padding: 2.5rem 0; }
+        .rotate-icon { transition: transform 0.4s ease; }
+        .rotate-icon.active { transform: rotate(180deg); }
+        .highlight { @apply font-bold text-sky-700; }
+    </style>
+</head>
+<body class="text-slate-900 leading-relaxed">
+
+    <!-- Hero Section with Biyangdo-like Image -->
+    <header class="relative bg-sky-950 text-white py-32 px-6 overflow-hidden">
+        <!-- Using a representative image of Jeju's coastal island -->
+        <div class="absolute inset-0 opacity-50 bg-[url('https://images.unsplash.com/photo-1621434313214-72750e3328e3?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center"></div>
+        <div class="relative z-10 max-w-5xl mx-auto text-center">
+            <h1 class="serif-title text-4xl md:text-6xl font-bold mb-6 italic">"The Island that Flew Across the Sea"</h1>
+            <p class="text-xl md:text-2xl text-sky-100 font-light mb-8 italic">비양도: 천 년의 전설을 품은 협재의 푸른 눈동자</p>
+            <div class="flex justify-center gap-4">
+                <span class="bg-sky-700 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter border border-sky-400">Volcanic Monument</span>
+                <span class="bg-blue-600 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">Jeju Monument No. 48</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto my-12 px-4">
+        
+        <!-- Intro Card -->
+        <section class="mb-10 bg-white p-8 rounded-3xl shadow-lg border border-sky-100">
+            <h2 class="text-2xl font-bold mb-4 flex items-center text-sky-900">
+                <span class="w-8 h-8 bg-sky-600 text-white rounded-lg flex items-center justify-center mr-3 text-sm">島</span>
+                비양도(Biyangdo): 하늘을 날아온 섬
+            </h2>
+            <p class="text-slate-600 mb-0">
+                제주시 한림읍 협재리 앞바다에 위치한 비양도는 약 1,000년 전 분출된 것으로 추정되는 <span class="highlight italic">Monogenetic Volcano</span>(단성 화산)입니다. 완벽한 원추형의 <span class="highlight">Cinder Cone</span>(분석구) 지형을 갖추고 있으며, 제주도에서 가장 늦게 형성된 화산섬 중 하나로 꼽힙니다.
+            </p>
+        </section>
+
+        <!-- Accordion List -->
+        <div class="space-y-6">
+            
+            <!-- 1. 지질학적 특성 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(1)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-sky-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Geological Heritage</span>
+                        <span class="text-2xl font-bold">1. 지질: 화산탄과 분석구의 전시장</span>
+                    </div>
+                    <svg id="icon-1" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-1" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-sky-600 pl-3">분석구(Cinder Cone)의 구조</h4>
+                            <p class="text-sm text-slate-600">비양도는 섬 중앙의 비양봉(114m)을 중심으로 2개의 분화구가 있는 분석구입니다. 마그마 분출 시 화산 쇄설물인 <span class="highlight">Scoria</span>(송이)가 쌓여 형성되었으며, 드론으로 부감 촬영 시 완벽한 원형의 크레이터를 관찰할 수 있습니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-blue-500 pl-3">초대형 화산탄 (Volcanic Bombs)</h4>
+                            <p class="text-sm text-slate-600">해안가를 따라 걷다 보면 직경 5m가 넘는 거대한 바위들을 볼 수 있는데, 이는 화산 폭발 시 공중으로 날아올랐다가 굳으며 떨어진 <span class="highlight">Volcanic Bomb</span>입니다. 이는 당시 폭발의 위력이 얼마나 강력했는지를 보여주는 결정적 증거입니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-500 pl-3">애기 업은 돌 (Hoedeungisul)</h4>
+                            <p class="text-sm text-slate-600">용암이 굳으면서 내부의 가스가 빠져나가지 못해 부풀어 오른 독특한 굴뚝 모양의 암석인 <span class="highlight">Lava Chimney</span>가 발달해 있습니다. 지질학적으로는 '호등이술'이라 불리며 비양도의 랜드마크 역할을 합니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 식생과 생태 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(2)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-emerald-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Ecological Diversity</span>
+                        <span class="text-2xl font-bold">2. 생태: 대나무 숲과 희귀 식물</span>
+                    </div>
+                    <svg id="icon-2" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-2" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-emerald-600 pl-3">비양나무와 상록수림</h4>
+                            <p class="text-sm text-slate-600">국내에서는 오직 비양도 분화구 안쪽에서만 자생하는 것으로 알려진 <span class="highlight">Biyang-namu</span>(비양나무)가 서식합니다. 비양봉 일대는 사계절 푸른 상록수림과 울창한 대나무 숲이 장관을 이룹니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-emerald-500 pl-3">황근(Hibiscus hamabo) 자생지</h4>
+                            <p class="text-sm text-slate-600">여름철 노란 꽃을 피우는 멸종위기 야생식물 <span class="highlight">Yellow Hibiscus</span>(황근)의 최대 자생지 중 한 곳입니다. 해안가 저습지 부근에서 자생하며 비양도의 생태적 가치를 높여줍니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 설화와 역사 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(3)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-indigo-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Myth & History</span>
+                        <span class="text-2xl font-bold">3. 인문: 날아온 섬의 전설</span>
+                    </div>
+                    <svg id="icon-3" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-3" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-indigo-600 pl-3">비양(飛揚) 전설</h4>
+                            <p class="text-sm text-slate-600">천 년 전 중국 쪽에서 산 하나가 구름을 타고 날아와 이곳에 멈추려 했습니다. 이를 본 한 여인이 "산이 날아온다!"라고 크게 소리치자 산이 그 자리에 멈추어 섬이 되었다는 설화가 전해집니다. 실제로 '신증동국여지승람'에는 1002년에 산이 솟았다는 기록이 있어 화산 활동의 시기를 짐작게 합니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-700 pl-3">한림의 수호신</h4>
+                            <p class="text-sm text-slate-600">한림읍의 지형이 배의 형상이라면 비양도는 그 배를 끄는 닻과 같은 존재로 여겨져 왔습니다. 주민들에게 비양도는 정서적 안식처이자 거친 바다로부터 마을을 지켜주는 방파제와 같은 존재입니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 관광객을 위한 실전 팁 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(4)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-sky-700 text-[10px] font-bold tracking-widest uppercase block mb-1">Practical Guide</span>
+                        <span class="text-2xl font-bold">4. 관광: 느리게 걷는 섬 여행</span>
+                    </div>
+                    <svg id="icon-4" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-4" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-amber-600 pl-3">접근성 및 코스</h4>
+                            <p class="text-sm text-slate-600">한림항에서 배를 타고 약 15분이면 도착합니다. 섬 전체를 도는 해안도로는 약 2km로 도보로 1시간이면 충분하며, 비양봉 등대까지 오르는 탐방로를 포함해도 2시간이면 섬의 모든 매력을 느낄 수 있습니다.</p>
+                        </section>
+                        <div class="bg-sky-50 p-4 rounded-xl border border-sky-100">
+                            <h5 class="font-bold text-xs mb-2">Drone Master's Checkpoint</h5>
+                            <ul class="text-[11px] text-slate-700 space-y-2">
+                                <li>📸 **Crater Shot:** 비양봉 정상 분화구의 완벽한 원형 구조를 수직(90도)으로 내려다보며 촬영해 보세요.</li>
+                                <li>📸 **Hyeopjae View:** 섬에서 협재 해변과 한라산을 바라보는 구도는 비양도에서만 얻을 수 있는 유니크한 샷입니다.</li>
+                                <li>🚢 **Ferry Schedule:** 비양도행 도선은 하루 4~5회 운항하므로 물때와 배 시간을 반드시 사전에 체크해야 합니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-sky-950 text-sky-500 py-12 px-6 text-center mt-12 border-t border-sky-900">
+        <p class="mb-2 text-sm">Biyangdo: The Flying Mountain of Hallim Whispering Ancient Secrets</p>
+        <p class="text-[10px] uppercase tracking-[0.3em]">Geological & Ecological Heritage Archive</p>
+    </footer>
+
+    <script>
+        function toggleSection(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            const isActive = content.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.content-transition').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.rotate-icon').forEach(el => el.classList.remove('active'));
+            
+            // Toggle clicked
+            if (!isActive) {
+                content.classList.add('active');
+                icon.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
