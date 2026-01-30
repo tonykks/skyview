@@ -24,6 +24,13 @@
     }
   }
 </script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  /* SkyView map: responsive without touching existing mobile UI */
+  #jeju-map { width: 100%; height: min(60vh, 520px); }
+  @media (max-width: 640px) { #jeju-map { height: 42vh; } }
+  @media (orientation: landscape) and (max-height: 500px) { #jeju-map { height: 70vh; } }
+</style>
 </head>
 <body>
 
@@ -76,13 +83,8 @@
           GitHub Raw URL을 사용하여 이미지가 정상적으로 출력되도록 처리했습니다. 
           내일 이 이미지 위에 좌표 마커를 올릴 예정입니다.
         -->
-        <img 
-          src="https://raw.githubusercontent.com/tonykks/skyview/main/images/jeju_map.jpg" 
-          alt="Jeju Island Map" 
-          class="w-full h-auto rounded-xl"
-          onerror="this.src='https://placehold.co/1000x600/CCCCCC/666666?text=Map+Image+Not+Found';"
-        >
-      </div>
+        <div id="jeju-map" class="w-full rounded-xl"></div>
+</div>
       <p class="mt-4 text-muted text-xs md:text-sm">※ 지도를 통해 촬영 장소의 위치를 직관적으로 확인하실 수 있습니다.</p>
     </div>
   </div>
@@ -96,6 +98,7 @@
     </div>
   </div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
   // ✅ Safe Storage
   const SafeStorage = {
@@ -149,6 +152,7 @@
       }
 
       const places = data.places || [];
+      renderJejuMap(places);
       const container = document.getElementById('list-container');
       const navContainer = document.getElementById('sub-navbar-content');
       document.getElementById('loading').style.display = 'none';
@@ -202,6 +206,65 @@
   if(contactBtn && contactModal && closeModalBtn){
     contactBtn.addEventListener('click',e=>{ e.preventDefault(); contactModal.style.display='flex'; });
     closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; });
+  }
+
+
+// --- Jeju Map (Leaflet + OSM): no API key / no billing required ---
+  function renderJejuMap(places) {
+    const el = document.getElementById('jeju-map');
+    if (!el || typeof L === 'undefined') return;
+
+    // Re-render safety (in case of hot reload / re-entry)
+    if (el._leaflet_id) {
+      try { el._leaflet_id = null; } catch(e) {}
+      el.innerHTML = '';
+    }
+
+    const map = L.map('jeju-map', { scrollWheelZoom: true }).setView([33.3617, 126.5292], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const bounds = [];
+    let count = 0;
+
+    (places || []).forEach(p => {
+      const name = (p.place_name ?? p.name ?? '').toString().trim();
+
+      // Sheet column is lng, but allow common mistakes (Ing/log) just in case
+      const lat = toNumber(p.lat);
+      const lng = toNumber(p.lng ?? p.Ing ?? p.log ?? p.Lng);
+
+      if (!isFinite(lat) || !isFinite(lng)) return;
+
+      const marker = L.marker([lat, lng]).addTo(map);
+
+      // 클릭하면 지명 표시
+      marker.bindPopup(`<b>${escapeHtml(name || '이름 없음')}</b>`);
+
+      // 모바일/PC 모두에서 살짝만 올려도 보이게(선택)
+      if (name) marker.bindTooltip(name, { direction: 'top', offset: [0, -10] });
+
+      bounds.push([lat, lng]);
+      count++;
+    });
+
+    if (count >= 2) map.fitBounds(bounds, { padding: [20, 20] });
+    if (count === 1) map.setView(bounds[0], 12);
+  }
+
+  function toNumber(v) {
+    if (v === null || v === undefined) return NaN;
+    const n = (typeof v === 'string') ? Number(v.trim()) : Number(v);
+    return n;
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, s => (
+      { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[s]
+    ));
   }
 </script>
 </body>
