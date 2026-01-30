@@ -245,7 +245,7 @@ let count = 0;
 
   if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
 
-  const marker = L.marker([lat, lng]).addTo(map);
+  const marker = L.circleMarker([lat, lng], { radius: 8, weight: 2 }).addTo(map);
 
   // 클릭하면 지명 표시
   marker.bindPopup(`<b>${escapeHtml(name || 'Unknown')}</b>`);
