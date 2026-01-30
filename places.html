@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8"/>
@@ -8,6 +8,7 @@
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <link rel="preload" as="image" href="./images/songak.png">
 <link rel="preload" as="image" href="./images/sanbangsan.png">
@@ -58,7 +59,10 @@
   <div id="main-content" style="display:none;">
     <div class="place-header">
       <a id="place-link" href="#" target="_blank" class="place-title-link"><span id="place-name-display"></span></a>
-      <p class="text-gray-500 text-muted mt-2 text-sm">위 타이틀을 클릭하면 소개 페이지로 이동합니다</p>
+      <div class="mt-4 flex justify-center gap-3">
+        <button id="location-btn" type="button" class="btn btn--primary" style="padding:0.6rem 1.1rem; border-radius:12px;">위치</button>
+      </div>
+      <p class="text-gray-500 text-muted mt-3 text-sm">위 타이틀을 클릭하면 소개 페이지로 이동합니다</p>
     </div>
     <hr class="border-t-2 border-gray-300 w-4/5 mx-auto mb-8">
     <div id="video-container" class="mixed-container grid--flex"></div>
@@ -76,11 +80,83 @@
     <div id="lb-player" class="lb-content"></div>
   </div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec";
   const BANNER_IMAGES = ["./images/songak.png", "./images/sanbangsan.png", "./images/baksu.png", "./images/tiger.png", "./images/sup.png"];
 
   let g_videos = []; let g_places = [];
+  let g_map = null;
+  let g_mapMarker = null;
+
+  function toNumber(v) {
+    if (v === null || v === undefined) return NaN;
+    const n = (typeof v === 'string') ? Number(v.trim()) : Number(v);
+    return n;
+  }
+
+  function getLng(obj) {
+    // Support common variants: lng / Ing (sheet) / log / Lng / lon
+    return obj?.lng ?? obj?.Ing ?? obj?.log ?? obj?.Lng ?? obj?.lon ?? obj?.longitude;
+  }
+
+  function openMapModal(placeName) {
+    const meta = g_places.find(p => (p.name || p.place_name) === placeName);
+    const lat = toNumber(meta?.lat);
+    const lng = toNumber(getLng(meta));
+
+    const modal = document.getElementById('map-modal');
+    const subtitle = document.getElementById('map-modal-subtitle');
+    const container = document.getElementById('map-container');
+
+    modal.style.display = 'flex';
+
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+      subtitle.textContent = `${placeName}의 좌표(lat/lng)가 없습니다. 스프레드시트에 좌표를 추가해 주세요.`;
+      container.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-500">좌표 없음</div>';
+      return;
+    }
+
+    subtitle.textContent = `${placeName} (${lat.toFixed(3)}, ${lng.toFixed(3)})`;
+
+    // Init map once
+    if (!g_map) {
+      g_map = L.map(container, { scrollWheelZoom: true });
+
+      // OSM tile: no API key / no billing
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(g_map);
+
+      // Fix marker icon paths (CDN)
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png"
+      });
+    }
+
+    // Ensure map sizes correctly after modal opens
+    setTimeout(() => {
+      g_map.invalidateSize();
+      g_map.setView([lat, lng], 12);
+
+      if (g_mapMarker) {
+        g_mapMarker.setLatLng([lat, lng]);
+      } else {
+        g_mapMarker = L.marker([lat, lng]).addTo(g_map);
+      }
+      g_mapMarker.bindPopup(`<b>${placeName}</b>`).openPopup();
+    }, 50);
+  }
+
+  function closeMapModal() {
+    const modal = document.getElementById('map-modal');
+    modal.style.display = 'none';
+  }
+
   async function init() {
     const loadingEl = document.getElementById('loading');
     try {
@@ -142,6 +218,18 @@
     const meta = g_places.find(p => p.name === placeName);
     if (meta && meta.introUrl) { linkEl.href = meta.introUrl; linkEl.style.pointerEvents = "auto"; } else { linkEl.removeAttribute('href'); linkEl.style.pointerEvents = "none"; }
     
+    // Location button (single-place popup map)
+    if (locationBtn) {
+      locationBtn.onclick = () => openMapModal(placeName);
+      // Disable if no coords
+      const lat = toNumber(meta?.lat);
+      const lng = toNumber(getLng(meta || {}));
+      const hasCoords = Number.isFinite(lat) && Number.isFinite(lng);
+      locationBtn.disabled = !hasCoords;
+      locationBtn.style.opacity = hasCoords ? '1' : '0.5';
+      locationBtn.style.cursor = hasCoords ? 'pointer' : 'not-allowed';
+    }
+
     const container = document.getElementById('video-container');
     const filtered = g_videos.filter(v => (v.place || "").trim() === placeName.trim());
     container.innerHTML = '';
@@ -181,6 +269,11 @@
   }
   function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; document.getElementById('lb-player').innerHTML = ''; }
   const contactBtn=document.getElementById('contact-btn'); const contactModal=document.getElementById('contact-modal'); const closeModalBtn=document.getElementById('close-modal-btn');
+
+  const locationBtn = document.getElementById('location-btn');
+  const closeMapBtn = document.getElementById('close-map-btn');
+  if (closeMapBtn) closeMapBtn.addEventListener('click', closeMapModal);
+
   if(contactBtn){ contactBtn.addEventListener('click',e=>{ e.preventDefault(); contactModal.style.display='flex'; }); closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; }); }
 
   init();
