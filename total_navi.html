@@ -151,7 +151,7 @@
         SafeStorage.set('skyview_data', JSON.stringify(data));
       }
 
-      const places = data.places || [];
+      const places = (data.places ?? data.data?.places ?? data.rows ?? data.result ?? (Array.isArray(data) ? data : []));
       renderJejuMap(places);
       const container = document.getElementById('list-container');
       const navContainer = document.getElementById('sub-navbar-content');
