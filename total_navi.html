@@ -208,7 +208,6 @@
     closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; });
   }
 
-
 // --- Jeju Map (Leaflet + OSM): no API key / no billing required ---
   function renderJejuMap(places) {
     const el = document.getElementById('jeju-map');
@@ -226,6 +225,15 @@
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+
+// [FIX] Leaflet default marker icon path (CDN 강제 지정)
+  
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+      iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+      shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png"
+    });
+  
 
     const bounds = [];
     let count = 0;
