@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서귀포 섶섬(숲섬) 지질·생태 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f0f4f8; }
+        .serif-title { font-family: 'Playfair Display', serif; }
+        .content-transition { transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; overflow: hidden; max-height: 0; opacity: 0; }
+        .content-transition.active { max-height: 4000px; opacity: 1; padding: 2.5rem 0; }
+        .rotate-icon { transition: transform 0.4s ease; }
+        .rotate-icon.active { transform: rotate(180deg); }
+        .highlight { @apply font-bold text-emerald-600; }
+    </style>
+</head>
+<body class="text-slate-900 leading-relaxed">
+
+    <!-- Hero Section -->
+    <header class="relative bg-emerald-950 text-white py-24 px-6 overflow-hidden">
+        <div class="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=2070')] bg-cover bg-center"></div>
+        <div class="relative z-10 max-w-5xl mx-auto text-center">
+            <h1 class="serif-title text-4xl md:text-6xl font-bold mb-6 italic">"Nature's Untouched Sanctuary"</h1>
+            <p class="text-xl md:text-2xl text-emerald-100 font-light mb-8 italic">서귀포 섶섬: 조면암 절벽과 상록수의 푸른 서사</p>
+            <div class="flex justify-center gap-4">
+                <span class="bg-emerald-600 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">Natural Monument No. 195</span>
+                <span class="bg-blue-600 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">Biosphere Reserve</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto my-12 px-4">
+        
+        <!-- Intro Card -->
+        <section class="mb-10 bg-white p-8 rounded-3xl shadow-lg border border-slate-100">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <span class="w-8 h-8 bg-emerald-500 text-white rounded-lg flex items-center justify-center mr-3 text-sm">☘</span>
+                섶섬(Seopseom): 숲이 섬이 된 곳
+            </h2>
+            <p class="text-slate-600 mb-0">
+                서귀포시 보목동 앞바다에 위치한 섶섬은 거대한 조면암 덩어리로 이루어진 무인도입니다. <span class="highlight italic">Supseom</span>(숲섬)이라는 별칭답게 연중 푸른 상록수림이 섬 전체를 뒤덮고 있으며, 아열대 식물의 북한계지로서 학술적 가치가 매우 높습니다.
+            </p>
+        </section>
+
+        <!-- Accordion List -->
+        <div class="space-y-6">
+            
+            <!-- 1. 지질학적 특성 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(1)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-emerald-600 text-[10px] font-bold tracking-widest uppercase block mb-1">Geological Structure</span>
+                        <span class="text-2xl font-bold">1. 지질: 조면암과 주상절리의 거탑</span>
+                    </div>
+                    <svg id="icon-1" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-1" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-orange-500 pl-3">조면암(Trachyte)의 위용</h4>
+                            <p class="text-sm text-slate-600">제주도의 일반적인 현무암과 달리 점성이 강한 <span class="highlight">Trachyte</span>(조면암)질 용암이 솟아올라 형성되었습니다. 이로 인해 섬의 경사가 매우 급하고 웅장한 수직 절벽을 이루고 있습니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-blue-500 pl-3">주상절리(Columnar Jointing)</h4>
+                            <p class="text-sm text-slate-600">섬 주변 해안가에는 용암이 냉각되며 수축하여 만든 수직 기둥 모양의 <span class="highlight">Columnar Jointing</span>이 발달해 있습니다. 파도에 깎여 나간 <span class="highlight">Sea Cliff</span>(해식애)와 동굴들은 지질학적 역동성을 보여줍니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 생물학적 특성 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(2)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-emerald-600 text-[10px] font-bold tracking-widest uppercase block mb-1">Biological Diversity</span>
+                        <span class="text-2xl font-bold">2. 생태: 아열대 식물의 북방 한계선</span>
+                    </div>
+                    <svg id="icon-2" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-2" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-green-500 pl-3">파초일엽(Pteris baurii) 자생지</h4>
+                            <p class="text-sm text-slate-600">섶섬은 천연기념물 제18호인 <span class="highlight">Pteris baurii</span>(파초일엽)의 천연 북한계지입니다. 꼬리고사리과에 속하는 이 아열대 식물은 한때 멸종 위기에 처했으나 섶섬의 독특한 미세기후 덕분에 자생지를 보존할 수 있었습니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-emerald-500 pl-3">상록수림(Evergreen Forest)</h4>
+                            <p class="text-sm text-slate-600">사계절 내내 푸른 담팔수, 구실잣밤나무, 후박나무 등이 울창한 밀림을 이룹니다. 이 숲은 해양성 기후의 영향을 받아 겨울에도 온난하여 육지와는 전혀 다른 생태계를 형성합니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 전설과 신화 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(3)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-indigo-600 text-[10px] font-bold tracking-widest uppercase block mb-1">Myth & Folklore</span>
+                        <span class="text-2xl font-bold">3. 문화: 용이 되지 못한 구렁이 전설</span>
+                    </div>
+                    <svg id="icon-3" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-3" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-indigo-500 pl-3">용이 되고 싶었던 구렁이</h4>
+                            <p class="text-sm text-slate-600 italic">"한 번만 더 기회가 있었다면..."</p>
+                            <p class="text-sm text-slate-600 mt-2">옛날 섶섬에 거대한 구렁이가 살고 있었습니다. 이 구렁이는 용이 되어 하늘로 승천하기 위해 매달 용왕에게 기도를 드렸으나 결국 뜻을 이루지 못하고 섬의 수호신이 되었다는 전설이 전해집니다. 이 전설은 섶섬의 험준하고 신비로운 분위기를 더욱 자아냅니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-700 pl-3">보목동 사람들의 삶</h4>
+                            <p class="text-sm text-slate-600">마을 사람들에게 섶섬은 땔감(<span class="highlight">Firewood</span>)을 제공하던 고마운 섬이었습니다. '섶'이라는 말 자체가 땔감을 뜻하는 제주 방언에서 유래한 만큼, 인간과 자연이 공생해온 역사가 깃들어 있습니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 관광객을 위한 특징 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <button onclick="toggleSection(4)" class="w-full flex justify-between items-center p-8 hover:bg-slate-50 transition-all text-left">
+                    <div>
+                        <span class="text-amber-600 text-[10px] font-bold tracking-widest uppercase block mb-1">Visitor Guide</span>
+                        <span class="text-2xl font-bold">4. 관광: 낚시와 스쿠버다이빙의 메카</span>
+                    </div>
+                    <svg id="icon-4" class="rotate-icon w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="content-4" class="content-transition px-8 border-t border-slate-50">
+                    <div class="space-y-6">
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-amber-500 pl-3">해양 레저의 천국</h4>
+                            <p class="text-sm text-slate-600">섶섬 주변은 한류와 난류가 만나는 지점으로 어족 자원이 매우 풍부합니다. 특히 <span class="highlight">Scuba Diving</span> 포인트로 유명하여 화려한 연산호 군락을 관찰할 수 있으며, 벵에돔 낚시꾼들에게는 꿈의 포인트로 불립니다.</p>
+                        </section>
+                        <section>
+                            <h4 class="font-bold text-slate-900 mb-2 border-l-4 border-slate-700 pl-3">관람 매너 및 규제</h4>
+                            <p class="text-sm text-slate-600">무인도이며 천연기념물 보호구역이므로 일반인의 상륙은 엄격히 제한됩니다. 하지만 보목항에서 출발하는 유람선이나 보트를 통해 선상 관람이 가능하며, 섶섬이 보이는 <span class="highlight">Soesokkak</span>(쇠소깍) 해변이나 보목항 방파제에서 바라보는 경관이 매우 아름답습니다.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-emerald-950 text-emerald-500 py-12 px-6 text-center mt-12 border-t border-emerald-900">
+        <p class="mb-2 text-sm">Seopseom: The Evergreen Gem of Seogwipo</p>
+        <p class="text-[10px] uppercase tracking-[0.3em]">Geological & Biological Archive Project</p>
+    </footer>
+
+    <script>
+        function toggleSection(id) {
+            const content = document.getElementById(`content-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            const isActive = content.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.content-transition').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.rotate-icon').forEach(el => el.classList.remove('active'));
+            
+            // Toggle clicked
+            if (!isActive) {
+                content.classList.add('active');
+                icon.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
