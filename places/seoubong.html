@@ -1,0 +1,865 @@
+<html lang="ko"><head><script>(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6ImIxZjQyNzYzZjkzNGExOTQwMWNkOTFhNjdjY2FhNzdiNjIwNWU2N2EiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIwOTk0MjI5MDIzOTA2MTQ2NTg1OSIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiIzMjI3MTQyZWI3NzQtaGFtZGVvay1zZW91Ym9uZy1leHBsb3Jlci5odG1sLTczMCJ9LCJleHAiOjE3Njk3Njg3MTgsImlhdCI6MTc2OTc2NTExOCwiYWxnIjoiUlMyNTYifQ.BOSu2r5Ei2tHbITz-bbANVfsj1WpjMo54WVbYpmaETNVtTdNEKwQ_5A9PGlk8ksiLa5dvn8o2Z_gfRMbMY594ju66FzgaELPgYdXrPC08QFyx6FR14CEpG45tHNKAHhW51z8UurAwz9szrgLmb8jfkt5uhI_yOEDgk_B8b9SHqXGsKN0lWU0l4aNpCPIC-wSw0tPbSy3o2Jwh-cuTmvs3WMIeXjZPdTe0b52jDs38PdLCM9ce9U-Z25J59XzEhGQr8C8n0wsLQ9xNM-PbJJSiHHzpd6PzRzsPLRQ3gTx5kqPY4BGgk7sMnoZSHWHt_43HIKW6jhwNvDjEV6UrJpU1g","3227142eb774-hamdeok-seoubong-explorer.html-730")</script><script>'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
+function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
+p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
+
+ MIT License
+
+ Copyright (c) 2017-2023 W.Y.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+*/
+function u(a,b){const d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);const c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{let a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){const b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
+function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{const c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
+function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
+function D(a,b,d){return t(function*(){const c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
+var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{const c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
+function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){const c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);const e=yield c.blob();return new Promise((f,g)=>{const k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){let c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
+function L(a,b,d){return t(function*(){const c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());let e;try{const f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){const b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");const c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
+function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
+function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;let c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
+return b})}function ea(a,b,d){const c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{let g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
+function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
+function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){const g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
+c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
+function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){const b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
+function la(a,b,d,c){return t(function*(){try{const e=d?(new URL(b,d||void 0)).toString():b;let f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){const [c,,e]=ia.exec(d)||[],f=c,g=e;if(!g)return"";if(g===b)return`src: ${f};`}}):a}
+function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;const c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c;const e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
+function oa(a,b){return t(function*(){const d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
+function pa(a,b){return t(function*(){const d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){let d=a.cssText;const c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){let g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
+function X(a){if(a==null)return[];const b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
+d.lastIndex;b.push(e[0])}return b}
+function qa(a,b){return t(function*(){const d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){const g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
+{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
+function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}const d=new Set;b(a);return d}function ua(a,b){return t(function*(){const d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
+function va(a,b){return t(function*(){const d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){const c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
+function xa(a,b={}){return t(function*(){const {width:d,height:c}=A(a,b);var e=yield wa(a,b);e=yield B(e);const f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=
+16384));f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;const c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
+function Aa(){return t(function*(){const a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
+function Ba(a){return t(function*(){let b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){const b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
+window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
+</script><script>(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script>
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script>((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-2.5-flash-preview-09-2025","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-2.5-flash-image-preview","imageTransformModelName":"gemini-3-pro-image-preview-11-2025","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"]})</script><script>(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제주의 보석: 함덕해수욕장과 서우봉 탐구</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+    <!-- Chosen Palette: "Calm Sea" - A palette using warm stone neutrals (bg-stone-50, text-stone-800) for the main body and a calming teal (text-teal-600, border-teal-500) as an accent to evoke the natural colors of Hamdeok. -->
+    <!-- Application Structure Plan: A thematic tab-based SPA structure was chosen over a linear report to allow non-linear exploration. The five tabs (Overview, Nature, History, Human Use, Culture) logically group distinct facets of the topic. This design empowers users, especially someone preparing a narration, to quickly access specific information (e.g., just the history or just the activities) without scrolling through unrelated content. The "Human Use" section is designed to be interactive, allowing users to filter content, directly reflecting how different areas (beach vs. peak) are utilized, which is a key part of the user's request. -->
+    <!-- Visualization & Content Choices: Report Info: Popular activities at Hamdeok/Seoubong -> Goal: Compare -> Viz: Vertical Bar Chart (Chart.js/Canvas) to visually represent the popularity of different activities. -> Interaction: The chart is supplemented by interactive filter buttons ("Beach Activities", "Peak Activities") that dynamically update a text block, providing detailed context for the visualized data. Report Info: Geographical relationship -> Goal: Inform -> Viz: A simple diagram made with HTML/CSS divs illustrates how Seoubong protects the bay. -> Interaction: Static, but provides crucial visual context. This approach avoids SVG and focuses on lightweight, accessible visualizations. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f7f5; }
+        .nav-item { transition: all 0.3s ease; }
+        .nav-item.active { border-color: #0d9488; color: #0d9488; font-weight: 500; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .chart-container { position: relative; width: 100%; max-width: 700px; margin-left: auto; margin-right: auto; height: 300px; max-height: 40vh; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .info-card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .info-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1); }
+        .interactive-btn { transition: all 0.2s ease-in-out; }
+        .interactive-btn.active { background-color: #0d9488; color: white; }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-2{margin-left:0.5rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.mt-8{margin-top:2rem}.mt-\[-1px\]{margin-top:-1px}.mr-2{margin-right:0.5rem}.mt-1{margin-top:0.25rem}.flex{display:flex}.grid{display:grid}.h-16{height:4rem}.h-24{height:6rem}.min-h-\[300px\]{min-height:300px}.w-48{width:12rem}.w-full{width:100%}.max-w-3xl{max-width:48rem}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-t-full{border-top-left-radius:9999px;border-top-right-radius:9999px}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}.border-t{border-top-width:1px}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209 / var(--tw-border-opacity, 1))}.border-transparent{border-color:transparent}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-green-300{--tw-bg-opacity:1;background-color:rgb(134 239 172 / var(--tw-bg-opacity, 1))}.bg-pink-200{--tw-bg-opacity:1;background-color:rgb(251 207 232 / var(--tw-bg-opacity, 1))}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244 / var(--tw-bg-opacity, 1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-yellow-200{--tw-bg-opacity:1;background-color:rgb(254 240 138 / var(--tw-bg-opacity, 1))}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.pt-6{padding-top:1.5rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-5xl{font-size:3rem;line-height:1}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175 / var(--tw-text-opacity, 1))}.text-green-700{--tw-text-opacity:1;color:rgb(21 128 61 / var(--tw-text-opacity, 1))}.text-green-800{--tw-text-opacity:1;color:rgb(22 101 52 / var(--tw-text-opacity, 1))}.text-pink-800{--tw-text-opacity:1;color:rgb(157 23 77 / var(--tw-text-opacity, 1))}.text-stone-500{--tw-text-opacity:1;color:rgb(120 113 108 / var(--tw-text-opacity, 1))}.text-stone-600{--tw-text-opacity:1;color:rgb(87 83 78 / var(--tw-text-opacity, 1))}.text-stone-700{--tw-text-opacity:1;color:rgb(68 64 60 / var(--tw-text-opacity, 1))}.text-stone-800{--tw-text-opacity:1;color:rgb(41 37 36 / var(--tw-text-opacity, 1))}.text-stone-900{--tw-text-opacity:1;color:rgb(28 25 23 / var(--tw-text-opacity, 1))}.text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110 / var(--tw-text-opacity, 1))}.text-yellow-800{--tw-text-opacity:1;color:rgb(133 77 14 / var(--tw-text-opacity, 1))}.text-teal-500{--tw-text-opacity:1;color:rgb(20 184 166 / var(--tw-text-opacity, 1))}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:border-teal-500:hover{--tw-border-opacity:1;border-color:rgb(20 184 166 / var(--tw-border-opacity, 1))}.hover\:bg-teal-500:hover{--tw-bg-opacity:1;background-color:rgb(20 184 166 / var(--tw-bg-opacity, 1))}.hover\:text-teal-600:hover{--tw-text-opacity:1;color:rgb(13 148 136 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.md\:p-8{padding:2rem}.md\:text-5xl{font-size:3rem;line-height:1}.md\:text-base{font-size:1rem;line-height:1.5rem}}@media (min-width: 1024px){.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}</style></head>
+<body class="bg-stone-50 text-stone-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-stone-900">제주의 보석: 함덕과 서우봉</h1>
+            <p class="mt-2 text-lg text-stone-600">에메랄드빛 바다와 수호신 같은 오름의 이야기</p>
+        </header>
+
+        <nav class="flex justify-center border-b border-stone-300 mb-8 space-x-2 md:space-x-4">
+            <button data-target="overview" class="nav-item text-sm md:text-base px-3 py-3 border-b-2 border-transparent hover:border-teal-500 hover:text-teal-600">종합 안내</button>
+            <button data-target="nature" class="nav-item text-sm md:text-base px-3 py-3 border-b-2 border-transparent hover:border-teal-500 hover:text-teal-600 active">자연과 지형</button>
+            <button data-target="history" class="nav-item text-sm md:text-base px-3 py-3 border-b-2 border-transparent hover:border-teal-500 hover:text-teal-600">역사와 전설</button>
+            <button data-target="usage" class="nav-item text-sm md:text-base px-3 py-3 border-b-2 border-transparent hover:border-teal-500 hover:text-teal-600">사람들의 이용</button>
+            <button data-target="culture" class="nav-item text-sm md:text-base px-3 py-3 border-b-2 border-transparent hover:border-teal-500 hover:text-teal-600">문화 콘텐츠</button>
+        </nav>
+
+        <main id="main-content">
+            <section id="overview" class="content-section p-4">
+                <h2 class="text-2xl font-bold text-center mb-6 text-teal-700">함덕과 서우봉, 한눈에 보기</h2>
+                <p class="text-center max-w-3xl mx-auto mb-8 text-stone-600">
+                    함덕 해수욕장과 서우봉은 단순한 관광지를 넘어, 제주의 자연과 역사, 그리고 사람들의 삶이 조화롭게 어우러진 특별한 공간입니다. 에메랄드빛 얕은 바다는 평온한 휴식을, 그 곁을 지키는 서우봉은 역동적인 제주의 자연과 역사를 동시에 선사합니다. 이 섹션에서는 함덕과 서우봉이 왜 많은 사람들에게 사랑받는지 핵심적인 매력을 소개합니다.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <div class="info-card p-6">
+                        <div class="text-5xl mb-3">🌊</div>
+                        <h3 class="text-xl font-semibold mb-2">국민 안심 해수욕장</h3>
+                        <p class="text-stone-600">수심이 얕고 파도가 잔잔하여 아이부터 어른까지 온 가족이 안전하게 물놀이를 즐길 수 있는 천혜의 조건을 갖추었습니다.</p>
+                    </div>
+                    <div class="info-card p-6">
+                        <div class="text-5xl mb-3">⛰️</div>
+                        <h3 class="text-xl font-semibold mb-2">바다를 품은 오름</h3>
+                        <p class="text-stone-600">해변 바로 옆에 위치한 서우봉은 가벼운 산책으로 정상에 올라 함덕의 절경과 한라산까지 조망할 수 있는 최고의 전망대입니다.</p>
+                    </div>
+                    <div class="info-card p-6">
+                        <div class="text-5xl mb-3">🌅</div>
+                        <h3 class="text-xl font-semibold mb-2">낮과 밤의 두 얼굴</h3>
+                        <p class="text-stone-600">낮에는 활기찬 해변의 풍경을, 밤에는 낭만적인 야경과 고요한 파도 소리를 즐길 수 있어 하루 종일 매력적인 곳입니다.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="nature" class="content-section p-4 active">
+                 <h2 class="text-2xl font-bold text-center mb-6 text-teal-700">자연이 빚은 걸작, 지형 이야기</h2>
+                 <p class="text-center max-w-3xl mx-auto mb-8 text-stone-600">
+                    함덕의 독특한 아름다움은 지형적 특성에서 비롯됩니다. 파도를 막아주는 서우봉과 넓게 펼쳐진 모래사장은 어떻게 형성되었을까요? 이 섹션에서는 함덕 해수욕장과 서우봉의 지리적 특징을 탐구하며, 자연이 인간에게 어떻게 아늑하고 아름다운 쉼터를 제공하는지 알아봅니다.
+                </p>
+                <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-bold mb-3 text-blue-600">함덕 해수욕장: 잔잔한 에메랄드빛 만(灣)</h3>
+                            <p class="text-stone-700 leading-relaxed">
+                                함덕 해수욕장은 제주 동쪽에 위치한 대표적인 해변으로, 바다 쪽으로 돌출된 서우봉이 북서풍을 막아주는 천연 방파제 역할을 합니다. 이 덕분에 만(Bay) 안쪽의 파도는 항상 잔잔하며, 물이 맑고 수심이 얕아 바닥의 흰 모래가 그대로 비쳐 아름다운 에메랄드빛을 띱니다. 해변은 크게 3개의 구역으로 나뉘며, 총 길이는 약 900m에 달합니다. 특히 썰물 때면 넓은 백사장이 드러나 더욱 광활한 풍경을 자아냅니다.
+                            </p>
+                        </div>
+                        <div>
+                             <h3 class="text-xl font-bold mb-3 text-green-700">서우봉: 함덕을 지키는 물소 오름</h3>
+                            <p class="text-stone-700 leading-relaxed">
+                                서우봉(犀牛峰)은 '물소(무소)'의 형상을 닮았다고 해서 붙여진 이름의 오름입니다. 높이 113.3m의 이 기생화산은 두 개의 봉우리로 이루어져 있으며, 해안 절벽과 완만한 풀밭의 능선이 조화를 이룹니다. 화산 활동으로 형성된 서우봉의 존재는 함덕 마을과 해수욕장을 바람과 파도로부터 보호하는 결정적인 역할을 합니다. 또한, 그 자체로 아름다운 트레킹 코스이자 전망대 역할을 하며 자연과 인간의 공존을 보여줍니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-6 border-t">
+                        <h4 class="text-lg font-semibold text-center mb-4">서우봉과 함덕의 지형적 관계</h4>
+                        <div class="flex flex-col items-center justify-center p-4 bg-stone-100 rounded-lg">
+                            <div class="text-center mb-2 font-medium text-blue-800">북서풍 &amp; 파도</div>
+                            <div class="text-4xl animate-pulse">⬇️</div>
+                            <div class="w-48 h-24 bg-green-300 rounded-t-full flex items-center justify-center text-center text-green-800 font-bold shadow-md">서우봉 (천연 방파제)</div>
+                            <div class="w-full h-16 bg-blue-100 flex items-center justify-center text-blue-800 font-semibold shadow-inner mt-[-1px]">함덕 해수욕장 (잔잔한 만)</div>
+                            <p class="mt-4 text-sm text-stone-600 text-center">서우봉이 바람과 파도를 막아주어 함덕 해수욕장은 항상 호수처럼 평온한 상태를 유지합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="history" class="content-section p-4">
+                <h2 class="text-2xl font-bold text-center mb-6 text-teal-700">시간이 쌓인 언덕, 서우봉의 기억</h2>
+                 <p class="text-center max-w-3xl mx-auto mb-8 text-stone-600">
+                    서우봉은 단순한 자연 경관을 넘어 제주의 아픈 역사와 선조들의 지혜가 깃든 공간입니다. 봉수대에서는 국방의 최전선이었던 흔적을, 일본군 진지에서는 전쟁의 상처를 엿볼 수 있습니다. 이 섹션은 서우봉에 겹겹이 쌓인 시간의 흔적을 따라가며 과거의 이야기를 들려줍니다.
+                </p>
+                <div class="space-y-6">
+                    <div class="info-card p-6 flex items-start space-x-4">
+                        <div class="text-3xl">📡</div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-1">조선 시대: 위급함을 알리던 봉수대</h3>
+                            <p class="text-stone-600">서우봉 정상에는 조선 시대에 사용되던 '서우봉 연대'가 있었습니다. 연대는 횃불과 연기로 인근의 다른 연대나 군사 기지에 위급한 상황(주로 왜구의 침입)을 알리는 통신 시설이었습니다. 이곳은 제주의 해안 방어 체계에서 중요한 역할을 담당했던 역사의 현장입니다. 지금은 그 터만 남아있지만, 당시의 긴박함과 선조들의 노고를 짐작하게 합니다.</p>
+                        </div>
+                    </div>
+                     <div class="info-card p-6 flex items-start space-x-4">
+                        <div class="text-3xl">⛰️</div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-1">일제 강점기: 전쟁의 상흔, 일본군 진지</h3>
+                            <p class="text-stone-600">태평양 전쟁 말기, 일본군은 미군의 본토 상륙을 저지하기 위해 제주도를 요새화했습니다. 이때 서우봉에도 해안 방어를 위한 진지 동굴이 여러 개 만들어졌습니다. 지금도 남아있는 이 동굴들은 강제 동원된 제주도민들의 아픔과 전쟁의 비극을 증언하는 살아있는 역사 교육의 장입니다. 아름다운 풍경 속에 숨겨진 역사의 상처를 기억하게 합니다.</p>
+                        </div>
+                    </div>
+                     <div class="info-card p-6 flex items-start space-x-4">
+                        <div class="text-3xl">🐃</div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-1">전설: 마을을 지키는 물소</h3>
+                            <p class="text-stone-600">서우봉의 이름에 얽힌 구체적인 신화나 전설이 문헌으로 전해지지는 않지만, 제주 사람들은 예로부터 오름을 신성시하고 마을을 지키는 수호신처럼 여겼습니다. 서우봉의 '물소' 형상은 듬직하게 마을과 바다를 굽어보며 풍요와 안녕을 가져다주는 존재로 인식되었을 것입니다. 거센 바람을 막아주는 지형적 특성이 이러한 믿음을 더욱 강하게 만들었을 것으로 추측됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="usage" class="content-section p-4">
+                <h2 class="text-2xl font-bold text-center mb-6 text-teal-700">쉼과 즐거움의 공간, 사람들의 이야기</h2>
+                <p class="text-center max-w-3xl mx-auto mb-8 text-stone-600">
+                    오늘날 함덕과 서우봉은 다양한 이유로 사람들의 발길이 끊이지 않는 제주의 대표적인 명소입니다. 사람들은 이곳의 자연을 어떤 방식으로 즐기고 있을까요? 이 섹션에서는 차트를 통해 인기 있는 활동들을 살펴보고, 해변과 오름에서 즐길 수 있는 다채로운 활동들을 소개하여 방문객들이 이곳을 찾는 이유를 탐구합니다.
+                </p>
+                <div class="text-center mb-6">
+                    <button id="btn-beach" class="interactive-btn active px-4 py-2 bg-white border border-stone-300 rounded-full text-stone-700 hover:bg-teal-500 hover:text-white">🌊 해변 활동</button>
+                    <button id="btn-peak" class="interactive-btn px-4 py-2 ml-2 bg-white border border-stone-300 rounded-full text-stone-700 hover:bg-teal-500 hover:text-white">⛰️ 서우봉 활동</button>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-8 items-center">
+                    <div id="activity-description" class="bg-white p-6 rounded-lg shadow-lg min-h-[300px]">
+                    <h3 class="text-xl font-bold mb-3">🌊 평화로운 해변에서의 활동</h3>
+                    <p class="text-stone-700 mb-4">함덕 해변의 가장 큰 매력은 잔잔하고 얕은 바다입니다. 아이들도 안심하고 물놀이를 할 수 있어 가족 단위 방문객에게 인기가 높습니다. 썰물 때 드러나는 넓은 모래사장에서의 모래놀이, 투명 카약이나 패들보드를 타며 바다 위를 유유히 떠다니는 경험은 특별한 추억을 선사합니다. 해변을 따라 조성된 산책로를 걷거나, 수많은 카페 중 한 곳에 앉아 바다를 바라보며 휴식을 취하는 것만으로도 완벽한 힐링이 됩니다.</p>
+                    <ul class="space-y-2 text-stone-600"><li class="flex items-start"><span class="text-teal-500 mr-2 mt-1">✓</span>가족 물놀이 및 해수욕</li><li class="flex items-start"><span class="text-teal-500 mr-2 mt-1">✓</span>투명 카약, 패들보드 체험</li><li class="flex items-start"><span class="text-teal-500 mr-2 mt-1">✓</span>백사장 산책 및 모래놀이</li><li class="flex items-start"><span class="text-teal-500 mr-2 mt-1">✓</span>해변 카페에서 휴식</li></ul>
+                </div>
+                    <div>
+                        <div class="chart-container">
+                            <canvas id="activityChart" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas>
+                        </div>
+                         <p class="text-center text-sm text-stone-500 mt-2">함덕 &amp; 서우봉 방문객 주요 활동 선호도</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="culture" class="content-section p-4">
+                 <h2 class="text-2xl font-bold text-center mb-6 text-teal-700">자연과 어우러진 문화 콘텐츠</h2>
+                 <p class="text-center max-w-3xl mx-auto mb-8 text-stone-600">
+                    함덕과 서우봉은 아름다운 자연을 배경으로 다양한 문화적 즐길 거리를 제공합니다. 계절마다 다른 색의 옷을 갈아입는 서우봉의 풍경부터 해변을 따라 이어진 산책로와 카페까지, 이곳의 매력을 더하는 문화 콘텐츠들을 소개합니다.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="info-card p-6">
+                        <h3 class="text-xl font-semibold mb-3">서우봉 둘레길: 계절을 걷다</h3>
+                        <p class="text-stone-600 mb-4">서우봉을 한 바퀴 도는 둘레길은 제주 올레 19코스의 일부이기도 합니다. 이 길을 따라 걸으면 한쪽으로는 푸른 바다를, 다른 쪽으로는 제주의 시골 마을 풍경을 감상할 수 있습니다. 특히 봄에는 노란 유채꽃이, 가을에는 코스모스가 만발하여 장관을 이룹니다. 가벼운 산책으로 제주의 사계절을 만끽할 수 있는 최고의 코스입니다.</p>
+                        <div class="flex space-x-4">
+                            <span class="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">🌼 봄: 유채꽃</span>
+                            <span class="bg-pink-200 text-pink-800 px-3 py-1 rounded-full text-sm font-medium">🌸 가을: 코스모스</span>
+                        </div>
+                    </div>
+                     <div class="info-card p-6">
+                        <h3 class="text-xl font-semibold mb-3">해변 카페와 델문도</h3>
+                        <p class="text-stone-600">함덕 해변을 따라서는 개성 있는 카페와 레스토랑이 즐비합니다. 특히, 바다 위 다리를 건너 들어가는 듯한 '카페 델문도'는 함덕의 랜드마크와도 같은 곳입니다. 탁 트인 바다 전망을 감상하며 즐기는 커피 한 잔은 함덕 여행의 빼놓을 수 없는 즐거움입니다. 밤이 되면 조명이 켜져 더욱 낭만적인 분위기를 연출합니다.</p>
+                    </div>
+                     <div class="info-card p-6">
+                        <h3 class="text-xl font-semibold mb-3">다양한 해양 레저</h3>
+                        <p class="text-stone-600">잔잔한 바다 덕분에 함덕은 다양한 해양 레저를 즐기기에도 최적의 장소입니다. 투명 카약, 패들보드, 스노클링 등을 통해 에메랄드빛 바다를 더욱 가까이에서 체험할 수 있습니다. 전문 업체들이 있어 초보자도 쉽게 장비를 대여하고 강습을 받을 수 있어 제주의 바다를 온몸으로 느낄 수 있습니다.</p>
+                    </div>
+                     <div class="info-card p-6">
+                        <h3 class="text-xl font-semibold mb-3">함덕 오일장과 지역 문화</h3>
+                        <p class="text-stone-600">함덕에서는 매 1일과 6일에 오일장이 열립니다. 제주의 신선한 농수산물과 특산품, 그리고 지역 주민들의 활기 넘치는 모습을 만날 수 있는 곳입니다. 관광지로서의 함덕뿐만 아니라, 제주 사람들의 삶이 녹아 있는 진짜 제주의 문화를 느끼고 싶다면 오일장 방문을 추천합니다.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const appData = {
+                activities: {
+                    beach: {
+                        title: '🌊 평화로운 해변에서의 활동',
+                        description: '함덕 해변의 가장 큰 매력은 잔잔하고 얕은 바다입니다. 아이들도 안심하고 물놀이를 할 수 있어 가족 단위 방문객에게 인기가 높습니다. 썰물 때 드러나는 넓은 모래사장에서의 모래놀이, 투명 카약이나 패들보드를 타며 바다 위를 유유히 떠다니는 경험은 특별한 추억을 선사합니다. 해변을 따라 조성된 산책로를 걷거나, 수많은 카페 중 한 곳에 앉아 바다를 바라보며 휴식을 취하는 것만으로도 완벽한 힐링이 됩니다.',
+                        points: ['가족 물놀이 및 해수욕', '투명 카약, 패들보드 체험', '백사장 산책 및 모래놀이', '해변 카페에서 휴식']
+                    },
+                    peak: {
+                        title: '⛰️ 역동적인 서우봉에서의 활동',
+                        description: '서우봉은 남녀노소 누구나 쉽게 오를 수 있는 완만한 트레킹 코스를 자랑합니다. 20-30분이면 정상에 도달하여 함덕 해변과 푸른 바다, 그리고 멀리 한라산까지 아우르는 파노라마 뷰를 감상할 수 있습니다. 특히 일출과 일몰 명소로도 유명하여 많은 사진작가들이 즐겨 찾습니다. 계절마다 유채꽃과 코스모스가 만발하는 풍경 속에서 인생 사진을 남기거나, 역사의 흔적인 진지동굴을 둘러보는 것도 의미 있는 활동입니다.',
+                        points: ['둘레길 트레킹 및 산책', '정상에서의 파노라마 뷰 감상', '일출/일몰 및 계절 꽃 촬영', '역사 유적(진지동굴) 탐방']
+                    }
+                },
+                chartData: {
+                    labels: ['사진 촬영', '해수욕/물놀이', '맛집/카페 탐방', '휴식/경관 감상', '트레킹/산책'],
+                    data: [95, 90, 88, 82, 75]
+                }
+            };
+
+            const navItems = document.querySelectorAll('.nav-item');
+            const contentSections = document.querySelectorAll('.content-section');
+            const activityDescContainer = document.getElementById('activity-description');
+            const btnBeach = document.getElementById('btn-beach');
+            const btnPeak = document.getElementById('btn-peak');
+
+            function updateActiveNav(targetId) {
+                navItems.forEach(item => {
+                    item.classList.toggle('active', item.dataset.target === targetId);
+                });
+                contentSections.forEach(section => {
+                    section.classList.toggle('active', section.id === targetId);
+                });
+            }
+            
+            function updateActivityContent(type) {
+                const content = appData.activities[type];
+                if (!content) return;
+
+                let pointsHTML = content.points.map(point => `<li class="flex items-start"><span class="text-teal-500 mr-2 mt-1">✓</span>${point}</li>`).join('');
+
+                activityDescContainer.innerHTML = `
+                    <h3 class="text-xl font-bold mb-3">${content.title}</h3>
+                    <p class="text-stone-700 mb-4">${content.description}</p>
+                    <ul class="space-y-2 text-stone-600">${pointsHTML}</ul>
+                `;
+                
+                btnBeach.classList.toggle('active', type === 'beach');
+                btnPeak.classList.toggle('active', type === 'peak');
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    updateActiveNav(item.dataset.target);
+                });
+            });
+
+            if (btnBeach && btnPeak) {
+                btnBeach.addEventListener('click', () => updateActivityContent('beach'));
+                btnPeak.addEventListener('click', () => updateActivityContent('peak'));
+            }
+            
+            const ctx = document.getElementById('activityChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: appData.chartData.labels,
+                        datasets: [{
+                            label: '활동 선호도 (%)',
+                            data: appData.chartData.data,
+                            backgroundColor: [
+                                'rgba(13, 148, 136, 0.6)',
+                                'rgba(8, 126, 126, 0.6)',
+                                'rgba(20, 184, 166, 0.6)',
+                                'rgba(45, 212, 191, 0.6)',
+                                'rgba(107, 114, 128, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(13, 148, 136, 1)',
+                                'rgba(8, 126, 126, 1)',
+                                'rgba(20, 184, 166, 1)',
+                                'rgba(45, 212, 191, 1)',
+                                'rgba(107, 114, 128, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.label}: ${context.raw}%`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: '선호도 (%)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            updateActiveNav('overview');
+            if (activityDescContainer) {
+              updateActivityContent('beach');
+            }
+        });
+    </script>
+
+
+</body></html>
