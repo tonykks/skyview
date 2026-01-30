@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>다려도와 외가리 이야기 | slow view series</title>
+  <style>
+    :root {
+      --bg-main: #f3f7fb;
+      --bg-card: #ffffff;
+      --accent: #1fa6a0;  
+      --accent-soft: #d9f3f1;
+      --text-main: #222222;
+      --text-muted: #555555;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans KR",
+        sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(
+        135deg,
+        #0f7cba,
+        #13a39a 55%,
+        #17c0a0
+      );
+      color: #ffffff;
+      padding: 2.8rem 1.5rem 2.2rem;
+    }
+
+    header .inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header h1 {
+      margin: 0 0 0.4rem;
+      font-size: 2.1rem;
+      letter-spacing: 0.04em;
+    }
+
+    header p {
+      margin: 0.1rem 0;
+      font-size: 0.98rem;
+      opacity: 0.9;
+    }
+
+    header .tagline {
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    nav .inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0.35rem 1.5rem 0.45rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    nav span.brand {
+      font-weight: 700;
+      color: #0b5b7f;
+      margin-right: 0.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      padding: 0.2rem 0.3rem;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.8rem 1.5rem 3rem;
+    }
+
+    section {
+      margin-bottom: 2.4rem;
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 1.6rem 1.4rem 1.7rem;
+      box-shadow: 0 4px 12px rgba(15, 40, 70, 0.06);
+    }
+
+    section.highlight {
+      border-left: 4px solid var(--accent);
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-size: 1.4rem;
+      letter-spacing: 0.03em;
+    }
+
+    h3 {
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    p {
+      margin: 0.1rem 0 0.65rem;
+      font-size: 0.95rem;
+    }
+
+    ul {
+      margin: 0.1rem 0 0.8rem 1.2rem;
+      padding: 0;
+      font-size: 0.93rem;
+    }
+
+    li {
+      margin-bottom: 0.25rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.14rem 0.7rem 0.16rem;
+      background: var(--accent-soft);
+      color: #0b6b67;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .note {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 1.4rem;
+    }
+
+    .pill-heading {
+      display: inline-block;
+      padding: 0.1rem 0.6rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #0c6d69;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .em {
+      color: #0c7e76;
+      font-weight: 600;
+    }
+
+    footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 1.2rem 1.5rem 2.2rem;
+      background: #f0f3f8;
+      font-size: 0.8rem;
+      color: #666666;
+    }
+
+    footer .inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        padding: 2.2rem 1.1rem 1.8rem;
+      }
+
+      main {
+        padding: 1.4rem 1rem 2.4rem;
+      }
+
+      nav .inner {
+        padding: 0.3rem 1rem 0.4rem;
+      }
+
+      .two-col {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="inner">
+      <h1>다려도와 외가리 이야기</h1>
+      <p>Jeju Daryeodo &amp; Grey Heron · slow view series — Ep.002 참고자료</p>
+      <p class="tagline">
+        북촌 앞바다의 작은 무인도, 다려도. 그 위에서 한때 여름을 보냈던 외가리들의 흔적을
+        영상과 함께 천천히 되짚어 보는 페이지입니다.
+      </p>
+    </div>
+  </header>
+
+  <nav>
+    <div class="inner">
+      <span class="brand">자료 목차</span>
+      <a href="#daryeodo-overview">다려도 한눈에 보기</a>
+      <a href="#daryeodo-story">지질·역사·마을 이야기</a>
+      <a href="#heron-basic">외가리 기본 정보</a>
+      <a href="#heron-annual">외가리의 1년 주기</a>
+      <a href="#why-three-left">왜 세 마리만 남았을까?</a>
+      <a href="#watching-tips">영상 관찰 포인트</a>
+    </div>
+  </nav>
+
+  <main>
+    
+    <section id="daryeodo-overview" class="highlight">
+      <h2>1. 다려도 한눈에 보기</h2>
+      <p class="pill-heading">Daryeodo Island · 조천읍 북촌리 앞바다</p>
+      <p>
+        다려도는 제주시 조천읍 북촌리 앞바다, 해안에서 약 400&nbsp;m 정도 떨어진
+        곳에 떠 있는 작은 무인도입니다. 3~4개의 바위섬과 여러 개의 여(암초)가
+        모여 하나의 섬처럼 보이며, 섬의 실루엣이 물개를 닮았다고 해서
+        <span class="em">달여도·달서도·다래여</span> 등 여러 이름으로 불려 왔습니다.
+      </p>
+
+      <div class="badge-row">
+        <span class="badge">현무암 바위섬</span>
+        <span class="badge">lava tumulus 지형</span>
+        <span class="badge">제주 숨은 비경 31선</span>
+        <span class="badge">원앙·외가리 서식지</span>
+      </div>
+
+      <h3>기본 정보</h3>
+      <ul>
+        <li><strong>위치</strong> · 제주시 조천읍 북촌리 산 87~90 일대</li>
+        <li><strong>형태</strong> · 현무암으로 이루어진 여러 개의 작은 섬이 모인 군도</li>
+        <li><strong>거리</strong> · 북촌포구·북촌항에서 배나 카약으로 10분 내외</li>
+        <li><strong>용도</strong> · 등대와 팔각정이 설치된 어업·휴식 공간, 조류 서식지</li>
+        <li><strong>소유</strong> · 북촌리 새마을회 소유의 사유지</li>
+      </ul>
+      <p class="note">
+        일반 관광객이 자유롭게 상륙하는 장소는 아니며, 어업과 마을 행사,
+        연구·촬영 등 제한된 목적으로 이용되는 공간입니다.
+      </p>
+    </section>
+
+    
+    <section id="daryeodo-story">
+      <h2>2. 다려도의 지질, 역사, 마을 이야기</h2>
+
+      <div class="two-col">
+        <div>
+          <h3>2-1. 바다 속까지 이어지는 화산섬의 뼈대</h3>
+          <p>
+            다려도 주변 바다는 한라산 동부에서 흘러내린
+            <span class="em">빌레 용암류</span>가 만든 독특한
+            <span class="em">lava tumulus(용암 투뮬러스)</span> 지형으로 유명합니다.
+            뜨거운 용암이 바다 쪽으로 흘러가며 표면이 먼저 굳고, 내부 용암이 밀어
+            올려 언덕처럼 불룩 솟아오른 뒤 식어 굳은 형태입니다. 오늘날에는 그
+            일부만 수면 위로 드러나 다려도라는 작은 섬들을 이루고 있습니다.
+          </p>
+          <p>
+            수천 년 동안 파도와 조류에 씻기면서도 투뮬러스의 둥근 윤곽이 잘 남아
+            있어, "바닷속 지질 박물관"이라는 표현이 어울리는 곳으로 평가됩니다.
+          </p>
+
+          <h3>2-2. 에메랄드빛 바다와 마을 어장</h3>
+          <p>
+            암반 표면의 홈과 틈, 완만한 수심 덕분에 다려도 주변은 소라·성게·전복,
+            해삼, 각종 해조류가 풍부한 어장이자, 물빛이 특히 맑고 옅은
+            에메랄드색으로 보이는 구간입니다. 북촌 주민들은 이곳을
+            <span class="em">"보물섬"</span>이라 부르며, 해녀의 물질과 연안 어업의
+            중요한 터전으로 사용해 왔습니다.
+          </p>
+        </div>
+
+        <div>
+          <h3>2-3. 제사유적과 신앙의 섬</h3>
+          <p>
+            다려도에서는 탐라 초기(대략 서기 1~5세기)로 추정되는 토기편이
+            다량 발견되어, 바다와 관련된 제사를 지내던
+            <span class="em">해상 제사유적</span>으로 해석되고 있습니다. 현재는
+            팔각정 건립 과정에서 유구가 많이 훼손되어 추가 연구가 쉽지 않지만,
+            바다 신에게 풍어와 안전을 비는 장소였을 가능성이 큽니다.
+          </p>
+
+          <p>
+            북촌 마을에서는 지금도 가릿당(본향당)에서 해신에게 비는 제의가 이어지고,
+            풍어제를 지낼 때 배를 타고 다려도를 한 바퀴 도는 의식이 전해집니다.
+            작은 바위섬이지만, 마을 사람들에게는 신앙과 생업, 기억이 겹겹이
+            쌓여 있는 상징적인 공간입니다.
+          </p>
+
+          <h3>2-4. 4·3과 피란의 기억</h3>
+          <p>
+            제주 4·3 당시 북촌리 주민 일부는 토벌대를 피해 배를 타고 다려도
+            인근으로 피신하기도 했다는 기록이 남아 있습니다. 지금의 고요한 풍경
+            뒤에는 격렬했던 근현대사의 기억도 함께 놓여 있는 셈입니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    
+    <section>
+      <h2>3. 다려도와 새들</h2>
+      <p>
+        다려도는 바다 새들에게도 중요한 쉼터입니다. 겨울철에는
+        <span class="em">원앙( mandarin duck )</span>의 집단 도래지로 알려져 있고,
+        여름철에는 외가리를 비롯한 백로류가 번식과 휴식을 위해 섬의 관목과
+        바위 위를 이용합니다.
+      </p>
+      <p>
+        무인도라는 특성상 사람의 왕래가 적고, 물가와 나무, 바위가 동시에
+        존재하여 물고기를 사냥하고 둥지를 틀기 좋은 조건을 갖추고 있습니다.
+        이번 영상에 담긴 외가리 집단 번식지도 이러한 환경 위에서 형성된 것입니다.
+      </p>
+    </section>
+
+    
+    <section id="heron-basic">
+      <h2>4. 외가리(Grey Heron) 기본 정보</h2>
+      <p class="pill-heading">Ardea cinerea · 왜가리</p>
+
+      <div class="two-col">
+        <div>
+          <h3>4-1. 분류와 생김새</h3>
+          <ul>
+            <li><strong>분류</strong> · 왜가리과(Ardeidae)에 속하는 대형 도요목 새</li>
+            <li>
+              <strong>크기</strong> · 몸길이 약 90&nbsp;cm 전후, 날개를 폈을 때
+              1.7&nbsp;m 안팎으로 한국 백로류 중 가장 큰 축에 속함
+            </li>
+            <li>
+              <strong>색</strong> · 회색 등과 흰 배, 검은 눈썹무늬와 머리 깃이 특징.
+              긴 목과 긴 다리, 날카로운 부리를 지녔음.
+            </li>
+          </ul>
+
+          <h3>4-2. 서식 환경</h3>
+          <p>
+            강·호수·하천·논, 갯벌과 하구, 양식장과 같은 얕은 물가를 선호합니다.
+            다려도처럼 수심이 완만한 연안 암반지대도 좋은 먹이터가 됩니다.
+          </p>
+        </div>
+
+        <div>
+          <h3>4-3. 먹이와 사냥법</h3>
+          <ul>
+            <li>주요 먹이는 물고기, 개구리, 새우·게 같은 수서 무척추동물</li>
+            <li>간혹 작은 쥐, 도마뱀, 곤충 등을 사냥하기도 함</li>
+            <li>
+              물가에 가만히 서서 기다리다가, 먹잇감이 가까이 오면 번개처럼
+              부리를 찔러 잡는 <span class="em">"기다렸다가 찌르기"</span> 방식이
+              전형적입니다.
+            </li>
+          </ul>
+
+          <h3>4-4. 번식 습성</h3>
+          <p>
+            우리나라의 왜가리는 보통 3~4월에 번식지로 모여 나무 위에 큰
+            접시 모양의 둥지를 짓고, 4~6월에 3~4개의 알을 낳습니다.
+            약 25~28일간 품은 뒤 부화한 새끼는 7~8월이면 둥지를 떠나
+            스스로 먹이를 잡을 수 있게 됩니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="heron-annual">
+      <h2>5. 외가리의 1년 주기와 이동</h2>
+      <p>
+        왜가리는 전 세계 온대·아열대 지역에 널리 분포하는 종으로,
+        번식지와 월동지를 오가는 <span class="em">부분 이동성(partially migratory)</span>을
+        보입니다. 우리나라에서는 대부분 여름철새지만, 남부와 도서 지역 일부 개체는
+        겨울에도 남아 텃새처럼 지냅니다.
+      </p>
+
+      <ul>
+        <li><strong>1~2월</strong> · 남부·도서 지역에서 월동, 일부는 이 시기부터 번식 준비</li>
+        <li><strong>3~4월</strong> · 전국 번식지로 이동, 나무 위 집단 번식지 형성, 둥지 짓기</li>
+        <li><strong>4~6월</strong> · 산란과 포란, 새끼 부화</li>
+        <li><strong>5~7월</strong> · 새끼 육추, 먹이 공급을 위해 부모새의 활동량이 가장 많아지는 시기</li>
+        <li><strong>7~8월</strong> · 어린 새의 비행 연습, 둥지 떠나 주변 습지로 분산</li>
+        <li><strong>9~10월</strong> · 많은 개체가 남쪽 월동지(중국·동남아 등)로 이동</li>
+        <li><strong>11~12월</strong> · 일부는 한국 남부·제주·섬 지역에 남아 겨울을 나며, 일부는 이미 월동지에서 생활</li>
+      </ul>
+    </section>
+
+    
+    <section id="why-three-left">
+      <h2>6. 왜 대부분 떠났는데 몇 마리만 남았을까?</h2>
+      <p>
+        6월에는 다려도 외가리 둥지가 빽빽했지만, 11월에 다시 찾았을 때는
+        대부분의 개체가 떠나고 3마리 정도만 남아 있었습니다. 이런 현상은
+        외가리의 생태를 생각하면 자연스러운 결과로 설명할 수 있습니다.
+      </p>
+
+      <h3>6-1. 번식이 끝난 뒤 집단 해산</h3>
+      <p>
+        외가리 새끼들은 여름 중반에 둥지를 떠나면, 더 이상 번식지에
+        남아 있을 이유가 없습니다. 먹이가 많은 하천·논·양식장·하구 등으로
+        흩어져서 단독 또는 작은 무리로 생활하며, 가을이 되면 많은 개체가
+        월동지로 이동합니다.
+      </p>
+
+      <h3>6-2. "남는" 개체가 있는 이유</h3>
+      <p>몇 마리만 다려도 주변에 남아 있었던 이유는 여러 가능성을 함께 생각해 볼 수 있습니다.</p>
+      <ul>
+        <li>
+          <strong>부분 텃새 개체</strong> · 우리나라 남부와 섬 지역에서는 일부
+          외가리가 겨울에도 머무는 텃새 성향을 보입니다. 다려도 주변 어장과
+          양식장에 먹이가 충분하다면, 굳이 먼 거리를 이동하지 않고 그 주변에서
+          겨울을 날 수 있습니다.
+        </li>
+        <li>
+          <strong>늦게 떠나는 어린 새</strong> · 그해에 태어난 어린 개체가
+          체력이나 경험 부족으로 이동 시기를 놓치거나, 상대적으로 따뜻한
+          해안 지역에서 조금 더 늦게까지 머무는 경우도 있습니다.
+        </li>
+        <li>
+          <strong>먹이터를 지키는 개체</strong> · 외가리는 좋은 먹이터를
+          선점하면 그 주변을 꾸준히 이용하려는 경향이 있습니다. 다려도 인근
+          양식장·암반대에서 먹이 효율이 높다면, 일부 성체가 그 자리를
+          고집했을 가능성이 있습니다.
+        </li>
+      </ul>
+
+      <p class="note">
+        즉, "집단 번식지는 여름이 끝나면 비어지고, 일부 개체만 남아 주변
+        해안·어장과 연결된 작은 월동터 역할을 한다"라고 이해하면 자연스럽습니다.
+      </p>
+    </section>
+
+    
+    <section id="watching-tips">
+      <h2>7. 영상과 함께 보면 좋은 관찰 포인트</h2>
+      <ul>
+        <li>
+          6월 영상에서는 둥지의 위치, 나무의 높이, 외가리들의 비행 경로를
+          살펴보며 "왜 이 섬이 번식지로 선택됐는지"를 상상해 볼 수 있습니다.
+        </li>
+        <li>
+          11월 영상에서는 거의 텅 빈 둥지와 몇 마리만 남은 외가리를 통해,
+          철새의 계절 이동과 "시간이 지나가는 섬"의 느낌을 함께 느껴 볼 수 있습니다.
+        </li>
+        <li>
+          마지막 원주비행 장면에서는 에메랄드빛 바다 위에 흩어진 lava tumulus
+          지형과, 북촌 마을·포구·해녀 작업장까지 한눈에 들어오는 전체 구도를
+          관찰해 보시면, 다려도가 단순한 바위섬이 아니라 지질·생태·역사가
+          겹친 공간이라는 점이 더 잘 보입니다.
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <div class="inner">
+      <p>
+        ※ 이 페이지는 공개 자료와 학술 논문, 지질·역사 답사 기사 등을 바탕으로
+        정리한 내용입니다. 실제 출입·촬영 시에는 관련 법규와 보호 규정을
+        반드시 확인해야 합니다.
+      </p>
+      <p>© slow view series · Daryeodo &amp; Grey Heron notes</p>
+    </div>
+  </footer>
+
+
+</body></html>
