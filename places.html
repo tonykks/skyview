@@ -68,6 +68,22 @@
     <div id="video-container" class="mixed-container grid--flex"></div>
   </div>
   
+
+  <!-- Map Modal (single-place location) -->
+  <div id="map-modal" class="modal" aria-hidden="true" style="display:none;">
+    <div class="modal-content modal__content" style="max-width: 1000px; width: min(92vw, 1000px);">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="text-xl font-bold mb-1">제주도 위치 안내</h3>
+          <p id="map-modal-subtitle" class="text-gray-600 text-sm text-muted">좌표 로딩 중...</p>
+        </div>
+        <button id="close-map-btn" class="btn btn--primary" type="button">Close ×</button>
+      </div>
+      <div id="map-container" class="mt-4 rounded-xl overflow-hidden border border-gray-200 dark:border-slate-700" style="height: min(70vh, 560px); width: 100%;"></div>
+      <p class="text-gray-500 text-xs text-muted mt-3">※ 지도는 OpenStreetMap 기반이며, API Key/카드 등록 없이 표시됩니다.</p>
+    </div>
+  </div>
+
   <div id="contact-modal" class="modal" aria-hidden="true">
     <div class="modal-content modal__content">
       <h3 class="text-xl font-bold mb-4">Contact Information</h3>
@@ -217,20 +233,17 @@
     const linkEl = document.getElementById('place-link');
     const meta = g_places.find(p => p.name === placeName);
     if (meta && meta.introUrl) { linkEl.href = meta.introUrl; linkEl.style.pointerEvents = "auto"; } else { linkEl.removeAttribute('href'); linkEl.style.pointerEvents = "none"; }
-    
+
     // Location button (single-place popup map)
     if (locationBtn) {
       locationBtn.onclick = () => openMapModal(placeName);
-      // Disable if no coords
-      const lat = toNumber(meta?.lat);
-      const lng = toNumber(getLng(meta || {}));
-      const hasCoords = Number.isFinite(lat) && Number.isFinite(lng);
-      locationBtn.disabled = !hasCoords;
-      locationBtn.style.opacity = hasCoords ? '1' : '0.5';
-      locationBtn.style.cursor = hasCoords ? 'pointer' : 'not-allowed';
+      locationBtn.disabled = false; // always clickable; modal will explain if coords missing
+      locationBtn.style.opacity = '1';
+      locationBtn.style.cursor = 'pointer';
     }
 
     const container = document.getElementById('video-container');
+
     const filtered = g_videos.filter(v => (v.place || "").trim() === placeName.trim());
     container.innerHTML = '';
     if (filtered.length === 0) { container.innerHTML = '<div class="w-full text-center text-gray-500 py-10">등록된 영상 없음</div>'; return; }
