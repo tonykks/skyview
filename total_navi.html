@@ -237,29 +237,32 @@
 // [TEST] marker should appear here
 L.marker([33.236, 126.362]).addTo(map).bindPopup("TEST: 박수기정").openPopup();  
 
-    const bounds = [];
-    let count = 0;
+const bounds = [];
+let count = 0;
 
-    (places || []).forEach(p => {
-      const name = (p.place_name ?? p.name ?? '').toString().trim();
+(places || []).forEach(p => {
+  const name = (p.place_name ?? p.name ?? '').toString().trim();
 
-      // Sheet column is lng, but allow common mistakes (Ing/log) just in case
-      const lat = toNumber(p.lat);
-      const lng = toNumber(p.lng ?? p.Ing ?? p.log ?? p.Lng);
+  const lat = toNumber(p.lat);
+  const lng = toNumber(p.lng ?? p.Ing ?? p.log ?? p.Lng); // lng / Ing 모두 대응
 
-      if (!isFinite(lat) || !isFinite(lng)) return;
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
 
-      const marker = L.marker([lat, lng]).addTo(map);
+  const marker = L.marker([lat, lng]).addTo(map);
 
-      // 클릭하면 지명 표시
-      marker.bindPopup(`<b>${escapeHtml(name || '이름 없음')}</b>`);
+  // 클릭하면 지명 표시
+  marker.bindPopup(`<b>${escapeHtml(name || 'Unknown')}</b>`);
 
-      // 모바일/PC 모두에서 살짝만 올려도 보이게(선택)
-      if (name) marker.bindTooltip(name, { direction: 'top', offset: [0, -10] });
+  // (선택) 마우스 올려도 보이게
+  if (name) marker.bindTooltip(name, { direction: 'top', offset: [0, -10] });
 
-      bounds.push([lat, lng]);
-      count++;
-    });
+  bounds.push([lat, lng]);
+  count++;
+});
+
+// 마커가 있으면 화면을 자동으로 맞춤
+if (count >= 2) map.fitBounds(bounds, { padding: [20, 20] });
+if (count === 1) map.setView(bounds[0], 12);
 
     if (count >= 2) map.fitBounds(bounds, { padding: [20, 20] });
     if (count === 1) map.setView(bounds[0], 12);
