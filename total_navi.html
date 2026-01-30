@@ -240,8 +240,8 @@ let count = 0;
 (places || []).forEach(p => {
   const name = (p.place_name ?? p.name ?? '').toString().trim();
 
-  const lat = toNumber(p.lat);
-  const lng = toNumber(p.lng ?? p.Ing ?? p.log ?? p.Lng); // lng / Ing 모두 대응
+const lat = parseFloat(p.lat);
+const lng = parseFloat(p.lng ?? p.Ing ?? p.log ?? p.Lng);
 
   if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
 
