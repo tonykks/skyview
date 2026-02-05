@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8"/>
@@ -57,7 +57,10 @@
   <div id="loading" class="text-center text-gray-500 font-bold my-10">데이터를 불러오는 중...</div>
   <div id="main-content" style="display:none;">
     <div class="place-header">
-      <a id="place-link" href="#" target="_blank" class="place-title-link"><span id="place-name-display"></span></a>
+      <div style="display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap;">
+        <a id="place-link" href="#" target="_blank" class="place-title-link"><span id="place-name-display"></span></a>
+        <button id="place-location-btn" class="btn btn--primary" type="button">위치</button>
+      </div>
       <p class="text-gray-500 text-muted mt-2 text-sm">위 타이틀을 클릭하면 소개 페이지로 이동합니다</p>
     </div>
     <hr class="border-t-2 border-gray-300 w-4/5 mx-auto mb-8">
@@ -69,6 +72,30 @@
       <h3 class="text-xl font-bold mb-4">Contact Information</h3>
       <p class="text-gray-700 mb-6 text-muted">Email: smile21c@korea.com</p>
       <button id="close-modal-btn" class="btn btn--primary">Close ×</button>
+    </div>
+  </div>
+
+
+  <!-- Location Map Modal -->
+  <div id="map-modal" class="modal" aria-hidden="true" style="display:none;">
+    <div class="modal-content modal__content" style="max-width: 980px; width: min(92vw, 980px);">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px;">
+        <h3 class="text-xl font-bold" id="map-modal-title">위치</h3>
+        <button id="close-map-modal-btn" class="btn btn--primary" type="button">Close ×</button>
+      </div>
+
+      <div style="border-radius: 14px; overflow:hidden; border:1px solid rgba(0,0,0,0.12); box-shadow: 0 10px 24px rgba(0,0,0,0.18);">
+        <iframe
+          id="map-iframe"
+          title="Place Location"
+          src="about:blank"
+          style="width:100%; height:520px; border:0; display:block;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+
+      <p class="text-muted text-xs mt-3" id="map-modal-hint">※ 마우스 휠로 확대/축소할 수 있습니다.</p>
     </div>
   </div>
   <div id="lightbox" class="lightbox">
@@ -142,7 +169,28 @@
     const meta = g_places.find(p => p.name === placeName);
     if (meta && meta.introUrl) { linkEl.href = meta.introUrl; linkEl.style.pointerEvents = "auto"; } else { linkEl.removeAttribute('href'); linkEl.style.pointerEvents = "none"; }
     
-    const container = document.getElementById('video-container');
+    
+    // ✅ 위치 버튼 세팅 (좌표가 있으면 maps.html을 팝업으로 표시)
+    const locBtn = document.getElementById('place-location-btn');
+    if (locBtn) {
+      const lat = meta && Number.isFinite(meta.lat) ? meta.lat : (meta && Number.isFinite(meta.latitude) ? meta.latitude : null);
+      const lng = meta && Number.isFinite(meta.lng) ? meta.lng : (meta && Number.isFinite(meta.longitude) ? meta.longitude : null);
+
+      const hasLatLng = Number.isFinite(lat) && Number.isFinite(lng);
+
+      locBtn.disabled = !hasLatLng;
+      locBtn.style.opacity = hasLatLng ? "1" : "0.45";
+      locBtn.style.cursor = hasLatLng ? "pointer" : "not-allowed";
+
+      locBtn.onclick = () => {
+        if (!hasLatLng) {
+          alert("이 장소는 아직 좌표가 없습니다. 스프레드시트(Places)의 lat/lng를 입력해주세요.");
+          return;
+        }
+        openMapModal(placeName, lat, lng);
+      };
+    }
+const container = document.getElementById('video-container');
     const filtered = g_videos.filter(v => (v.place || "").trim() === placeName.trim());
     container.innerHTML = '';
     if (filtered.length === 0) { container.innerHTML = '<div class="w-full text-center text-gray-500 py-10">등록된 영상 없음</div>'; return; }
@@ -183,13 +231,47 @@
   const contactBtn=document.getElementById('contact-btn'); const contactModal=document.getElementById('contact-modal'); const closeModalBtn=document.getElementById('close-modal-btn');
   if(contactBtn){ contactBtn.addEventListener('click',e=>{ e.preventDefault(); contactModal.style.display='flex'; }); closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; }); }
 
+  // ✅ Location Map Modal
+  function openMapModal(name, lat, lng) {
+    const modal = document.getElementById('map-modal');
+    const iframe = document.getElementById('map-iframe');
+    const title = document.getElementById('map-modal-title');
+
+    const q = new URLSearchParams({
+      embed: "1",
+      lat: String(lat),
+      lng: String(lng),
+      name: name
+    });
+
+    // maps.html이 같은 폴더(루트)에 있다고 가정합니다.
+    iframe.src = `maps.html?${q.toString()}`;
+    if (title) title.textContent = `${name} 위치`;
+
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeMapModal() {
+    const modal = document.getElementById('map-modal');
+    const iframe = document.getElementById('map-iframe');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    if (iframe) iframe.src = 'about:blank';
+  }
+
+  const closeMapBtn = document.getElementById('close-map-modal-btn');
+  if (closeMapBtn) closeMapBtn.addEventListener('click', closeMapModal);
+
+  const mapModal = document.getElementById('map-modal');
+  if (mapModal) {
+    mapModal.addEventListener('click', (e) => {
+      if (e.target === mapModal) closeMapModal();
+    });
+  }
+
+
   init();
 </script>
 </body>
 </html>
-
-
-
-
-
-
