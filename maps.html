@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tony's SkyView · Maps</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    html, body { margin: 0; height: 100%; background: #0b1220; }
+    #map { width: 100%; height: 100%; }
+
+    /* Label */
+    .leaflet-tooltip.place-label{
+      background: rgba(255,255,255,0.92);
+      border: 0;
+      border-radius: 12px;
+      padding: 6px 10px;
+      font-weight: 800;
+      font-size: 14px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      color: #111827;
+    }
+    .leaflet-tooltip.place-label:before{ display:none; }
+
+    /* Small top bar (optional, auto-hide in iframe if desired) */
+    .topbar{
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      display: flex; gap: 10px; align-items: center;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.90);
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+      z-index: 500;
+      backdrop-filter: blur(8px);
+    }
+    .topbar .title{
+      font-weight: 900; color: #111827;
+      white-space: nowrap;
+    }
+    .topbar .meta{
+      font-weight: 800; color: #111827;
+      opacity: .75;
+    }
+    .spacer{ flex: 1; }
+
+    .btn{
+      border: 0;
+      border-radius: 14px;
+      padding: 8px 12px;
+      font-weight: 900;
+      cursor: pointer;
+      background: #1f3556;
+      color: #fff;
+    }
+    .btn.secondary{ background:#111827; }
+    .btn.ghost{
+      background: rgba(31,53,86,0.10);
+      color: #111827;
+    }
+
+    /* Toast */
+    .toast{
+      position: absolute;
+      bottom: 14px; left: 50%;
+      transform: translateX(-50%);
+      background: rgba(17,24,39,.92);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-weight: 800;
+      z-index: 500;
+      display: none;
+    }
+
+    /* Hide topbar when embedded, if ?embed=1 */
+    body.embed .topbar{ display:none; }
+  </style>
+</head>
+
+<body>
+  <div class="topbar" role="region" aria-label="Map Controls">
+    <div class="title">Tony's SkyView · Maps</div>
+    <div class="meta" id="count">Places: -</div>
+    <div class="spacer"></div>
+    <button class="btn ghost" id="fitBtn" type="button">Jeju Fit</button>
+    <button class="btn secondary" id="copyToggleBtn" type="button">좌표복사 ON</button>
+  </div>
+
+  <div id="map"></div>
+  <div id="toast" class="toast">복사됨</div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    // ===== 설정 =====
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec";
+    const DEFAULT_CENTER = [33.35, 126.53];
+    const DEFAULT_ZOOM = 10;
+
+    // ===== Query Params =====
+    const qs = new URLSearchParams(location.search);
+    const embed = qs.get('embed') === '1';
+    const admin = qs.get('admin') === '1';
+    if (embed) document.body.classList.add('embed');
+    if (!admin) document.body.classList.add('embed'); // hide controls unless admin
+
+    const qLat = parseFloat(qs.get('lat'));
+    const qLng = parseFloat(qs.get('lng'));
+    const qName = (qs.get('name') || '').trim();
+    const qPlace = (qs.get('place') || '').trim(); // optional: name-based
+    const hasPoint = Number.isFinite(qLat) && Number.isFinite(qLng);
+
+    // ===== UI =====
+    const toastEl = document.getElementById('toast');
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.style.display = 'block';
+      clearTimeout(toastEl._t);
+      toastEl._t = setTimeout(()=> toastEl.style.display='none', 900);
+    }
+
+    // ===== Map =====
+    const map = L.map('map', { zoomControl: true }).setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    let copyEnabled = admin; // only admin can copy coords
+    const copyToggleBtn = document.getElementById('copyToggleBtn');
+    if (copyToggleBtn){
+      copyToggleBtn.addEventListener('click', () => {
+        copyEnabled = !copyEnabled;
+        copyToggleBtn.textContent = copyEnabled ? '좌표복사 ON' : '좌표복사 OFF';
+        toast(copyEnabled ? '좌표복사 ON' : '좌표복사 OFF');
+      });
+    }
+
+    // Click-to-copy
+    map.on('click', (e) => {
+      if (!admin || !copyEnabled) return;
+      const { lat, lng } = e.latlng;
+      const text = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+      navigator.clipboard?.writeText(text).then(()=>toast('좌표 복사됨')).catch(()=>toast('복사 실패'));
+      L.popup()
+        .setLatLng(e.latlng)
+        .setContent(`<b>좌표</b><br>${text}<br><small>(클립보드 복사)</small>`)
+        .openOn(map);
+    });
+
+    // Fit button
+    const fitBtn = document.getElementById('fitBtn');
+    if (fitBtn){
+      fitBtn.addEventListener('click', () => {
+        if (window.__bounds && window.__bounds.isValid()){
+          map.fitBounds(window.__bounds, { padding: [40, 40] });
+        } else {
+          map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+        }
+      });
+    }
+
+    // ===== Data Load =====
+    function isFiniteNum(n){ return Number.isFinite(n) && !Number.isNaN(n); }
+
+    function addPlaceMarker(p, permanentLabel=true){
+      const marker = L.marker([p.lat, p.lng]).addTo(map);
+      marker.bindTooltip(p.name || '', {
+        permanent: !!permanentLabel,
+        direction: 'top',
+        className: 'place-label'
+      });
+      if (p.introUrl){
+        marker.bindPopup(`<b>${p.name || ''}</b><br><a href="${p.introUrl}" target="_blank" rel="noopener">소개 페이지</a>`);
+      } else {
+        marker.bindPopup(`<b>${p.name || ''}</b>`);
+      }
+      return marker;
+    }
+
+    fetch(SCRIPT_URL)
+      .then(r => r.json())
+      .then(json => {
+        const places = (json && json.places) ? json.places : [];
+        const cleaned = places
+          .map(p => ({
+            name: (p.name || '').toString().trim(),
+            introUrl: (p.introUrl || '').toString().trim(),
+            lat: (p.lat === '' || p.lat === null || p.lat === undefined) ? NaN : Number(p.lat),
+            lng: (p.lng === '' || p.lng === null || p.lng === undefined) ? NaN : Number(p.lng)
+          }))
+          .filter(p => p.name && isFiniteNum(p.lat) && isFiniteNum(p.lng));
+
+        const countEl = document.getElementById('count');
+        if (countEl) countEl.textContent = `Places: ${cleaned.length}`;
+
+        // Build bounds
+        const bounds = L.latLngBounds([]);
+        cleaned.forEach(p => bounds.extend([p.lat, p.lng]));
+        window.__bounds = bounds;
+
+        // Mode: single point (lat/lng)
+        if (hasPoint){
+          const name = qName || qPlace || '위치';
+          const one = { name, introUrl: '', lat: qLat, lng: qLng };
+          addPlaceMarker(one, true);
+          map.setView([qLat, qLng], 13);
+          return;
+        }
+
+        // Mode: single place (by name)
+        if (qPlace){
+          const target = cleaned.find(p => p.name === qPlace);
+          if (target){
+            addPlaceMarker(target, true);
+            map.setView([target.lat, target.lng], 13);
+            return;
+          }
+        }
+
+        // Mode: all places
+        cleaned.forEach(p => addPlaceMarker(p, true));
+
+        if (bounds.isValid()){
+          map.fitBounds(bounds, { padding: [40, 40] });
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        toast('데이터 로딩 실패');
+      });
+  </script>
+</body>
+</html>
