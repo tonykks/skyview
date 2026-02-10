@@ -142,12 +142,25 @@
     try {
       let data = null;
       const cached = SafeStorage.get('skyview_data');
-      if (cached) {
+
+      // ✅ Always try to fetch the latest sheet first (so newly added places show up immediately).
+      // If the network fails, gracefully fall back to the cached copy.
+      try {
+        const res = await fetch(SCRIPT_URL, { cache: 'no-store' });
+        if (res.ok) {
+          data = await res.json();
+          SafeStorage.set('skyview_data', JSON.stringify(data));
+        }
+      } catch (e) {
+        // ignore and fall back to cache
+      }
+
+      if (!data && cached) {
         data = JSON.parse(cached);
-      } else {
-        const res = await fetch(SCRIPT_URL);
-        data = await res.json();
-        SafeStorage.set('skyview_data', JSON.stringify(data));
+      }
+
+      if (!data) {
+        throw new Error('데이터를 불러올 수 없습니다 (네트워크/캐시 모두 실패)');
       }
 
       const places = data.places || [];
