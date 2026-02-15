@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>산방산 Tafoni(타포니) 해설 — 자연이 새긴 지질학적 문장</title>
+  <style>
+    :root {
+      --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --muted: #94a3b8;
+      --accent: #38bdf8; --accent-soft: rgba(56, 189, 248, 0.1);
+      --warn: #fbbf24; --warn-soft: rgba(251, 191, 36, 0.1);
+      --line: #334155; --max-w: 720px; --radius: 20px;
+    }
+    @media (prefers-color-scheme: light) {
+      :root { --bg: #f1f5f9; --card: #ffffff; --text: #0f172a; --muted: #64748b; --line: #e2e8f0; }
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; word-break: keep-all; }
+    
+    .banner { 
+      width: 100%; height: 280px; background: #000; overflow: hidden; position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .banner img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+    .banner-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0; 
+      padding: 40px 20px 20px;
+      background: linear-gradient(transparent, var(--bg));
+    }
+
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 20px 80px; }
+    header h1 { font-size: 28px; margin: 0 0 8px; letter-spacing: -0.03em; }
+    .subtitle { color: var(--muted); font-size: 16px; margin-bottom: 24px; }
+
+    section { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+    h2 { font-size: 18px; margin: 0 0 16px; display: flex; align-items: center; gap: 8px; color: var(--accent); }
+    
+    .definition { font-size: 17px; font-weight: 600; padding: 16px; background: var(--accent-soft); border-radius: 12px; border-left: 4px solid var(--accent); }
+    
+    .info-grid { display: grid; gap: 12px; margin-top: 16px; }
+    .info-item { padding: 12px; border: 1px solid var(--line); border-radius: 12px; font-size: 14px; }
+    .info-item b { display: block; color: var(--accent); margin-bottom: 4px; }
+
+    .step-list { padding: 0; list-style: none; counter-reset: step; }
+    .step-list li { position: relative; padding-left: 40px; margin-bottom: 16px; }
+    .step-list li::before { 
+      counter-increment: step; content: counter(step); 
+      position: absolute; left: 0; top: 0; width: 28px; height: 28px;
+      background: var(--accent); color: #fff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;
+    }
+
+    .checklist-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    button { 
+      padding: 14px; border-radius: 14px; border: 1px solid var(--line); 
+      background: var(--card); color: var(--text); cursor: pointer; font-weight: 600; font-size: 14px;
+      transition: all 0.2s;
+    }
+    button.active { background: var(--accent); color: white; border-color: var(--accent); }
+    #check-content { padding: 16px; border-radius: 14px; background: var(--accent-soft); display: none; font-size: 15px; border: 1px dashed var(--accent); }
+
+    .qa-item { margin-bottom: 12px; padding: 12px; border-radius: 12px; background: var(--warn-soft); border-left: 4px solid var(--warn); }
+    .qa-q { font-weight: bold; margin-bottom: 4px; font-size: 14px; }
+    .qa-a { color: var(--muted); font-size: 14px; }
+
+    .summary { font-style: italic; border-top: 1px solid var(--line); padding-top: 16px; margin-top: 16px; font-size: 14px; color: var(--muted); }
+    
+    footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 40px; }
+  </style>
+</head>
+<body>
+
+  <div class="banner">
+    <!-- GitHub raw URL로 변경하여 이미지 로딩 보장 -->
+    <img src="https://raw.githubusercontent.com/tonykks/skyview/main/images/Tafoni.jpg" alt="Sanbangsan Tafoni" onerror="this.src='https://via.placeholder.com/800x400?text=Sanbangsan+Tafoni'">
+    <div class="banner-overlay"></div>
+  </div>
+
+  <div class="container">
+    <header>
+      <h1>산방산 Tafoni(타포니) 해설</h1>
+      <p class="subtitle">영상을 보기 전과 후, 절벽의 구멍들이 들려주는 지질학적 이야기를 확인하세요.</p>
+    </header>
+
+    <section>
+      <h2>01. Definition (정의)</h2>
+      <div class="definition">
+        Tafoni (타포니; 穴飾): 암석의 수직 벽면에 벌집 모양으로 형성된 풍화 공동(Weathering Pits)
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <b>Etymology (어원)</b>
+          이탈리아 코르시카어 'Taffoni(구멍)' 또는 그리스어 'Taphos(무덤)'에서 유래했다는 설이 있습니다.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>02. Mechanism (형성 원리)</h2>
+      <p style="font-size:15px; margin-top:0;">핵심 원인은 <strong>Salt Weathering (염풍화)</strong>입니다.</p>
+      <ul class="step-list">
+        <li><strong>Infiltration (침투):</strong> 바닷바람에 실린 염분이 암석의 미세한 틈새로 스며듭니다.</li>
+        <li><strong>Concentration (농축):</strong> 수분이 증발하면서 구멍 내부의 염분 농도가 높아집니다.</li>
+        <li><strong>Crystallization (결정 성장):</strong> 소금 결정이 자라나며 주변 암석 입자를 밀어내는 물리적 압력을 가합니다.</li>
+        <li><strong>Expansion (확장):</strong> 표면이 조금씩 부서져 나가며 구멍이 점점 커지고 서로 연결됩니다.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>03. Observation Checklist</h2>
+      <div class="checklist-btns">
+        <button id="btnBefore" onclick="toggleCheck('before')">영상 보기 전</button>
+        <button id="btnAfter" onclick="toggleCheck('after')">영상 본 후</button>
+      </div>
+      <div id="check-content"></div>
+    </section>
+
+    <section>
+      <h2>04. Misconceptions (오해와 진실)</h2>
+      <div class="qa-item">
+        <div class="qa-q">Q. 파도가 직접 깎아서 만든 것인가요?</div>
+        <div class="qa-a">A. 아닙니다. 파도의 직접적인 침식보다는 '소금 결정의 성장'이라는 화학적/물리적 풍화가 주원인입니다.</div>
+      </div>
+      <div class="qa-item">
+        <div class="qa-q">Q. 화산이 폭발할 때 생긴 기포인가요?</div>
+        <div class="qa-a">A. 아닙니다. 기포(Vesicle)는 암석이 굳을 때 생기지만, 타포니는 굳은 후 '나중에' 깎여 나간 흔적입니다.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>05. Summary (세 줄 요약)</h2>
+      <div class="summary">
+        1. 산방산 절벽의 구멍은 소금 결정이 암석을 밀어내어 만든 **Tafoni** 지형입니다.<br>
+        2. 이는 바다와 바람, 그리고 시간이 함께 협력하여 만든 자연의 조각품입니다.<br>
+        3. '산방(山房)'이라는 이름처럼, 자연이 만든 빈 공간의 미학을 감상해 보세요.
+      </div>
+    </section>
+
+    <footer>
+      &copy; SkyView Drone Cinematography | Geological Guide
+    </footer>
+  </div>
+
+  <script>
+    const content = {
+      before: `
+        <ul style="margin:0; padding-left:20px;">
+          <li>절벽에 구멍이 <b>특정 높이</b>에 몰려 있는지 살펴보세요.</li>
+          <li>구멍 주변에 <b>하얀 가루나 흔적</b>이 있는지 확인해 보세요.</li>
+          <li>구멍의 모양이 날카로운지, 부드러운지 관찰해 보세요.</li>
+        </ul>
+      `,
+      after: `
+        <ul style="margin:0; padding-left:20px;">
+          <li>이제 구멍이 '파인 것'이 아니라 <b>'자라난 것'</b>으로 느껴지시나요?</li>
+          <li><b>염풍화의 4단계</b>(침투-농축-결정-확장)를 영상의 모습과 매칭해 보세요.</li>
+          <li>산방산의 거대한 벽이 하나의 <b>살아있는 역사책</b>처럼 보이시나요?</li>
+        </ul>
+      `
+    };
+
+    function toggleCheck(type) {
+      const box = document.getElementById('check-content');
+      const btnBefore = document.getElementById('btnBefore');
+      const btnAfter = document.getElementById('btnAfter');
+
+      box.style.display = 'block';
+      box.innerHTML = content[type];
+      
+      if(type === 'before') {
+        btnBefore.classList.add('active');
+        btnAfter.classList.remove('active');
+      } else {
+        btnAfter.classList.add('active');
+        btnBefore.classList.remove('active');
+      }
+      
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
+</body>
+</html>
