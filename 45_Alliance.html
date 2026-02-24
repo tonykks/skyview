@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>45 Alliance Calendar</title>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background: #000; margin: 0; padding: 0; overflow: hidden; touch-action: manipulation; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: repeat(6, 1fr); height: 100%; }
+        video { transition: opacity 1s ease-in-out; }
+
+        /* [PC & 가로 모드 기본] 5열 풍성한 레이아웃 */
+        .header-grid {
+            display: grid;
+            grid-template-columns: 220px 110px 1fr 110px 220px;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* [세로 모드 최적화] 3열 대칭 구조 (미니 달력 숨김) */
+        @media (orientation: portrait) {
+            .header-grid {
+                grid-template-columns: 1fr 2fr 1fr !important;
+                gap: 0.5rem;
+            }
+            .mini-cal-box { display: none !important; }
+            .photo-box { width: 4.5rem !important; height: 4.5rem !important; }
+            .month-text { font-size: 3.5rem !important; }
+        }
+
+        /* [가로 모드 최적화] 5열 유지하되 높이 압축 및 스크롤 */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .header-grid {
+                grid-template-columns: 100px 70px 1fr 70px 100px !important;
+                min-height: 80px !important; 
+                gap: 0.2rem;
+                padding-bottom: 0.25rem !important;
+                margin-bottom: 0.25rem !important;
+            }
+            .mini-cal-box { display: flex !important; scale: 0.8; }
+            .calendar-container { overflow-y: auto !important; height: 98vh !important; padding: 0.5rem !important; }
+            .day-cell { min-height: 35px !important; font-size: 0.85rem !important; }
+            .photo-box { width: 3.2rem !important; height: 3.2rem !important; }
+            .month-text { font-size: 2.2rem !important; }
+            .alliance-label { font-size: 0.5rem !important; margin-bottom: 0 !important; }
+        }
+        
+        .disabled-nav-visual { opacity: 0.3 !important; }
+
+        /* [핵심] 사진 하단 명시적 이동 버튼 스타일 */
+        .explicit-nav {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 9999px;
+            padding: 4px 12px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            margin-top: 8px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .explicit-nav:active { background: rgba(255, 255, 255, 0.3); transform: translateY(2px); }
+        @media (min-width: 768px) {
+            .explicit-nav { padding: 6px 16px; font-size: 0.75rem; margin-top: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useMemo } = React;
+
+        const App = () => {
+            const [currentM, setCurrentM] = useState(12);
+            const [currentY, setCurrentY] = useState(2025);
+            const [selectedImg, setSelectedImg] = useState(null);
+
+            const FRAME_IMG = "https://cdn.pixabay.com/photo/2019/04/03/17/46/poster-4100927_1280.jpg";
+
+            const config = useMemo(() => ({
+                "2025-12": { themeColor: "#F7D794", vid: "https://cdn.pixabay.com/video/2022/11/20/139834-773444672_large.mp4", p1: "https://drive.google.com/file/d/1QHfesNYkEwyt8KhCURamG41Odcc-lsfv/view?usp=drive_link", p2: "https://drive.google.com/file/d/1fkshsyCBhaZuDNG_18XC-MkVQFP28I0T/view?usp=drive_link" },
+                "2026-1": { themeColor: "#FF4D4D", vid: "https://cdn.pixabay.com/video/2025/02/23/260397_large.mp4", p1: "https://drive.google.com/file/d/17CUK6dgyD46m0qqobFDTibLslnqHHTs1/view?usp=drive_link", p2: "https://drive.google.com/file/d/1mqZ9GOBBk4d3mgxcck_8g1-R-xaINFtq/view?usp=drive_link" },
+                "2026-2": { themeColor: "#A29BFE", vid: "https://cdn.pixabay.com/video/2023/04/14/158830-817668585_large.mp4", p1: "https://drive.google.com/file/d/1GJFt-qfhl2LLsnPeCddaR2fbguFHJR5x/view?usp=drive_link", p2: "https://drive.google.com/file/d/1ts7DQa8J7VqKIwh2sX5KE8v3mT617HOx/view?usp=drive_link" },
+                "2026-3": { themeColor: "#55E6C1", vid: "https://cdn.pixabay.com/video/2023/04/03/157278-814358485_large.mp4", p1: "https://drive.google.com/file/d/1YnVZilMJoY25i5g8fWLOWTOv3vnyo3ld/view?usp=drive_link", p2: "https://drive.google.com/file/d/1Ec3J0E3Oduufr1FpJ6iHbyfQokKb3I43/view?usp=drive_link" },
+                "2026-4": { themeColor: "#FAD390", vid: "https://cdn.pixabay.com/video/2020/07/23/45399-443057201_large.mp4", p1: "https://drive.google.com/file/d/10cF9pH6OrdOsH0ayd8tQMJqTgb8-lTf0/view?usp=drive_link", p2: "https://drive.google.com/file/d/1DQfnqp_pju3fBplDBVTwRWBKShhXoFej/view?usp=drive_link" },
+                "2026-5": { themeColor: "#B8E994", vid: "https://cdn.pixabay.com/video/2020/06/29/43445-436041758_tiny.mp4", p1: "https://drive.google.com/file/d/1PGwBKH3ZCe27Sf-g6aNFUmGzXHufgTDQ/view?usp=drive_link", p2: "https://drive.google.com/file/d/1nL5-XOozy0JUWqkTIoe00HXk1raG0q03/view?usp=drive_link" },
+                "2026-6": { themeColor: "#81ECEC", vid: "https://cdn.pixabay.com/video/2020/06/20/42673-432087063_large.mp4", p1: "https://drive.google.com/file/d/1ErGykeN_IDdL5x72JLd07ATyeZn3i266/view?usp=drive_link", p2: "https://drive.google.com/file/d/1TH6HOoAiOomHhrnXKMypN74Z8hoxDJXe/view?usp=drive_link" },
+                "2026-7": { themeColor: "#74B9FF", vid: "https://cdn.pixabay.com/video/2023/07/20/172451-847505208_large.mp4", p1: "https://drive.google.com/file/d/1maRCHZQmzNPNPv2vmFhWP3OMM86MrFYL/view?usp=drive_link", p2: "https://drive.google.com/file/d/1Vynewu_yThgjCIlYB5QsPtn1CyZ9gR-5/view?usp=drive_link" },
+                "2026-8": { themeColor: "#FFE11A", vid: "https://cdn.pixabay.com/video/2022/08/22/128729-742053550_large.mp4", p1: "https://drive.google.com/file/d/1ML1orR0G7cHaB-3nZ5KN1hTV5DBKPc-U/view?usp=drive_link", p2: "https://drive.google.com/file/d/1FJzACRrIA-I4PJyI_obNPT6nJWCKDRQt/view?usp=drive_link" },
+                "2026-9": { themeColor: "#E84393", vid: "https://cdn.pixabay.com/video/2019/10/29/28453-369807721_large.mp4", p1: "https://drive.google.com/file/d/1OhanTRyGw6VWREvSTAjLasXGswwHn35d/view?usp=drive_link", p2: "https://drive.google.com/file/d/1twEhSI5S_inETiMxNnbmPvXVy1YNCZZz/view?usp=drive_link" },
+                "2026-10": { themeColor: "#D63031", vid: "https://cdn.pixabay.com/video/2018/09/25/18420-292228405_large.mp4", p1: "https://drive.google.com/file/d/16Fdfb30HNVhB4RXar_JZdicfntZEY6Ai/view?usp=drive_link", p2: "https://drive.google.com/file/d/1hBAuyG84Xew7JJ6Q1F2tLfsijLwdn-4V/view?usp=drive_link" },
+                "2026-11": { themeColor: "#636E72", vid: "https://cdn.pixabay.com/video/2025/01/22/254098_large.mp4", p1: "https://drive.google.com/file/d/1wFarZw1_j6nAY3vr4VeFWnEmw-iGKSH6/view?usp=drive_link", p2: "https://drive.google.com/file/d/1fW84FSFDDPwx27Geg6C0Q48XEz8kOCHB/view?usp=drive_link" },
+                "2026-12": { themeColor: "#F7D794", vid: "https://cdn.pixabay.com/video/2020/12/31/60784-496654956_large.mp4", p1: "https://drive.google.com/file/d/1QHfesNYkEwyt8KhCURamG41Odcc-lsfv/view?usp=drive_link", p2: "https://drive.google.com/file/d/1fkshsyCBhaZuDNG_18XC-MkVQFP28I0T/view?usp=drive_link" },
+            }), []);
+
+            const toDirect = (url) => {
+                if (!url) return "";
+                const m = url.match(/\/d\/(.+?)\//);
+                return m ? `https://lh3.googleusercontent.com/d/${m[1]}` : url;
+            };
+
+            const move = (delta) => {
+                let nY = currentY;
+                let nM = currentM + delta;
+                if (nM > 12) { nM = 1; nY++; }
+                else if (nM < 1) { nM = 12; nY--; }
+                
+                const nextKey = `${nY}-${nM}`;
+                if (config[nextKey]) {
+                    setCurrentM(nM);
+                    setCurrentY(nY);
+                }
+            };
+
+            const generateDays = (year, month) => {
+                const first = new Date(year, month - 1, 1).getDay();
+                const last = new Date(year, month, 0).getDate();
+                const prevLast = new Date(year, month - 1, 0).getDate();
+                const days = [];
+                for (let i = first; i > 0; i--) days.push({ date: prevLast - i + 1, other: true });
+                for (let i = 1; i <= last; i++) days.push({ date: i, other: false });
+                while (days.length < 42) days.push({ date: days.length - (first + last) + 1, other: true });
+                return days;
+            };
+
+            const currentKey = `${currentY}-${currentM}`;
+            const currentData = config[currentKey] || config["2025-12"];
+            const calendarDays = generateDays(currentY, currentM);
+            
+            const getMonthInfo = (delta) => {
+                let m = currentM + delta; let y = currentY;
+                if (m > 12) { m = 1; y++; } else if (m < 1) { m = 12; y--; }
+                return { m, y };
+            };
+            const prevInfo = getMonthInfo(-1);
+            const nextInfo = getMonthInfo(1);
+
+            const hasPrev = !!config[`${prevInfo.y}-${prevInfo.m}`];
+            const hasNext = !!config[`${nextInfo.y}-${nextInfo.m}`];
+
+            return (
+                <div className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-black text-white">
+                    <video key={currentData.vid} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0">
+                        <source src={currentData.vid} type="video/mp4" />
+                    </video>
+
+                    <div className="calendar-container relative z-10 w-full max-w-5xl h-[92vh] mx-2 p-4 md:p-8 flex flex-col rounded-3xl border border-white/10 shadow-2xl overflow-hidden" style={{ background: 'rgba(0, 0, 0, 0.2)' }}>
+                        <header className="header-grid pb-4 md:pb-6 mb-4 border-b border-white/20 min-h-[140px] md:min-h-[180px]">
+                            {/* 1. 이전 달 (호버 피드백 유지) */}
+                            <div onClick={() => move(-1)} className={`mini-cal-box cursor-pointer group flex flex-col items-center transition-all duration-300 hover:scale-105 active:scale-95 ${!hasPrev && 'disabled-nav-visual'}`}>
+                                <div className="text-[0.6rem] md:text-lg font-bold text-white mb-2 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">{prevInfo.m}월</div>
+                                <div className="grid grid-cols-7 gap-1 opacity-40 group-hover:opacity-100 group-hover:font-bold transition-all duration-300">
+                                    {generateDays(prevInfo.y, prevInfo.m).map((d, i) => <div key={i} className="text-[0.5rem] md:text-[0.8rem] text-center">{d.other ? "" : d.date}</div>)}
+                                </div>
+                            </div>
+                            
+                            {/* 2. 좌측 사진 및 이전 버튼 */}
+                            <div className="flex flex-col items-center">
+                                <div onClick={() => setSelectedImg(toDirect(currentData.p1))} className="photo-box w-16 h-16 md:w-28 md:h-28 rounded-xl overflow-hidden border border-white/20 shadow-lg cursor-zoom-in shrink-0">
+                                    <img src={toDirect(currentData.p1)} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" alt="L" />
+                                </div>
+                                <button onClick={() => move(-1)} className={`explicit-nav ${!hasPrev && 'opacity-20 pointer-events-none'}`}>
+                                    ‹ {prevInfo.m}월
+                                </button>
+                            </div>
+
+                            {/* 3. 중앙 타이틀 (원형 버튼 제거) */}
+                            <div className="flex flex-col items-center justify-center space-y-1 text-center overflow-hidden">
+                                <span className="alliance-label text-[0.6rem] md:text-sm font-black tracking-[0.4em] text-white/90 drop-shadow-lg uppercase whitespace-nowrap mb-1">45 ALLIANCE</span>
+                                <h1 className="month-text whitespace-nowrap text-3xl md:text-7xl font-black tracking-tighter leading-none drop-shadow-[0_4px_12px_rgba(0,0,0,1)]" style={{ color: currentData.themeColor }}>
+                                    {currentM}월
+                                </h1>
+                                <span className="text-[0.5rem] md:text-[0.7rem] tracking-[0.6em] font-light opacity-60 uppercase">{currentY}</span>
+                            </div>
+
+                            {/* 4. 우측 사진 및 다음 버튼 */}
+                            <div className="flex flex-col items-center">
+                                <div onClick={() => setSelectedImg(toDirect(currentData.p2))} className="photo-box w-16 h-16 md:w-28 md:h-28 rounded-xl overflow-hidden border border-white/20 shadow-lg cursor-zoom-in shrink-0">
+                                    <img src={toDirect(currentData.p2)} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" alt="R" />
+                                </div>
+                                <button onClick={() => move(1)} className={`explicit-nav ${!hasNext && 'opacity-20 pointer-events-none'}`}>
+                                    {nextInfo.m}월 ›
+                                </button>
+                            </div>
+
+                            {/* 5. 다음 달 (호버 피드백 유지) */}
+                            <div onClick={() => move(1)} className={`mini-cal-box cursor-pointer group flex flex-col items-center transition-all duration-300 hover:scale-105 active:scale-95 ${!hasNext && 'disabled-nav-visual'}`}>
+                                <div className="text-[0.6rem] md:text-lg font-bold text-white mb-2 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all">{nextInfo.m}월</div>
+                                <div className="grid grid-cols-7 gap-1 opacity-40 group-hover:opacity-100 group-hover:font-bold transition-all duration-300">
+                                    {generateDays(nextInfo.y, nextInfo.m).map((d, i) => <div key={i} className="text-[0.5rem] md:text-[0.8rem] text-center">{d.other ? "" : d.date}</div>)}
+                                </div>
+                            </div>
+                        </header>
+
+                        <section className="flex-1 flex flex-col min-h-0 overflow-y-auto">
+                            <div className="grid grid-cols-7 mb-2 md:mb-4 text-[0.6rem] md:text-[0.8rem] font-bold tracking-widest text-white/60 text-center uppercase">
+                                <div className="text-red-500">SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div className="text-blue-400">SAT</div>
+                            </div>
+                            <div className="calendar-grid gap-0.5 md:gap-1">
+                                {calendarDays.map((d, i) => {
+                                    const isToday = new Date().getMonth() + 1 === currentM && new Date().getFullYear() === currentY && new Date().getDate() === d.date && !d.other;
+                                    return (
+                                        <div key={i} className={`day-cell flex flex-col items-center justify-center rounded-lg md:rounded-2xl transition-all duration-300 ${d.other ? 'opacity-10 font-thin' : 'opacity-100 font-bold'} ${isToday ? 'bg-white text-black shadow-xl scale-105' : 'hover:bg-white/5'}`}>
+                                            <span className={`text-base md:text-2xl drop-shadow-md ${!d.other && (i % 7 === 0) ? 'text-red-500' : ''} ${!d.other && (i % 7 === 6) ? 'text-blue-400' : ''}`}>{d.date}</span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </section>
+                    </div>
+
+                    {/* 확대 모달 */}
+                    {selectedImg && (
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-6 overflow-hidden cursor-zoom-out" onClick={() => setSelectedImg(null)} style={{ background: 'rgba(0, 0, 0, 0.96)', backdropFilter: 'blur(15px)' }}>
+                            <div className="relative flex items-center justify-center w-[98vw] h-[92vh]" onClick={(e) => e.stopPropagation()}>
+                                <img src={FRAME_IMG} className="absolute w-full h-full object-contain pointer-events-none drop-shadow-2xl" alt="F" />
+                                <div className="relative w-[92%] h-[92%] flex items-center justify-center overflow-hidden"><img src={selectedImg} className="w-full h-full object-contain shadow-2xl" alt="P" /></div>
+                                <button className="absolute top-4 right-4 w-12 h-12 bg-white/10 text-white rounded-full flex items-center justify-center border border-white/20 backdrop-blur-xl" onClick={() => setSelectedImg(null)}>✕</button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
