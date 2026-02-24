@@ -79,12 +79,48 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useMemo } = React;
+        const { useState, useMemo, useEffect } = React;
 
-        const App = () => {
-            const [currentM, setCurrentM] = useState(12);
-            const [currentY, setCurrentY] = useState(2025);
-            const [selectedImg, setSelectedImg] = useState(null);
+        
+        const getTodayKST = () => {
+            try {
+                const parts = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'Asia/Seoul',
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                }).formatToParts(new Date());
+                const get = (t) => Number(parts.find(p => p.type === t)?.value || 0);
+                return { y: get('year'), m: get('month'), d: get('day') };
+            } catch (e) {
+                const now = new Date();
+                return { y: now.getFullYear(), m: now.getMonth() + 1, d: now.getDate() };
+            }
+        };
+
+        const pickClosestAvailableYM = (cfg, targetY, targetM) => {
+            const keys = Object.keys(cfg || {});
+            if (!keys.length) return { y: targetY, m: targetM };
+            const target = targetY * 12 + (targetM - 1);
+            let best = null;
+            let bestDist = Infinity;
+            for (const k of keys) {
+                const [yStr, mStr] = k.split('-');
+                const y = Number(yStr);
+                const m = Number(mStr);
+                if (!Number.isFinite(y) || !Number.isFinite(m)) continue;
+                const v = y * 12 + (m - 1);
+                const dist = Math.abs(v - target);
+                if (dist < bestDist) { bestDist = dist; best = { y, m }; }
+            }
+            return best || { y: targetY, m: targetM };
+        };
+
+const App = () => {
+            const _today = getTodayKST();
+            const [currentM, setCurrentM] = useState(_today.m);
+            const [currentY, setCurrentY] = useState(_today.y);
+const [selectedImg, setSelectedImg] = useState(null);
 
             const FRAME_IMG = "https://cdn.pixabay.com/photo/2019/04/03/17/46/poster-4100927_1280.jpg";
 
@@ -103,6 +139,22 @@
                 "2026-11": { themeColor: "#636E72", vid: "https://cdn.pixabay.com/video/2025/01/22/254098_large.mp4", p1: "https://drive.google.com/file/d/1wFarZw1_j6nAY3vr4VeFWnEmw-iGKSH6/view?usp=drive_link", p2: "https://drive.google.com/file/d/1fW84FSFDDPwx27Geg6C0Q48XEz8kOCHB/view?usp=drive_link" },
                 "2026-12": { themeColor: "#F7D794", vid: "https://cdn.pixabay.com/video/2020/12/31/60784-496654956_large.mp4", p1: "https://drive.google.com/file/d/1QHfesNYkEwyt8KhCURamG41Odcc-lsfv/view?usp=drive_link", p2: "https://drive.google.com/file/d/1fkshsyCBhaZuDNG_18XC-MkVQFP28I0T/view?usp=drive_link" },
             }), []);
+
+            // [AUTO] 페이지 오픈 시, '오늘(Asia/Seoul)'이 속한 달로 자동 이동 (해당 월 데이터가 없으면 가장 가까운 달로 이동)
+            useEffect(() => {
+                const t = getTodayKST();
+                const key = `${t.y}-${t.m}`;
+                if (config[key]) {
+                    setCurrentY(t.y);
+                    setCurrentM(t.m);
+                } else {
+                    const closest = pickClosestAvailableYM(config, t.y, t.m);
+                    setCurrentY(closest.y);
+                    setCurrentM(closest.m);
+                }
+                // eslint-disable-next-line react-hooks/exhaustive-deps
+            }, [config]);
+
 
             const toDirect = (url) => {
                 if (!url) return "";
