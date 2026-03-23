@@ -98,10 +98,13 @@
     </div>
   </div>
 
-  <!-- Coordinate Toast UI (Added for the requested feature) -->
-  <div id="coord-toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[9999] bg-black/80 text-white px-6 py-3 rounded-full text-sm font-medium shadow-2xl transition-all duration-300 opacity-0 pointer-events-none flex items-center gap-3">
-    <span id="coord-text">좌표를 불러오는 중...</span>
-    <span class="bg-brand px-2 py-0.5 rounded text-[10px]">COPIED</span>
+  <!-- ✅ Coordinate Display Toast (이 부분이 복원 및 강화되었습니다) -->
+  <div id="coord-toast" class="fixed bottom-12 left-1/2 -translate-x-1/2 z-[9999] bg-slate-900/90 text-white px-5 py-3 rounded-2xl text-sm font-medium shadow-[0_8px_30px_rgb(0,0,0,0.3)] transition-all duration-300 opacity-0 pointer-events-none border border-white/10 flex flex-col items-center gap-1 backdrop-blur-sm min-w-[200px]">
+    <div class="flex items-center gap-2">
+      <span id="coord-text" class="font-mono text-blue-300">위도, 경도 추출 중...</span>
+      <span class="bg-blue-600 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">Copied</span>
+    </div>
+    <span class="text-[10px] text-slate-400">클립보드에 좌표가 복사되었습니다.</span>
   </div>
 
 <script>
@@ -208,43 +211,60 @@
     closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; });
   }
 
-  // ✅ Restored Feature: Coordinate Display & Copy Logic
-  window.addEventListener('message', (event) => {
-    // maps.html에서 전송하는 좌표 데이터 구조 확인
-    if (event.data && (event.data.type === 'MAP_CLICK' || event.data.lat)) {
-      const lat = event.data.lat;
-      const lng = event.data.lng;
-      if (!lat || !lng) return;
+  // ✅ [FIXED/RESTORED] Robust Coordinate Message Listener
+  window.addEventListener('message', function(event) {
+    const data = event.data;
+    if (!data) return;
 
+    // 다양한 형태의 데이터(maps.html의 구현 방식)를 모두 수용하도록 파싱
+    let lat = data.lat || (data.location && data.location.lat);
+    let lng = data.lng || (data.location && data.location.lng);
+
+    // 좌표값이 유효한 숫자인지 확인 (0도 유효하므로 typeof check)
+    if (typeof lat === 'number' && typeof lng === 'number') {
       const coordString = `${lat}, ${lng}`;
       
-      // 1. 클립보드 복사
-      const textArea = document.createElement("textarea");
-      textArea.value = coordString;
-      document.body.appendChild(textArea);
-      textArea.select();
-      try {
-        document.execCommand('copy');
-      } catch (err) {}
-      document.body.removeChild(textArea);
+      // 1. 클립보드 복사 (최신 API 시도 후 구형 fallback)
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(coordString).catch(() => {
+          copyFallback(coordString);
+        });
+      } else {
+        copyFallback(coordString);
+      }
 
-      // 2. UI 토스트 표시
+      // 2. UI 토스트 업데이트 및 표시
       const toast = document.getElementById('coord-toast');
       const text = document.getElementById('coord-text');
       if (toast && text) {
-        text.innerText = `좌표: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-        toast.classList.remove('opacity-0', 'pointer-events-none');
-        toast.classList.add('opacity-100');
+        text.innerText = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
         
-        // 3초 후 사라짐
-        clearTimeout(window.toastTimer);
-        window.toastTimer = setTimeout(() => {
+        // 애니메이션 효과와 함께 표시
+        toast.classList.remove('opacity-0', 'pointer-events-none');
+        toast.classList.add('opacity-100', 'translate-y-[-8px]');
+        
+        // 3.5초 후 자동으로 사라짐
+        clearTimeout(window.coordTimer);
+        window.coordTimer = setTimeout(() => {
           toast.classList.add('opacity-0', 'pointer-events-none');
-          toast.classList.remove('opacity-100');
-        }, 3000);
+          toast.classList.remove('opacity-100', 'translate-y-[-8px]');
+        }, 3500);
       }
     }
   });
+
+  // 구형 브라우저 혹은 보안 제약 대응용 복사 함수
+  function copyFallback(text) {
+    const el = document.createElement('textarea');
+    el.value = text;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    try { document.execCommand('copy'); } catch (err) {}
+    document.body.removeChild(el);
+  }
 </script>
 </body>
 </html>
