@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tony's SkyView - All Places</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+<!-- 외부 스타일 시트 참조 -->
+<link rel="stylesheet" href="style.css" />
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: { dark: '#1f3556', DEFAULT: '#2b5aa6', hover: '#234b8b' },
+          accent: '#7b1fa2', page: '#f2f2f2', card: '#ffffff', muted: '#6b7280'
+        },
+        fontFamily: { sans: ['Pretendard', 'sans-serif'] }
+      }
+    }
+  }
+</script>
+</head>
+<body>
+
+  <!-- Banner Section -->
+  <header class="hero">
+    <div id="slider-track" class="hero__track slider-transition"></div>
+    <div class="hero__overlay"></div>
+    <h1 class="hero__title text-shadow">Tony's Sky View</h1>
+  </header>
+
+  <!-- Navigation -->
+  <div class="navbar-wrapper">
+    <div class="navbar nav">
+      <a href="index.html" class="nav-btn nav__link">Home</a>
+      <button id="places-toggle-btn" class="nav-btn nav__link" onclick="togglePlacesMenu()">Places ▼</button>
+      <a href="videos.html" class="nav-btn nav__link">Videos</a>
+      <a href="shorts.html" class="nav-btn nav__link">Shorts</a>
+      <a href="https://smile21c.notion.site/my-profile" class="nav-btn nav__link" target="_blank" rel="noopener">About Me</a>
+      <button id="contact-btn" class="nav-btn nav__link">Email Me</button>
+    </div>
+    <div id="sub-navbar-container" class="sub-navbar-container">
+      <div id="sub-navbar-content" class="sub-navbar">
+        <span class="subnav__placeholder">Loading places...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Intro Quote Section -->
+  <div class="intro text-sm md:text-lg">
+    행복은 내가 가장 좋아하는 것, 내가 가장 잘하는 것 그리고 세상이 원하는 것의 교차점에서 온다.
+  </div>
+
+  <!-- Horizontal Divider -->
+  <hr class="border-t-2 border-gray-300 w-4/5 mx-auto mb-8">
+
+  <!-- Main Content -->
+  <div class="container mx-auto px-2 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold mb-2 text-brand-dark dark:text-gray-200">모든 장소 보기</h2>
+    <p class="mb-8 text-muted text-sm md:text-base">가나다 순으로 정렬되어 있습니다</p>
+    
+    <div id="loading" class="text-gray-500 font-bold my-10">데이터를 불러오는 중...</div>
+    
+    <div id="list-container" class="grid grid-cols-6 md:flex md:flex-wrap md:justify-center gap-1 md:gap-4 max-w-[1200px] mx-auto mb-12"></div>
+
+    <!-- Map Section -->
+    <div id="map-section" class="max-w-[1000px] mx-auto pb-20">
+      <h3 class="text-xl font-bold mb-4 text-brand-dark dark:text-gray-300">제주도 촬영장소 위치 안내</h3>
+
+      <div class="relative overflow-hidden rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+        <iframe
+          src="maps.html?embed=1"
+          title="Jeju Places Map"
+          class="w-full"
+          style="height: 560px; border: 0; display: block;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+
+      <p class="mt-3 text-muted text-xs">
+        ※ 스프레드시트(Places) 좌표가 업데이트되면, 이 지도도 자동으로 반영됩니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div id="contact-modal" class="modal" aria-hidden="true">
+    <div class="modal-content modal__content">
+      <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+      <p class="mb-6 text-muted">Email: smile21c@korea.com</p>
+      <button id="close-modal-btn" class="btn btn--primary">Close</button>
+    </div>
+  </div>
+
+  <!-- Coordinate Toast UI (Added for the requested feature) -->
+  <div id="coord-toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[9999] bg-black/80 text-white px-6 py-3 rounded-full text-sm font-medium shadow-2xl transition-all duration-300 opacity-0 pointer-events-none flex items-center gap-3">
+    <span id="coord-text">좌표를 불러오는 중...</span>
+    <span class="bg-brand px-2 py-0.5 rounded text-[10px]">COPIED</span>
+  </div>
+
+<script>
+  // ✅ Safe Storage
+  const SafeStorage = {
+    get(key) {
+      try { return localStorage.getItem(key); } catch (e) { return null; }
+    },
+    set(key, value) {
+      try { localStorage.setItem(key, value); return true; } catch (e) { return false; }
+    }
+  };
+
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec";
+  const BANNER_IMAGES = ["./images/songak.png", "./images/sanbangsan.png", "./images/baksu.png", "./images/tiger.png", "./images/sup.png"];
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('slider-track');
+    if (track) {
+      const imagesToUse = BANNER_IMAGES || [];
+      const imagesToRender = [...imagesToUse, imagesToUse[0]];
+      const slideWidthPercent = 100 / imagesToRender.length;
+      track.innerHTML = imagesToRender.map((src) => `<img src="${src}" class="hero__img banner-img" style="width: ${slideWidthPercent}%;">`).join('');
+      track.style.width = `${imagesToRender.length * 100}%`;
+      let index=0; 
+      setInterval(()=>{ 
+        index++; 
+        track.style.transition='transform 1s ease'; 
+        track.style.transform=`translateX(-${index*slideWidthPercent}%)`; 
+        if(index===imagesToUse.length){ 
+          setTimeout(()=>{ track.style.transition='none'; index=0; track.style.transform='translateX(0)'; },1000); 
+        } 
+      }, 10000);
+    }
+    loadData();
+  });
+
+  function togglePlacesMenu() {
+    const container = document.getElementById('sub-navbar-container');
+    container.style.maxHeight = (container.style.maxHeight && container.style.maxHeight !== '0px') ? '0px' : '200px';
+  }
+
+  async function loadData() {
+    try {
+      let data = null;
+      const cached = SafeStorage.get('skyview_data');
+
+      try {
+        const res = await fetch(SCRIPT_URL, { cache: 'no-store' });
+        if (res.ok) {
+          data = await res.json();
+          SafeStorage.set('skyview_data', JSON.stringify(data));
+        }
+      } catch (e) {}
+
+      if (!data && cached) {
+        data = JSON.parse(cached);
+      }
+
+      if (!data) {
+        throw new Error('데이터를 불러올 수 없습니다');
+      }
+
+      const places = data.places || [];
+      places.push({ name: '기타', introUrl: 'places.html?place=%EA%B8%B0%ED%83%80', priority: 999, lat: null, lng: null });
+      const container = document.getElementById('list-container');
+      const navContainer = document.getElementById('sub-navbar-content');
+      document.getElementById('loading').style.display = 'none';
+
+      navContainer.innerHTML = '';
+      places.filter(p => p.priority >= 1 && p.priority <= 7).sort((a,b) => a.priority - b.priority).forEach(p => {
+        const a = document.createElement('a'); a.className = 'sub-btn subnav__link'; a.innerText = p.name;
+        a.href = `places.html?place=${encodeURIComponent(p.name)}`; navContainer.appendChild(a);
+      });
+      const allBtn = document.createElement('a'); allBtn.className = 'sub-btn subnav__link--all'; allBtn.innerText = '전체보기'; allBtn.href = 'total_navi.html'; navContainer.appendChild(allBtn);
+
+      let names = [...new Set(places.map(p => p.name))].sort((a, b) => a.localeCompare(b));
+      const etcIndex = names.indexOf("기타");
+      if (etcIndex > -1) { names.splice(etcIndex, 1); names.push("기타"); }
+
+      container.innerHTML = '';
+      names.forEach(name => {
+        const a = document.createElement('a'); 
+        const isEtc = name === "기타";
+        let baseClass = 'flex items-center justify-center w-full md:w-[120px] min-h-[40px] md:min-h-[44px] rounded-lg shadow-sm hover:shadow-md transition-all text-[10px] md:text-sm font-semibold px-0.5 border';
+        if (isEtc) { baseClass += ' bg-gray-100 dark:bg-slate-700 border-gray-300 dark:border-slate-600 text-gray-500 dark:text-gray-400 hover:border-gray-400'; }
+        else { baseClass += ' bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-brand'; }
+        a.className = baseClass;
+        a.innerText = name;
+        a.href = `places.html?place=${encodeURIComponent(name)}`; 
+        container.appendChild(a);
+      });
+
+    } catch (e) {
+      document.getElementById('loading').innerText = "로드 실패: " + e.message;
+    }
+  }
+
+  const contactBtn = document.getElementById('contact-btn');
+  const contactModal = document.getElementById('contact-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+  if(contactBtn && contactModal && closeModalBtn){
+    contactBtn.addEventListener('click',e=>{ e.preventDefault(); contactModal.style.display='flex'; });
+    closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; });
+  }
+
+  // ✅ Restored Feature: Coordinate Display & Copy Logic
+  window.addEventListener('message', (event) => {
+    // maps.html에서 전송하는 좌표 데이터 구조 확인
+    if (event.data && (event.data.type === 'MAP_CLICK' || event.data.lat)) {
+      const lat = event.data.lat;
+      const lng = event.data.lng;
+      if (!lat || !lng) return;
+
+      const coordString = `${lat}, ${lng}`;
+      
+      // 1. 클립보드 복사
+      const textArea = document.createElement("textarea");
+      textArea.value = coordString;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+      } catch (err) {}
+      document.body.removeChild(textArea);
+
+      // 2. UI 토스트 표시
+      const toast = document.getElementById('coord-toast');
+      const text = document.getElementById('coord-text');
+      if (toast && text) {
+        text.innerText = `좌표: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+        toast.classList.remove('opacity-0', 'pointer-events-none');
+        toast.classList.add('opacity-100');
+        
+        // 3초 후 사라짐
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+          toast.classList.add('opacity-0', 'pointer-events-none');
+          toast.classList.remove('opacity-100');
+        }, 3000);
+      }
+    }
+  });
+</script>
+</body>
+</html>
