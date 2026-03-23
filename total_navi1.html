@@ -76,6 +76,7 @@
         <iframe
           src="maps.html?embed=1"
           title="Jeju Places Map"
+          id="map-iframe"
           class="w-full"
           style="height: 560px; border: 0; display: block;"
           loading="lazy"
@@ -98,16 +99,65 @@
     </div>
   </div>
 
-  <!-- ✅ Coordinate Display Toast (이 부분이 복원 및 강화되었습니다) -->
-  <div id="coord-toast" class="fixed bottom-12 left-1/2 -translate-x-1/2 z-[9999] bg-slate-900/90 text-white px-5 py-3 rounded-2xl text-sm font-medium shadow-[0_8px_30px_rgb(0,0,0,0.3)] transition-all duration-300 opacity-0 pointer-events-none border border-white/10 flex flex-col items-center gap-1 backdrop-blur-sm min-w-[200px]">
+  <!-- ✅ [복원된 좌표 토스트 UI] -->
+  <div id="coord-toast" class="fixed bottom-12 left-1/2 -translate-x-1/2 z-[99999] bg-slate-900/95 text-white px-6 py-3 rounded-2xl text-sm font-medium shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition-all duration-300 opacity-0 pointer-events-none border border-blue-500/30 flex flex-col items-center gap-1 backdrop-blur-md min-w-[240px]">
     <div class="flex items-center gap-2">
-      <span id="coord-text" class="font-mono text-blue-300">위도, 경도 추출 중...</span>
-      <span class="bg-blue-600 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">Copied</span>
+      <span id="coord-text" class="font-mono text-blue-400">0.000000, 0.000000</span>
+      <span class="bg-blue-600 px-1.5 py-0.5 rounded text-[10px] font-black uppercase">Copied</span>
     </div>
-    <span class="text-[10px] text-slate-400">클립보드에 좌표가 복사되었습니다.</span>
+    <span class="text-[11px] text-slate-400">좌표가 클립보드에 복사되었습니다.</span>
   </div>
 
 <script>
+  // ✅ [복원 기능: 좌표 수신 리스너]
+  // maps.html에서 전달되는 위도/경도 신호를 받아 화면에 출력합니다.
+  window.addEventListener('message', function(event) {
+    let data = event.data;
+    if (!data) return;
+
+    // 데이터가 JSON 문자열로 넘어오는 경우를 대비한 파싱
+    if (typeof data === 'string') {
+      try { data = JSON.parse(data); } catch (e) { return; }
+    }
+
+    // 다양한 객체 구조(lat, lng 또는 location.lat 등) 대응
+    let lat = data.lat || (data.location && data.location.lat);
+    let lng = data.lng || (data.location && data.location.lng);
+
+    if (typeof lat === 'number' && typeof lng === 'number') {
+      const coordString = lat.toFixed(6) + ", " + lng.toFixed(6);
+      
+      // 1. 클립보드 복사
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(coordString);
+      } else {
+        const el = document.createElement('textarea');
+        el.value = coordString;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+      }
+
+      // 2. UI 토스트 표시
+      const toast = document.getElementById('coord-toast');
+      const text = document.getElementById('coord-text');
+      if (toast && text) {
+        text.innerText = coordString;
+        toast.style.opacity = "1";
+        toast.style.pointerEvents = "auto";
+        toast.style.transform = "translate(-50%, -10px)";
+        
+        clearTimeout(window.coordTimer);
+        window.coordTimer = setTimeout(() => {
+          toast.style.opacity = "0";
+          toast.style.pointerEvents = "none";
+          toast.style.transform = "translate(-50%, 0)";
+        }, 3000);
+      }
+    }
+  });
+
   // ✅ Safe Storage
   const SafeStorage = {
     get(key) {
@@ -151,7 +201,6 @@
     try {
       let data = null;
       const cached = SafeStorage.get('skyview_data');
-
       try {
         const res = await fetch(SCRIPT_URL, { cache: 'no-store' });
         if (res.ok) {
@@ -159,17 +208,12 @@
           SafeStorage.set('skyview_data', JSON.stringify(data));
         }
       } catch (e) {}
-
-      if (!data && cached) {
-        data = JSON.parse(cached);
-      }
-
-      if (!data) {
-        throw new Error('데이터를 불러올 수 없습니다');
-      }
+      if (!data && cached) data = JSON.parse(cached);
+      if (!data) throw new Error('데이터 로드 실패');
 
       const places = data.places || [];
-      places.push({ name: '기타', introUrl: 'places.html?place=%EA%B8%B0%ED%83%80', priority: 999, lat: null, lng: null });
+      places.push({ name: '기타', introUrl: 'places.html?place=%EA%B8%B0%ED%83%80', priority: 999 });
+      
       const container = document.getElementById('list-container');
       const navContainer = document.getElementById('sub-navbar-content');
       document.getElementById('loading').style.display = 'none';
@@ -190,14 +234,11 @@
         const a = document.createElement('a'); 
         const isEtc = name === "기타";
         let baseClass = 'flex items-center justify-center w-full md:w-[120px] min-h-[40px] md:min-h-[44px] rounded-lg shadow-sm hover:shadow-md transition-all text-[10px] md:text-sm font-semibold px-0.5 border';
-        if (isEtc) { baseClass += ' bg-gray-100 dark:bg-slate-700 border-gray-300 dark:border-slate-600 text-gray-500 dark:text-gray-400 hover:border-gray-400'; }
-        else { baseClass += ' bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-brand'; }
-        a.className = baseClass;
-        a.innerText = name;
-        a.href = `places.html?place=${encodeURIComponent(name)}`; 
+        if (isEtc) baseClass += ' bg-gray-100 dark:bg-slate-700 border-gray-300 dark:border-slate-600 text-gray-500 dark:text-gray-400';
+        else baseClass += ' bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-brand';
+        a.className = baseClass; a.innerText = name; a.href = `places.html?place=${encodeURIComponent(name)}`; 
         container.appendChild(a);
       });
-
     } catch (e) {
       document.getElementById('loading').innerText = "로드 실패: " + e.message;
     }
@@ -209,61 +250,6 @@
   if(contactBtn && contactModal && closeModalBtn){
     contactBtn.addEventListener('click',e=>{ e.preventDefault(); contactModal.style.display='flex'; });
     closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; });
-  }
-
-  // ✅ [FIXED/RESTORED] Robust Coordinate Message Listener
-  window.addEventListener('message', function(event) {
-    const data = event.data;
-    if (!data) return;
-
-    // 다양한 형태의 데이터(maps.html의 구현 방식)를 모두 수용하도록 파싱
-    let lat = data.lat || (data.location && data.location.lat);
-    let lng = data.lng || (data.location && data.location.lng);
-
-    // 좌표값이 유효한 숫자인지 확인 (0도 유효하므로 typeof check)
-    if (typeof lat === 'number' && typeof lng === 'number') {
-      const coordString = `${lat}, ${lng}`;
-      
-      // 1. 클립보드 복사 (최신 API 시도 후 구형 fallback)
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(coordString).catch(() => {
-          copyFallback(coordString);
-        });
-      } else {
-        copyFallback(coordString);
-      }
-
-      // 2. UI 토스트 업데이트 및 표시
-      const toast = document.getElementById('coord-toast');
-      const text = document.getElementById('coord-text');
-      if (toast && text) {
-        text.innerText = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-        
-        // 애니메이션 효과와 함께 표시
-        toast.classList.remove('opacity-0', 'pointer-events-none');
-        toast.classList.add('opacity-100', 'translate-y-[-8px]');
-        
-        // 3.5초 후 자동으로 사라짐
-        clearTimeout(window.coordTimer);
-        window.coordTimer = setTimeout(() => {
-          toast.classList.add('opacity-0', 'pointer-events-none');
-          toast.classList.remove('opacity-100', 'translate-y-[-8px]');
-        }, 3500);
-      }
-    }
-  });
-
-  // 구형 브라우저 혹은 보안 제약 대응용 복사 함수
-  function copyFallback(text) {
-    const el = document.createElement('textarea');
-    el.value = text;
-    el.setAttribute('readonly', '');
-    el.style.position = 'absolute';
-    el.style.left = '-9999px';
-    document.body.appendChild(el);
-    el.select();
-    try { document.execCommand('copy'); } catch (err) {}
-    document.body.removeChild(el);
   }
 </script>
 </body>
