@@ -109,7 +109,84 @@
   </div>
 
 <script>
-  // ✅ [복원 기능: 좌표 수신 리스너]
+  // ✅ [최종 병기: Active DOM Hooking (능동적 이벤트 가로채기)]
+  // maps.html이 내부에 어떤 코드를 가졌든 상관없이, 부모가 지도 메모리에 직접 침투하여 좌표를 강제로 낚아챕니다.
+  function injectActiveMapListener() {
+    const iframe = document.getElementById('map-iframe');
+    if (!iframe) return;
+
+    try {
+      // 1. iframe 내부 문서로 침투 시도
+      const win = iframe.contentWindow;
+      if (!win) return;
+
+      let mapFound = false;
+      
+      // 2. 클릭 시 위경도를 강제 추출하여 출력하는 함수 설계
+      const captureClick = function(e) {
+        if(e && e.latlng) {
+          const lat = e.latlng.lat;
+          const lng = e.latlng.lng;
+          const coordString = lat.toFixed(6) + ", " + lng.toFixed(6);
+
+          // 클립보드 강제 복사
+          const el = document.createElement('textarea');
+          el.value = coordString;
+          document.body.appendChild(el);
+          el.select();
+          try { document.execCommand('copy'); } catch(err) {}
+          document.body.removeChild(el);
+
+          // UI 토스트 강제 팝업
+          const toast = document.getElementById('coord-toast');
+          const text = document.getElementById('coord-text');
+          if (toast && text) {
+            text.innerText = coordString;
+            toast.style.opacity = "1";
+            toast.style.pointerEvents = "auto";
+            toast.style.transform = "translate(-50%, -10px)";
+            clearTimeout(window.coordTimer);
+            window.coordTimer = setTimeout(() => {
+              toast.style.opacity = "0";
+              toast.style.pointerEvents = "none";
+              toast.style.transform = "translate(-50%, 0)";
+            }, 3000);
+          }
+        }
+      };
+
+      // 3. 내부 메모리에 상주하는 Leaflet 인스턴스 전수조사 및 강제 바인딩
+      for (const key in win) {
+        try {
+          const obj = win[key];
+          if (obj && typeof obj === 'object' && obj._leaflet_id && typeof obj.on === 'function') {
+            obj.off('click', captureClick); // 중복 방지
+            obj.on('click', captureClick);
+            mapFound = true;
+            break;
+          }
+        } catch(e) {} 
+      }
+
+      // 4. 객체를 찾지 못했을 경우, Leaflet 코어 원형(Prototype) 자체에 훅(Hook) 설치
+      if (!mapFound && win.L && win.L.Map) {
+        win.L.Map.addInitHook(function() {
+          this.on('click', captureClick);
+        });
+      }
+    } catch (err) {
+      console.warn("[SkyView] 브라우저 CORS 보안 정책으로 인해 내부 메모리 직접 접근이 차단되었습니다.");
+    }
+  }
+
+  // 지도 iframe 로드시점에 해킹 스크립트(Hook) 주입
+  const mapIframe = document.getElementById('map-iframe');
+  if (mapIframe) {
+    mapIframe.addEventListener('load', injectActiveMapListener);
+    setTimeout(injectActiveMapListener, 1500); // 로드 지연을 대비한 2차 확인사살
+  }
+
+  // ✅ [복원 기능: 좌표 수신 리스너 (기존 대비용)]
   // maps.html에서 전달되는 위도/경도 신호를 받아 화면에 출력합니다.
   window.addEventListener('message', function(event) {
     let data = event.data;
