@@ -1,333 +1,94 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Tony's SkyView - All Places</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-
-<!-- 외부 스타일 시트 참조 -->
-<link rel="stylesheet" href="style.css" />
-
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          brand: { dark: '#1f3556', DEFAULT: '#2b5aa6', hover: '#234b8b' },
-          accent: '#7b1fa2', page: '#f2f2f2', card: '#ffffff', muted: '#6b7280'
-        },
-        fontFamily: { sans: ['Pretendard', 'sans-serif'] }
-      }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>지도 좌표 확인</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
     }
-  }
-</script>
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .coordinate-panel {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 1000;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #cfcfcf;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      line-height: 1.5;
+    }
+
+    .coordinate-panel strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
 </head>
 <body>
-
-  <!-- Banner Section -->
-  <header class="hero">
-    <div id="slider-track" class="hero__track slider-transition"></div>
-    <div class="hero__overlay"></div>
-    <h1 class="hero__title text-shadow">Tony's Sky View</h1>
-  </header>
-
-  <!-- Navigation -->
-  <div class="navbar-wrapper">
-    <div class="navbar nav">
-      <a href="index.html" class="nav-btn nav__link">Home</a>
-      <button id="places-toggle-btn" class="nav-btn nav__link" onclick="togglePlacesMenu()">Places ▼</button>
-      <a href="videos.html" class="nav-btn nav__link">Videos</a>
-      <a href="shorts.html" class="nav-btn nav__link">Shorts</a>
-      <a href="https://smile21c.notion.site/my-profile" class="nav-btn nav__link" target="_blank" rel="noopener">About Me</a>
-      <button id="contact-btn" class="nav-btn nav__link">Email Me</button>
-    </div>
-    <div id="sub-navbar-container" class="sub-navbar-container">
-      <div id="sub-navbar-content" class="sub-navbar">
-        <span class="subnav__placeholder">Loading places...</span>
-      </div>
-    </div>
+  <div class="coordinate-panel" id="coordinate-panel">
+    <strong>지도 클릭 좌표</strong>
+    지도를 좌클릭하면 위도와 경도가 표시됩니다.
   </div>
+  <div id="map" aria-label="지도"></div>
 
-  <!-- Intro Quote Section -->
-  <div class="intro text-sm md:text-lg">
-    행복은 내가 가장 좋아하는 것, 내가 가장 잘하는 것 그리고 세상이 원하는 것의 교차점에서 온다.
-  </div>
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script>
+    const map = L.map("map").setView([33.3617, 126.5292], 10);
 
-  <!-- Horizontal Divider -->
-  <hr class="border-t-2 border-gray-300 w-4/5 mx-auto mb-8">
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-  <!-- Main Content -->
-  <div class="container mx-auto px-2 text-center">
-    <h2 class="text-2xl md:text-3xl font-bold mb-2 text-brand-dark dark:text-gray-200">모든 장소 보기</h2>
-    <p class="mb-8 text-muted text-sm md:text-base">가나다 순으로 정렬되어 있습니다</p>
-    
-    <div id="loading" class="text-gray-500 font-bold my-10">데이터를 불러오는 중...</div>
-    
-    <div id="list-container" class="grid grid-cols-6 md:flex md:flex-wrap md:justify-center gap-1 md:gap-4 max-w-[1200px] mx-auto mb-12"></div>
+    const panel = document.getElementById("coordinate-panel");
+    let marker = null;
 
-    <!-- Map Section -->
-    <div id="map-section" class="max-w-[1000px] mx-auto pb-20">
-      <h3 class="text-xl font-bold mb-4 text-brand-dark dark:text-gray-300">제주도 촬영장소 위치 안내</h3>
+    map.on("click", (event) => {
+      const { lat, lng } = event.latlng;
+      const latitude = lat.toFixed(6);
+      const longitude = lng.toFixed(6);
 
-      <div class="relative overflow-hidden rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800">
-        <iframe
-          src="maps.html?embed=1"
-          title="Jeju Places Map"
-          id="map-iframe"
-          class="w-full"
-          style="height: 560px; border: 0; display: block;"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </div>
+      panel.innerHTML = `
+        <strong>지도 클릭 좌표</strong>
+        Latitude: ${latitude}<br />
+        Longitude: ${longitude}
+      `;
 
-      <p class="mt-3 text-muted text-xs">
-        ※ 스프레드시트(Places) 좌표가 업데이트되면, 이 지도도 자동으로 반영됩니다.
-      </p>
-    </div>
-  </div>
-
-  <!-- Contact Modal -->
-  <div id="contact-modal" class="modal" aria-hidden="true">
-    <div class="modal-content modal__content">
-      <h3 class="text-xl font-bold mb-4">Contact Information</h3>
-      <p class="mb-6 text-muted">Email: smile21c@korea.com</p>
-      <button id="close-modal-btn" class="btn btn--primary">Close</button>
-    </div>
-  </div>
-
-  <!-- ✅ [복원된 좌표 토스트 UI] -->
-  <div id="coord-toast" class="fixed bottom-12 left-1/2 -translate-x-1/2 z-[99999] bg-slate-900/95 text-white px-6 py-3 rounded-2xl text-sm font-medium shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition-all duration-300 opacity-0 pointer-events-none border border-blue-500/30 flex flex-col items-center gap-1 backdrop-blur-md min-w-[240px]">
-    <div class="flex items-center gap-2">
-      <span id="coord-text" class="font-mono text-blue-400">0.000000, 0.000000</span>
-      <span class="bg-blue-600 px-1.5 py-0.5 rounded text-[10px] font-black uppercase">Copied</span>
-    </div>
-    <span class="text-[11px] text-slate-400">좌표가 클립보드에 복사되었습니다.</span>
-  </div>
-
-<script>
-  // ✅ [최종 병기: Active DOM Hooking (능동적 이벤트 가로채기)]
-  // maps.html이 내부에 어떤 코드를 가졌든 상관없이, 부모가 지도 메모리에 직접 침투하여 좌표를 강제로 낚아챕니다.
-  function injectActiveMapListener() {
-    const iframe = document.getElementById('map-iframe');
-    if (!iframe) return;
-
-    try {
-      // 1. iframe 내부 문서로 침투 시도
-      const win = iframe.contentWindow;
-      if (!win) return;
-
-      let mapFound = false;
-      
-      // 2. 클릭 시 위경도를 강제 추출하여 출력하는 함수 설계
-      const captureClick = function(e) {
-        if(e && e.latlng) {
-          const lat = e.latlng.lat;
-          const lng = e.latlng.lng;
-          const coordString = lat.toFixed(6) + ", " + lng.toFixed(6);
-
-          // 클립보드 강제 복사
-          const el = document.createElement('textarea');
-          el.value = coordString;
-          document.body.appendChild(el);
-          el.select();
-          try { document.execCommand('copy'); } catch(err) {}
-          document.body.removeChild(el);
-
-          // UI 토스트 강제 팝업
-          const toast = document.getElementById('coord-toast');
-          const text = document.getElementById('coord-text');
-          if (toast && text) {
-            text.innerText = coordString;
-            toast.style.opacity = "1";
-            toast.style.pointerEvents = "auto";
-            toast.style.transform = "translate(-50%, -10px)";
-            clearTimeout(window.coordTimer);
-            window.coordTimer = setTimeout(() => {
-              toast.style.opacity = "0";
-              toast.style.pointerEvents = "none";
-              toast.style.transform = "translate(-50%, 0)";
-            }, 3000);
-          }
-        }
-      };
-
-      // 3. 내부 메모리에 상주하는 Leaflet 인스턴스 전수조사 및 강제 바인딩
-      for (const key in win) {
-        try {
-          const obj = win[key];
-          if (obj && typeof obj === 'object' && obj._leaflet_id && typeof obj.on === 'function') {
-            obj.off('click', captureClick); // 중복 방지
-            obj.on('click', captureClick);
-            mapFound = true;
-            break;
-          }
-        } catch(e) {} 
-      }
-
-      // 4. 객체를 찾지 못했을 경우, Leaflet 코어 원형(Prototype) 자체에 훅(Hook) 설치
-      if (!mapFound && win.L && win.L.Map) {
-        win.L.Map.addInitHook(function() {
-          this.on('click', captureClick);
-        });
-      }
-    } catch (err) {
-      console.warn("[SkyView] 브라우저 CORS 보안 정책으로 인해 내부 메모리 직접 접근이 차단되었습니다.");
-    }
-  }
-
-  // 지도 iframe 로드시점에 해킹 스크립트(Hook) 주입
-  const mapIframe = document.getElementById('map-iframe');
-  if (mapIframe) {
-    mapIframe.addEventListener('load', injectActiveMapListener);
-    setTimeout(injectActiveMapListener, 1500); // 로드 지연을 대비한 2차 확인사살
-  }
-
-  // ✅ [복원 기능: 좌표 수신 리스너 (기존 대비용)]
-  // maps.html에서 전달되는 위도/경도 신호를 받아 화면에 출력합니다.
-  window.addEventListener('message', function(event) {
-    let data = event.data;
-    if (!data) return;
-
-    // 데이터가 JSON 문자열로 넘어오는 경우를 대비한 파싱
-    if (typeof data === 'string') {
-      try { data = JSON.parse(data); } catch (e) { return; }
-    }
-
-    // 다양한 객체 구조(lat, lng 또는 location.lat 등) 대응
-    let lat = data.lat || (data.location && data.location.lat);
-    let lng = data.lng || (data.location && data.location.lng);
-
-    if (typeof lat === 'number' && typeof lng === 'number') {
-      const coordString = lat.toFixed(6) + ", " + lng.toFixed(6);
-      
-      // 1. 클립보드 복사
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(coordString);
+      if (marker) {
+        marker.setLatLng(event.latlng);
       } else {
-        const el = document.createElement('textarea');
-        el.value = coordString;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
+        marker = L.marker(event.latlng).addTo(map);
       }
 
-      // 2. UI 토스트 표시
-      const toast = document.getElementById('coord-toast');
-      const text = document.getElementById('coord-text');
-      if (toast && text) {
-        text.innerText = coordString;
-        toast.style.opacity = "1";
-        toast.style.pointerEvents = "auto";
-        toast.style.transform = "translate(-50%, -10px)";
-        
-        clearTimeout(window.coordTimer);
-        window.coordTimer = setTimeout(() => {
-          toast.style.opacity = "0";
-          toast.style.pointerEvents = "none";
-          toast.style.transform = "translate(-50%, 0)";
-        }, 3000);
-      }
-    }
-  });
-
-  // ✅ Safe Storage
-  const SafeStorage = {
-    get(key) {
-      try { return localStorage.getItem(key); } catch (e) { return null; }
-    },
-    set(key, value) {
-      try { localStorage.setItem(key, value); return true; } catch (e) { return false; }
-    }
-  };
-
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdmO5YEMjTvrArVSmqyN0em4IQOzhOSfjf3mWBqlxA_qlht4Hf0udgJJA5uVQrsmmTPQ/exec";
-  const BANNER_IMAGES = ["./images/songak.png", "./images/sanbangsan.png", "./images/baksu.png", "./images/tiger.png", "./images/sup.png"];
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const track = document.getElementById('slider-track');
-    if (track) {
-      const imagesToUse = BANNER_IMAGES || [];
-      const imagesToRender = [...imagesToUse, imagesToUse[0]];
-      const slideWidthPercent = 100 / imagesToRender.length;
-      track.innerHTML = imagesToRender.map((src) => `<img src="${src}" class="hero__img banner-img" style="width: ${slideWidthPercent}%;">`).join('');
-      track.style.width = `${imagesToRender.length * 100}%`;
-      let index=0; 
-      setInterval(()=>{ 
-        index++; 
-        track.style.transition='transform 1s ease'; 
-        track.style.transform=`translateX(-${index*slideWidthPercent}%)`; 
-        if(index===imagesToUse.length){ 
-          setTimeout(()=>{ track.style.transition='none'; index=0; track.style.transform='translateX(0)'; },1000); 
-        } 
-      }, 10000);
-    }
-    loadData();
-  });
-
-  function togglePlacesMenu() {
-    const container = document.getElementById('sub-navbar-container');
-    container.style.maxHeight = (container.style.maxHeight && container.style.maxHeight !== '0px') ? '0px' : '200px';
-  }
-
-  async function loadData() {
-    try {
-      let data = null;
-      const cached = SafeStorage.get('skyview_data');
-      try {
-        const res = await fetch(SCRIPT_URL, { cache: 'no-store' });
-        if (res.ok) {
-          data = await res.json();
-          SafeStorage.set('skyview_data', JSON.stringify(data));
-        }
-      } catch (e) {}
-      if (!data && cached) data = JSON.parse(cached);
-      if (!data) throw new Error('데이터 로드 실패');
-
-      const places = data.places || [];
-      places.push({ name: '기타', introUrl: 'places.html?place=%EA%B8%B0%ED%83%80', priority: 999 });
-      
-      const container = document.getElementById('list-container');
-      const navContainer = document.getElementById('sub-navbar-content');
-      document.getElementById('loading').style.display = 'none';
-
-      navContainer.innerHTML = '';
-      places.filter(p => p.priority >= 1 && p.priority <= 7).sort((a,b) => a.priority - b.priority).forEach(p => {
-        const a = document.createElement('a'); a.className = 'sub-btn subnav__link'; a.innerText = p.name;
-        a.href = `places.html?place=${encodeURIComponent(p.name)}`; navContainer.appendChild(a);
-      });
-      const allBtn = document.createElement('a'); allBtn.className = 'sub-btn subnav__link--all'; allBtn.innerText = '전체보기'; allBtn.href = 'total_navi.html'; navContainer.appendChild(allBtn);
-
-      let names = [...new Set(places.map(p => p.name))].sort((a, b) => a.localeCompare(b));
-      const etcIndex = names.indexOf("기타");
-      if (etcIndex > -1) { names.splice(etcIndex, 1); names.push("기타"); }
-
-      container.innerHTML = '';
-      names.forEach(name => {
-        const a = document.createElement('a'); 
-        const isEtc = name === "기타";
-        let baseClass = 'flex items-center justify-center w-full md:w-[120px] min-h-[40px] md:min-h-[44px] rounded-lg shadow-sm hover:shadow-md transition-all text-[10px] md:text-sm font-semibold px-0.5 border';
-        if (isEtc) baseClass += ' bg-gray-100 dark:bg-slate-700 border-gray-300 dark:border-slate-600 text-gray-500 dark:text-gray-400';
-        else baseClass += ' bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-200 hover:border-brand';
-        a.className = baseClass; a.innerText = name; a.href = `places.html?place=${encodeURIComponent(name)}`; 
-        container.appendChild(a);
-      });
-    } catch (e) {
-      document.getElementById('loading').innerText = "로드 실패: " + e.message;
-    }
-  }
-
-  const contactBtn = document.getElementById('contact-btn');
-  const contactModal = document.getElementById('contact-modal');
-  const closeModalBtn = document.getElementById('close-modal-btn');
-  if(contactBtn && contactModal && closeModalBtn){
-    contactBtn.addEventListener('click',e=>{ e.preventDefault(); contactModal.style.display='flex'; });
-    closeModalBtn.addEventListener('click',()=>{ contactModal.style.display='none'; });
-  }
-</script>
+      marker
+        .bindPopup(`Latitude: ${latitude}<br>Longitude: ${longitude}`)
+        .openPopup();
+    });
+  </script>
 </body>
 </html>
