@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>갯깍주상절리: 드론으로 읽는 지질학</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .hero-gradient {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .section-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .concept-tag {
+            background-color: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header / Hero Section -->
+    <header class="hero-gradient h-[60vh] flex flex-col items-center justify-center text-white text-center px-4">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">갯깍주상절리대</h1>
+        <p class="text-xl md:text-2xl font-light max-w-2xl italic">
+            "아는 만큼 보입니다. 드론의 시선으로 지질학적 경이로움을 마주하십시오."
+        </p>
+        <div class="mt-8 flex gap-4">
+            <span class="border border-white px-4 py-2 rounded-full text-sm">#Entablature</span>
+            <span class="border border-white px-4 py-2 rounded-full text-sm">#Tafoni</span>
+            <span class="border border-white px-4 py-2 rounded-full text-sm">#SeaCave</span>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        
+        <!-- Quick Definition Section -->
+        <section class="mb-16 bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <i class="fas fa-microscope text-blue-600"></i> 핵심 정의 (Core Definition)
+            </h2>
+            <p class="text-lg leading-relaxed mb-4">
+                <strong class="text-blue-700 underline decoration-blue-200">주상절리 (Columnar Joint, 柱狀節理)</strong>: 
+                지표로 분출한 용암이 냉각 및 수축하는 과정에서 형성된 수직의 기둥 모양 절리 구조입니다.
+            </p>
+            <p class="text-slate-600 italic">
+                특히 갯깍주상절리는 '바다를 마주한 끝머리'라는 뜻의 '갯깍'이라는 이름처럼, 약 1.7km에 걸쳐 펼쳐진 해안 절벽(해식애)의 웅장함을 자랑합니다.
+            </p>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="grid md:grid-cols-2 gap-8">
+            
+            <!-- Geological Value -->
+            <section class="section-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                <h3 class="text-xl font-bold mb-4 text-blue-900 border-b pb-2">1. 지질학적 가치: <span class="text-sm font-normal">Entablature</span></h3>
+                <p class="text-slate-700 mb-4">
+                    <span class="concept-tag">객상주상절리</span>는 학술적으로 <strong>Entablature(인테브러처)</strong>적 구조로 설명됩니다.
+                </p>
+                <ul class="space-y-3 text-sm text-slate-600">
+                    <li class="flex gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span>일반적인 반듯한 기둥과 달리, 냉각 속도의 차이로 인해 휘어지거나 뒤틀린 복잡한 형태를 띱니다.</span>
+                    </li>
+                    <li class="flex gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span>해식동굴 주변 암벽에서 관찰되는 이 구조는 드론 촬영 시 가장 역동적인 패턴을 보여줍니다.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Tafoni & Weathering -->
+            <section class="section-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                <h3 class="text-xl font-bold mb-4 text-blue-900 border-b pb-2">2. 풍화의 흔적: <span class="text-sm font-normal">Tafoni</span></h3>
+                <p class="text-slate-700 mb-4">
+                    절벽 표면의 벌집 모양 구멍들은 <span class="concept-tag">Tafoni(타포니)</span>라 불리는 풍화 지형입니다.
+                </p>
+                <ul class="space-y-3 text-sm text-slate-600">
+                    <li class="flex gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span>염분과 수분이 암석 틈에서 증발하며 부피를 팽창시켜 암석 표면을 깎아내는 현상입니다.</span>
+                    </li>
+                    <li class="flex gap-2">
+                        <i class="fas fa-check text-green-500 mt-1"></i>
+                        <span>주상절리가 생성된 후, 수만 년의 시간이 빚어낸 2차적인 자연 조각품입니다.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- History & Culture -->
+            <section class="section-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                <h3 class="text-xl font-bold mb-4 text-blue-900 border-b pb-2">3. 역사와 문화: <span class="text-sm font-normal">Daramjigul</span></h3>
+                <p class="text-slate-700 mb-4">
+                    단순한 바위벽이 아닌 선사시대부터의 삶이 깃든 장소입니다.
+                </p>
+                <ul class="space-y-3 text-sm text-slate-600">
+                    <li class="flex gap-2">
+                        <i class="fas fa-history text-orange-500 mt-1"></i>
+                        <span><strong>다람쥐굴</strong>: 높이 15m에 달하는 해식동굴로, 1985년 토기편 등 유물이 발견된 선사시대 거처입니다.</span>
+                    </li>
+                    <li class="flex gap-2">
+                        <i class="fas fa-leaf text-green-500 mt-1"></i>
+                        <span><strong>반딧불이 보호지역</strong>: 예례천 하구와 연결된 이 구역은 청정 제주의 생태적 가치를 상징합니다.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Drone Pilot Guide -->
+            <section class="section-card bg-blue-900 text-white p-8 rounded-2xl shadow-lg">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-paper-plane"></i> 드론 촬영 가이드 (Pilot Checklist)
+                </h3>
+                <div class="space-y-4 text-sm">
+                    <div class="bg-blue-800 p-3 rounded-lg">
+                        <p class="font-bold mb-1 underline">최적의 앵글 (Best Angle)</p>
+                        <p>해안선과 평행하게 비행하며 <strong>Sea Cliff(해식애)</strong>와 <strong>Notch(노치)</strong>를 측면에서 포착하면 주상절리의 수직성이 강조됩니다.</p>
+                    </div>
+                    <div class="bg-red-800/50 p-3 rounded-lg border border-red-500/30">
+                        <p class="font-bold mb-1">안전 주의 (Safety First)</p>
+                        <p>낙석 위험으로 인해 올레길이 변경된 지역입니다. 비행 시 절벽에 너무 근접하기보다는 줌 렌즈를 활용하고, 기류 변화에 주의하십시오.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Location Footer -->
+        <footer class="mt-16 text-center border-t pt-8 text-slate-500">
+            <p class="mb-2"><i class="fas fa-map-marker-alt text-red-500"></i> 위치: 제주특별자치도 서귀포시 색달동 갯깍주상절리대</p>
+            <p class="text-xs">본 페이지는 갯깍주상절리의 과학적 이해를 돕기 위해 제작되었습니다.</p>
+        </footer>
+
+    </main>
+
+    <!-- Bottom Message Box (Custom Replacement for alert) -->
+    <div id="welcome-msg" class="fixed bottom-4 right-4 bg-slate-900 text-white p-4 rounded-xl shadow-2xl max-w-xs transform translate-y-20 transition-transform duration-500">
+        <p class="text-sm font-medium">
+            <i class="fas fa-info-circle text-blue-400 mr-2"></i>
+            주인님, 드론 촬영을 위한 지질학 도슨트 페이지가 준비되었습니다.
+        </p>
+    </div>
+
+    <script>
+        window.onload = () => {
+            const msg = document.getElementById('welcome-msg');
+            msg.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                msg.style.transform = 'translateY(150%)';
+            }, 5000);
+        };
+    </script>
+</body>
+</html>
