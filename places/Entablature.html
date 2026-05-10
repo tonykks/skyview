@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>갯깍주상절리: 드론으로 읽는 지질학</title>
+    <title>갯깍주상절리대 &amp; 해식동굴 | 지질·문화 안내</title>
+    <meta name="description" content="제주 색달동 갯깍주상절리대와 해식동굴의 지질학적 가치, 객상·Entablature형 주상절리, 다람쥐굴 향토유산, 형성 원리와 촬영·안전 안내.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
-        
+
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #f8fafc;
             color: #1e293b;
+            scroll-behavior: smooth;
         }
         .hero-gradient {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.45)), url('/images/Gae-kkak.png');
             background-size: cover;
             background-position: center;
         }
@@ -34,47 +36,96 @@
             font-size: 0.875rem;
             font-weight: 600;
         }
+        .cave-section {
+            background-color: #0f172a;
+            background-image: radial-gradient(circle at 20% 30%, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 1) 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Header / Hero Section -->
-    <header class="hero-gradient h-[60vh] flex flex-col items-center justify-center text-white text-center px-4">
-        <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">갯깍주상절리대</h1>
-        <p class="text-xl md:text-2xl font-light max-w-4xl italic">
-            "아는 만큼 보입니다. 드론의 시선으로 지질학적 경이로움을 마주하십시오."
+    <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between text-sm font-medium text-slate-700">
+            <span class="font-bold text-slate-900">갯깍 · 해식동굴</span>
+            <div class="flex gap-4 md:gap-6 flex-wrap justify-end">
+                <a href="#overview" class="hover:text-blue-600">개요</a>
+                <a href="#gaeksang" class="hover:text-blue-600">객상·Entablature</a>
+                <a href="#daramji" class="hover:text-blue-600">다람쥐굴</a>
+                <a href="#cave" class="hover:text-blue-600">해식동굴</a>
+                <a href="#photo" class="hover:text-blue-600">촬영</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-gradient min-h-[55vh] md:h-[60vh] flex flex-col items-center justify-center text-white text-center px-4 py-16">
+        <p class="text-sm md:text-base tracking-wide text-white/90 mb-3 uppercase">Geological Heritage of Jeju</p>
+        <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">갯깍주상절리대</h1>
+        <p class="text-lg md:text-xl font-light max-w-2xl text-white/95 mb-2">그리고 이 해안을 깎아 낸 <strong class="font-semibold">해식동굴</strong></p>
+        <p class="text-base md:text-lg font-light max-w-3xl italic text-white/85">
+            아는 만큼 보입니다. 바다와 절벽이 들려주는 지질학적 경이로움을 마주하십시오.
         </p>
-        <div class="mt-8 flex gap-4">
-            <span class="border border-white px-4 py-2 rounded-full text-sm">#Entablature</span>
-            <span class="border border-white px-4 py-2 rounded-full text-sm">#Tafoni</span>
-            <span class="border border-white px-4 py-2 rounded-full text-sm">#SeaCave</span>
+        <div class="mt-8 flex flex-wrap justify-center gap-2 md:gap-4">
+            <span class="border border-white/80 px-3 py-1.5 rounded-full text-xs md:text-sm">#주상절리</span>
+            <span class="border border-white/80 px-3 py-1.5 rounded-full text-xs md:text-sm">#Entablature</span>
+            <span class="border border-white/80 px-3 py-1.5 rounded-full text-xs md:text-sm">#Tafoni</span>
+            <span class="border border-white/80 px-3 py-1.5 rounded-full text-xs md:text-sm">#해식동굴</span>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 py-12">
-        
-        <!-- Quick Definition Section -->
+    <main class="max-w-6xl mx-auto px-4 py-12" id="overview">
+
+        <section class="mb-12 text-center max-w-3xl mx-auto">
+            <p class="text-slate-600 leading-relaxed">
+                이 페이지는 <strong class="text-slate-800">갯깍주상절리대</strong>와 그 해안에 발달한 <strong class="text-slate-800">해식동굴</strong>을
+                이해하기 위한 배경·지질·문화유산·촬영·안내 자료입니다. 영상 설명란 등에 이 주소를 링크해 두면 시청자가 같은 정보를 바로 확인할 수 있습니다.
+            </p>
+        </section>
+
         <section class="mb-16 bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
             <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
                 <i class="fas fa-microscope text-blue-600"></i> 핵심 정의 (Core Definition)
             </h2>
             <p class="text-lg leading-relaxed mb-4">
-                <strong class="text-blue-700 underline decoration-blue-200">주상절리 (Columnar Joint, 柱狀節理)</strong>: 
+                <strong class="text-blue-700 underline decoration-blue-200">주상절리 (Columnar Joint, 柱狀節理)</strong>:
                 지표로 분출한 용암이 냉각 및 수축하는 과정에서 형성된 수직의 기둥 모양 절리 구조입니다.
             </p>
             <p class="text-slate-600 italic">
-                특히 갯깍주상절리는 '바다를 마주한 끝머리'라는 뜻의 '갯깍'이라는 이름처럼, 약 1.7km에 걸쳐 펼쳐진 해안 절벽(해식애)의 웅장함을 자랑합니다.
+                특히 갯깍주상절리는 ‘바다를 마주한 끝머리’라는 뜻의 ‘갯깍’이라는 이름처럼, 약 1.7km에 걸쳐 펼쳐진 해안 절벽(해식애)의 웅장함을 자랑합니다.
             </p>
         </section>
 
-        <!-- Main Content Grid -->
+        <section id="gaeksang" class="mb-16 bg-gradient-to-br from-slate-50 to-blue-50 p-8 md:p-10 rounded-2xl border border-blue-100 shadow-sm">
+            <h2 class="text-2xl font-bold mb-4 text-blue-950 flex items-center gap-2">
+                <i class="fas fa-water text-blue-600"></i> 객상주상절리와 Entablature — 갯깍의 차별점
+            </h2>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                <strong>「객상주상절리」</strong>는 학술 논문 제목에 쓰이기보다, 현장·안내·영상에서
+                <strong>바다를 마주한 절벽에서 한 기둥씩 높이·기울기·곡선이 조금씩 달라 보이는 주상절리</strong>를 가리킬 때 쓰이는 말로 이해하면 됩니다.
+                마치 객석에 앉은 사람마다 다른 실루엣이 보이듯, 배나 멀리 높은 지점에서 내려다보면 ‘각기 다른 모양새의 기둥들’이 겹쳐 보이는 인상을 말로 옮긴 표현에 가깝습니다.
+            </p>
+            <p class="text-slate-700 leading-relaxed mb-4">
+                같은 현상을 지질학에서는 용암이 식을 때 냉각 속도·등온면의 형태가 위아래·좌우로 달라지면서 생기는
+                <strong>Entablature(인테브러처)</strong> 층으로 설명합니다. 대표적인 수직·다각형 기둥대인 <strong>Colonnade(코로네이드)</strong>와 달리,
+                Entablature는 <strong>비교적 휘거나 뒤틀린 주상절리</strong>를 가리키는 말로 쓰이며, 갯깍 해식동굴 주변 암벽에서 특히 잘 관찰됩니다.
+            </p>
+            <p class="text-sm text-slate-600 border-l-4 border-blue-400 pl-4 py-1 bg-white/60 rounded-r-lg">
+                한국민족문화대백과 「갯깍 주상절리」에는 해식동굴 주변에서
+                <strong>인테브러춰(entablature)라고 부르는 다소 휘어진 모양의 주상절리</strong>를 볼 수 있다고 기술되어 있습니다.
+                갯깍을 다른 해안 주상절리와 구분 짓는 요소 중 하나가 바로 이 <strong>해식·노치 환경과 맞물린 Entablature형 절리</strong>입니다.
+            </p>
+        </section>
+
         <div class="grid md:grid-cols-2 gap-8">
-            
-            <!-- Geological Value -->
+
             <section class="section-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
                 <h3 class="text-xl font-bold mb-4 text-blue-900 border-b pb-2">1. 지질학적 가치: <span class="text-sm font-normal">Entablature</span></h3>
                 <p class="text-slate-700 mb-4">
-                    <span class="concept-tag">객상주상절리</span>는 학술적으로 <strong>Entablature(인테브러처)</strong>적 구조로 설명됩니다.
+                    <span class="concept-tag">객상주상절리</span>로 불리는 시각적 특징은 학술적으로 <strong>Entablature(인테브러처)</strong>적 구조로 설명됩니다.
                 </p>
                 <ul class="space-y-3 text-sm text-slate-600">
                     <li class="flex gap-2">
@@ -83,12 +134,11 @@
                     </li>
                     <li class="flex gap-2">
                         <i class="fas fa-check text-green-500 mt-1"></i>
-                        <span>해식동굴 주변 암벽에서 관찰되는 이 구조는 드론 촬영 시 가장 역동적인 패턴을 보여줍니다.</span>
+                        <span>해식동굴 주변 암벽에서 관찰되는 이 구조는 조망 각도에 따라 가장 역동적인 패턴을 드러냅니다.</span>
                     </li>
                 </ul>
             </section>
 
-            <!-- Tafoni & Weathering -->
             <section class="section-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
                 <h3 class="text-xl font-bold mb-4 text-blue-900 border-b pb-2">2. 풍화의 흔적: <span class="text-sm font-normal">Tafoni</span></h3>
                 <p class="text-slate-700 mb-4">
@@ -106,65 +156,196 @@
                 </ul>
             </section>
 
-            <!-- History & Culture -->
-            <section class="section-card bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
-                <h3 class="text-xl font-bold mb-4 text-blue-900 border-b pb-2">3. 역사와 문화: <span class="text-sm font-normal">Daramjigul</span></h3>
-                <p class="text-slate-700 mb-4">
-                    단순한 바위벽이 아닌 선사시대부터의 삶이 깃든 장소입니다.
-                </p>
-                <ul class="space-y-3 text-sm text-slate-600">
-                    <li class="flex gap-2">
-                        <i class="fas fa-history text-orange-500 mt-1"></i>
-                        <span><strong>다람쥐굴</strong>: 높이 15m에 달하는 해식동굴로, 1985년 토기편 등 유물이 발견된 선사시대 거처입니다.</span>
-                    </li>
-                    <li class="flex gap-2">
-                        <i class="fas fa-leaf text-green-500 mt-1"></i>
-                        <span><strong>반딧불이 보호지역</strong>: 예례천 하구와 연결된 이 구역은 청정 제주의 생태적 가치를 상징합니다.</span>
-                    </li>
-                </ul>
-            </section>
-
-            <!-- Drone Pilot Guide -->
-            <section class="section-card bg-blue-900 text-white p-8 rounded-2xl shadow-lg">
-                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-                    <i class="fas fa-paper-plane"></i> 드론 촬영 가이드 (Pilot Checklist)
-                </h3>
-                <div class="space-y-4 text-sm">
-                    <div class="bg-blue-800 p-3 rounded-lg">
-                        <p class="font-bold mb-1 underline">최적의 앵글 (Best Angle)</p>
-                        <p>해안선과 평행하게 비행하며 <strong>Sea Cliff(해식애)</strong>와 <strong>Notch(노치)</strong>를 측면에서 포착하면 주상절리의 수직성이 강조됩니다.</p>
-                    </div>
-                    <div class="bg-red-800/50 p-3 rounded-lg border border-red-500/30">
-                        <p class="font-bold mb-1">안전 주의 (Safety First)</p>
-                        <p>낙석 위험으로 인해 올레길이 변경된 지역입니다. 비행 시 절벽에 너무 근접하기보다는 줌 렌즈를 활용하고, 기류 변화에 주의하십시오.</p>
-                    </div>
-                </div>
-            </section>
         </div>
 
-        <!-- Location Footer -->
+        <section id="daramji" class="mt-16 bg-white p-8 md:p-10 rounded-2xl border border-amber-200/80 shadow-sm">
+            <h2 class="text-2xl font-bold mb-3 text-slate-900 flex items-center gap-2">
+                <i class="fas fa-archway text-amber-700"></i> 다람쥐굴(색달동)
+            </h2>
+            <p class="text-slate-700 leading-relaxed mb-8 text-sm md:text-base border-b border-slate-100 pb-8">
+                절벽 전체가 웅장하게 보일 때, 화면 구석에 <strong>작은 동굴 입구</strong>로 잡히는 것이 바로 <strong>다람쥐굴</strong>인 경우가 많습니다.
+                갯깍 일대에는 파랑이 깎아 낸 <strong>여러 해식동굴</strong>이 있고, 백과 등에 따르면 노치가 확대되어 발달한 동굴의 높이는 최대 <strong>약 15m</strong>에 이르기도 합니다.
+                이 페이지 아래쪽에서 소개하는 <strong>관통형·대규모 해식동굴</strong>과 달리, 다람쥐굴은 <strong>입구는 비교적 작지만 안으로 깊게 들어가는 바위그늘집형 해식동굴</strong>이며,
+                <strong>선사 유적·향토유산·해녀 생활사</strong>가 한데 얽혀 있어 문화적으로도 중요합니다.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8 text-slate-700 text-sm leading-relaxed">
+                <div>
+                    <h3 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fas fa-ruler-combined text-amber-600 text-sm"></i> 규모와 형태</h3>
+                    <p class="mb-4">
+                        백과·문헌에 따르면 입구 높이 <strong>약 3.7m</strong>, 폭 <strong>약 3.7m</strong>, 길이(깊이) <strong>약 21m</strong>로 기술되는 경우가 많습니다.
+                        사진·영상에서는 입구가 더 작게 보이기도 하지만, 실제로는 꽤 길게 뻗은 동굴입니다.
+                    </p>
+                    <h3 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fas fa-history text-orange-600 text-sm"></i> 선사 유적</h3>
+                    <p>
+                        <strong>1985년</strong> 지역 주민의 제보로 조사가 이루어졌고, 항아리와 <strong>토기편 10여 점</strong> 등이 출토되었습니다.
+                        선사시대 사람들의 <strong>거처·창고</strong>로 쓰였을 가능성이 제기되며, 출토품은 기원 후 100~500년경 탐라시대 적갈색 경질토기 계열로 분류되는 보고가 있습니다.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fas fa-landmark text-amber-700 text-sm"></i> 향토유산·생활사</h3>
+                    <p class="mb-4">
+                        <strong>제주특별자치도 향토유산 제7호</strong>(2013년 11월 15일 지정)로, 바위그늘집 자리에서 탐라시대 토기가 확인되고
+                        색달동 해녀들의 <strong>간이 불턱</strong>(물질 후 잠시 쉬거나 불을 쬐던 곳)으로 오랫동안 이용된 점 등이 지정 사유로 소개됩니다.
+                    </p>
+                    <h3 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fas fa-leaf text-green-600 text-sm"></i> 예례천·생태</h3>
+                    <p>
+                        갯깍 주상절리대 <strong>서쪽</strong>에는 예례천 하구가 이어지고, 서귀포시는 2002년 이 일대를 <strong>반딧불이 보호지역</strong>으로 지정하였습니다.
+                        해안 지질과 맞물려 <strong>청정 수계·야간 생태</strong>를 함께 기억할 만한 구역입니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 해식동굴: 형성 원리 + 상세 (Entablature1 통합) -->
+        <section id="cave" class="mt-20 pt-4 border-t border-slate-200">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-3">해식동굴의 형성과 갯깍의 동굴</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">바다가 깎아 낸 시간의 통로. 주상절리 기둥 사이로 흐르는 파랑의 에너지가 완성한 지형입니다.</p>
+                <div class="h-1 w-20 bg-blue-600 mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-16">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="text-blue-600 font-bold text-3xl mb-3">01</div>
+                    <h4 class="text-lg font-bold mb-2">Notch Formation</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        파도가 해안 절벽 하단부에 지속적으로 충돌하며 ‘해식 노치(Sea Notch)’를 만듭니다. 주상절리의 경우 수직 기둥 사이의 <strong>Joint(절리)</strong>가 취약점이 되어 집중적인 침식이 일어납니다.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="text-blue-600 font-bold text-3xl mb-3">02</div>
+                    <h4 class="text-lg font-bold mb-2">Hydraulic Action</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        절리 틈새로 파도가 밀려들 때 내부 공기가 순간적으로 압축되었다가 팽창하는 <strong>Cavitation(공동현상)</strong>이 발생합니다. 이 충격이 거대한 현무암 기둥을 뿌리째 뽑아 내는 역할을 합니다.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <div class="text-blue-600 font-bold text-3xl mb-3">03</div>
+                    <h4 class="text-lg font-bold mb-2">Roof Stability</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        하단의 Colonnade(주상절리)가 사라져도 상단의 불규칙한 <strong>Entablature</strong> 층이 서로 맞물려 아치 구조를 형성하며, 거대한 동굴 천장을 지탱하게 됩니다.
+                    </p>
+                </div>
+            </div>
+
+            <div class="cave-section rounded-3xl py-16 px-6 text-white overflow-hidden">
+                <div class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+                    <div class="lg:w-1/2 order-2 lg:order-1">
+                        <h3 class="text-3xl md:text-4xl font-bold mb-8 leading-tight">
+                            자연이 설계한<br>
+                            <span class="text-blue-400">현무암 터널</span>
+                        </h3>
+                        <div class="space-y-8">
+                            <div>
+                                <h4 class="text-lg font-bold flex items-center gap-3 mb-3">
+                                    <span class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-sm shrink-0">A</span>
+                                    구조적 특징 (Structural Features)
+                                </h4>
+                                <p class="text-slate-400 leading-relaxed text-sm md:text-base">
+                                    갯깍 해식동굴은 입구가 두 군데인 <strong>Through-cave(관통형 동굴)</strong> 형태를 띱니다. 약 40m 길이에 달하며, 동굴 내부 천장 높이는 최대 5~7m에 달합니다. 벽면은 정교하게 깎인 6각형 주상절리 기둥들이 병풍처럼 둘러싸여 있어 마치 고딕 양식의 성당 내부를 연상시킵니다.
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold flex items-center gap-3 mb-3">
+                                    <span class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-sm shrink-0">B</span>
+                                    지질학적 희귀성 (Geological Rarity)
+                                </h4>
+                                <p class="text-slate-400 leading-relaxed text-sm md:text-base">
+                                    일반적인 해식동굴은 퇴적암이나 균질한 화강암에서 흔히 발생하지만, <strong>Columnar Joint(주상절리)</strong> 지대에서 이 정도 규모의 관통형 동굴이 형성된 것은 전 세계적으로도 보기 드문 현상입니다. 기둥이 탈락하며 만들어진 계단식 바닥 구조가 특징입니다.
+                                </p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 max-w-sm">
+                                <div class="glass-card p-4 rounded-xl">
+                                    <div class="text-xs text-slate-500 uppercase mb-1">Total Length</div>
+                                    <div class="text-2xl font-bold">~42m</div>
+                                </div>
+                                <div class="glass-card p-4 rounded-xl">
+                                    <div class="text-xs text-slate-500 uppercase mb-1">Max Height</div>
+                                    <div class="text-2xl font-bold">8.5m</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 order-1 lg:order-2 w-full relative">
+                        <div class="absolute -inset-2 bg-blue-500/10 blur-3xl rounded-full pointer-events-none"></div>
+                        <figure class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-slate-900">
+                            <img src="/images/Sea_Cave.jpg" alt="갯깍 해식동굴과 주상절리" class="w-full h-auto max-h-[560px] object-cover object-center mx-auto" width="1200" height="1500" loading="lazy">
+                            <figcaption class="text-xs text-slate-500 px-4 py-3 bg-slate-900/90 border-t border-white/5">
+                                동굴 끝에서 마주하는 제주 바다. 주상절리의 실루엣이 프레임이 됩니다.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="photo" class="mt-20 py-8">
+            <div class="flex flex-col md:flex-row gap-10">
+                <div class="md:w-1/3">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4">촬영 팁<br><span class="text-lg font-normal text-slate-600">사진</span></h2>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        주상절리의 질감과 해식동굴의 깊이를 살리는 데 도움이 되는 요약입니다.
+                    </p>
+                </div>
+                <div class="md:w-2/3 grid sm:grid-cols-2 gap-6">
+                    <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold mb-2 flex items-center gap-2 text-blue-900">
+                            <i class="fas fa-sun text-amber-500"></i> Golden Hour
+                        </h4>
+                        <p class="text-xs text-slate-500 mb-2">오후 3시 ~ 5시 (동계 기준)</p>
+                        <p class="text-sm text-slate-600">태양 고도가 낮아질 때 동굴 내부로 빛이 깊게 들어와 주상절리의 입체감이 살아납니다.</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold mb-2 flex items-center gap-2 text-blue-900">
+                            <i class="fas fa-image text-blue-600"></i> Silhouette Frame
+                        </h4>
+                        <p class="text-xs text-slate-500 mb-2">동굴 안쪽에서 입구를 향해 촬영</p>
+                        <p class="text-sm text-slate-600">입구의 주상절리를 실루엣으로 잡고 배경에 바다와 하늘을 노출하면 웅장함이 잘 드러납니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-12 bg-red-50 border border-red-100 rounded-2xl p-6 md:p-8">
+            <div class="flex flex-col md:flex-row items-start gap-6">
+                <div class="shrink-0 w-14 h-14 bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg">
+                    <i class="fas fa-exclamation-triangle text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-red-900 mb-2">안전 관리 및 접근</h3>
+                    <p class="text-red-900/90 leading-relaxed text-sm mb-4">
+                        갯깍주상절리대는 <strong>낙석(Rockfall)</strong>에 의한 인명사고 위험이 높아 출입이 엄격히 통제되는 구간이 있습니다. 해식동굴 천장의 <strong>Entablature</strong> 층은 해풍 풍화가 진행 중이므로 내부 진입은 매우 위험합니다.
+                    </p>
+                    <ul class="flex flex-wrap gap-2 text-xs font-semibold text-red-800">
+                        <li class="px-3 py-1.5 bg-white border border-red-200 rounded-lg">원거리에서 관찰·촬영 권장</li>
+                        <li class="px-3 py-1.5 bg-white border border-red-200 rounded-lg">물때(Tide) 확인</li>
+                        <li class="px-3 py-1.5 bg-white border border-red-200 rounded-lg">갯깍 하단 몽돌·미끄러짐 주의</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <footer class="mt-16 text-center border-t pt-8 text-slate-500">
             <p class="mb-2"><i class="fas fa-map-marker-alt text-red-500"></i> 위치: 제주특별자치도 서귀포시 색달동 갯깍주상절리대</p>
-            <p class="text-xs">본 페이지는 갯깍주상절리의 과학적 이해를 돕기 위해 제작되었습니다.</p>
+            <p class="text-xs">본 페이지는 갯깍주상절리대와 해식동굴의 과학적 이해를 돕기 위해 제작되었습니다.</p>
         </footer>
 
     </main>
 
-    <!-- Bottom Message Box (Custom Replacement for alert) -->
-    <div id="welcome-msg" class="fixed bottom-4 right-4 bg-slate-900 text-white p-4 rounded-xl shadow-2xl max-w-xs transform translate-y-20 transition-transform duration-500">
+    <div id="welcome-msg" class="fixed bottom-4 right-4 bg-slate-900 text-white p-4 rounded-xl shadow-2xl max-w-xs transform translate-y-24 transition-transform duration-500 z-50">
         <p class="text-sm font-medium">
             <i class="fas fa-info-circle text-blue-400 mr-2"></i>
-            주인님, 드론 촬영을 위한 지질학 도슨트 페이지가 준비되었습니다.
+            갯깍·해식동굴 안내 페이지입니다. 유튜브 설명란에 이 페이지 링크를 걸어 두시면 됩니다.
         </p>
     </div>
 
     <script>
-        window.onload = () => {
-            const msg = document.getElementById('welcome-msg');
-            msg.style.transform = 'translateY(0)';
-            setTimeout(() => {
-                msg.style.transform = 'translateY(150%)';
-            }, 5000);
+        window.onload = function () {
+            var msg = document.getElementById('welcome-msg');
+            if (msg) {
+                msg.style.transform = 'translateY(0)';
+                setTimeout(function () { msg.style.transform = 'translateY(150%)'; }, 5000);
+            }
         };
     </script>
 </body>
